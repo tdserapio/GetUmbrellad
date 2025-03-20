@@ -1,5 +1,10 @@
+package getumbrellad.controllers;
 
-
+import getumbrellad.views.MainMenuGUI;
+import getumbrellad.views.HelpGUI;
+import javax.swing.*;
+import java.awt.*;
+import java.awt.event.*;
 
 public class HelpGUIController implements ActionListener, MouseListener {
     
