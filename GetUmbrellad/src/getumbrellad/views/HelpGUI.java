@@ -1,5 +1,8 @@
+package getumbrellad.views;
 
-
+import getumbrellad.controllers.HelpGUIController;
+import javax.swing.*;
+import java.awt.*;
 
 public class HelpGUI extends JFrame{
     
