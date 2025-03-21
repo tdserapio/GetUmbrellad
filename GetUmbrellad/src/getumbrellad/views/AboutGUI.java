@@ -35,7 +35,7 @@ public class AboutGUI extends JFrame{
         imageText.setVerticalTextPosition(JLabel.TOP);
         this.add(imageText);                
         
-        img = new ImageIcon(AboutGUI.class.getResource("../resources/200x150.png"));
+        img = new ImageIcon(AboutGUI.class.getResource("../resources/the_team.png"));
         imageText.setIcon(img);
         
         descriptionText = new JLabel();
