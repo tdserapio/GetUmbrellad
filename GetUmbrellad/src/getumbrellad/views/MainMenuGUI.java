@@ -21,6 +21,8 @@ public class MainMenuGUI extends JFrame{
         this.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         this.setSize(900, 600);
         
+        // Import Lexend font
+        
         try {
             GraphicsEnvironment ge = GraphicsEnvironment.getLocalGraphicsEnvironment();
             InputStream is = getClass().getResourceAsStream("../resources/Lexend.ttf");
@@ -29,6 +31,8 @@ public class MainMenuGUI extends JFrame{
             System.out.println(anyException.getMessage());
             return;
         }
+        
+        // Create "overall" pane
                 
         overallPanel = new JPanel();
         overallPanel.setBorder(new EmptyBorder(100, 50, 100, 50));
