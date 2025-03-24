@@ -22,7 +22,7 @@ public class HelpGUIController implements ActionListener, MouseListener {
     @Override
     public void actionPerformed(ActionEvent e) {
         if (e.getSource() == menuButton) {
-            var display = new mainMenu();
+            MainMenuGUI display = new MainMenuGUI();
             display.setVisible(true);
             helpGUI.dispose();
         }

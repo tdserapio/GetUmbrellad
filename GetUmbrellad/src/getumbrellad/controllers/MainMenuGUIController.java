@@ -5,9 +5,12 @@
 package getumbrellad.controllers;
 import getumbrellad.views.AboutGUI;
 import getumbrellad.views.LevelGameplayGUI;
+import getumbrellad.views.HelpGUI;
 import java.awt.Color;
 import javax.swing.*;
 import java.awt.event.*;
+import java.io.IOException;
+import javax.imageio.ImageIO;
 
 public class MainMenuGUIController implements ActionListener, MouseListener{
     private JFrame GUI;
@@ -32,7 +35,8 @@ public class MainMenuGUIController implements ActionListener, MouseListener{
             about.setVisible(true);
             GUI.dispose();
         } else if(e.getSource() == helpButton){
-            JOptionPane.showMessageDialog(null, "The HELP page is under construction.", "Under Construction", JOptionPane.INFORMATION_MESSAGE);
+            HelpGUI help = new HelpGUI();
+            help.setVisible(true);
             GUI.dispose();
         } else if(e.getSource() == leaveButton){
             int confirm = JOptionPane.showOptionDialog(
@@ -49,27 +53,35 @@ public class MainMenuGUIController implements ActionListener, MouseListener{
     }
     
     public void changeColor(MouseEvent e){
-        if(e.getSource() == playButton){
-            playButton.setBackground(Color.GRAY);
-        } else if(e.getSource() == aboutButton){
-            aboutButton.setBackground(Color.GRAY);
-        } else if(e.getSource() == helpButton){
-            helpButton.setBackground(Color.GRAY);
-        } else if(e.getSource() == leaveButton){
-            leaveButton.setBackground(Color.GRAY);
-        } 
+        try {
+            if(e.getSource() == playButton){
+                playButton.setIcon(new ImageIcon(ImageIO.read(getClass().getResource("../resources/play_darken.png"))));
+            } else if(e.getSource() == aboutButton){
+                aboutButton.setIcon(new ImageIcon(ImageIO.read(getClass().getResource("../resources/about_darken.png"))));
+            } else if(e.getSource() == helpButton){
+                helpButton.setIcon(new ImageIcon(ImageIO.read(getClass().getResource("../resources/help_darken.png"))));
+            } else if(e.getSource() == leaveButton){
+                leaveButton.setIcon(new ImageIcon(ImageIO.read(getClass().getResource("../resources/exit_darken.png"))));
+            } 
+        } catch (IOException ioe) {
+            System.out.println("Oops! Image not found.");
+        }
     }
     
     public void resetColor(MouseEvent e){
-        if(e.getSource() == playButton){
-            playButton.setBackground(new JButton().getBackground());
-        } else if(e.getSource() == aboutButton){
-            aboutButton.setBackground(new JButton().getBackground());
-        } else if(e.getSource() == helpButton){
-            helpButton.setBackground(new JButton().getBackground());
-        } else if(e.getSource() == leaveButton){
-            leaveButton.setBackground(new JButton().getBackground());
-        } 
+        try {
+            if(e.getSource() == playButton){
+                playButton.setIcon(new ImageIcon(ImageIO.read(getClass().getResource("../resources/play.png"))));
+            } else if(e.getSource() == aboutButton){
+                aboutButton.setIcon(new ImageIcon(ImageIO.read(getClass().getResource("../resources/about.png"))));
+            } else if(e.getSource() == helpButton){
+                helpButton.setIcon(new ImageIcon(ImageIO.read(getClass().getResource("../resources/help.png"))));
+            } else if(e.getSource() == leaveButton){
+                leaveButton.setIcon(new ImageIcon(ImageIO.read(getClass().getResource("../resources/exit.png"))));
+            } 
+        } catch (IOException ioe) {
+            System.out.println("Oops! Image not found.");
+        }
     }
     
     @Override
