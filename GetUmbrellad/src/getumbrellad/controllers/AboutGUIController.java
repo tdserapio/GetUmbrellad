@@ -3,8 +3,11 @@ package getumbrellad.controllers;
 import getumbrellad.views.MainMenuGUI;
 import getumbrellad.views.AboutGUI;
 import java.awt.Color;
+import java.awt.Component;
 import javax.swing.*;
 import java.awt.event.*;
+import java.io.IOException;
+import javax.imageio.ImageIO;
 
 public class AboutGUIController implements ActionListener, MouseListener {
     
@@ -39,11 +42,19 @@ public class AboutGUIController implements ActionListener, MouseListener {
 
     @Override
     public void mouseEntered(MouseEvent e) {
-        menuButton.setBackground(Color.GRAY);
+        try {
+            menuButton.setIcon(new ImageIcon(ImageIO.read(getClass().getResource("../resources/mainmenu_darken.png"))));
+        } catch (IOException ioe) {
+            System.out.println("Error while loading button.");
+        }
     }
 
     @Override
     public void mouseExited(MouseEvent e) {
-        menuButton.setBackground(new JButton().getBackground());
+        try {
+            menuButton.setIcon(new ImageIcon(ImageIO.read(getClass().getResource("../resources/mainmenu.png"))));
+        } catch (IOException ioe) {
+            System.out.println("Error while loading button.");
+        }
     }
 }
