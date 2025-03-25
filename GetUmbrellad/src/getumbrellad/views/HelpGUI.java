@@ -1,85 +1,98 @@
 package getumbrellad.views;
 
 import getumbrellad.controllers.HelpGUIController;
-import javax.swing.*;
 import java.awt.*;
+import java.io.InputStream;
+import java.io.IOException;
+import javax.imageio.ImageIO;
+import javax.swing.*;
+import javax.swing.border.EmptyBorder;
+import java.util.ArrayList;
 
-public class HelpGUI extends JFrame{
+public class HelpGUI extends JFrame {
     
+    private JPanel overallPanel;
+    private JPanel gridPanel;
     private JButton menuButton;
-    private JPanel panel[];
-    private JLabel a, d, space, descriptionA, descriptionD, descriptionSpace;
     private HelpGUIController controller;
     
     public HelpGUI() {
         
-        super("Help");
+        super("Help & Controls");
+        
         this.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         this.setSize(900, 600);
-        
-        int row = 7;
-        int column = 9;
-        this.setLayout(new GridLayout(row, column));
-        
-        panel = new JPanel[row * column];
-        for (int i = 0; i < row * column; i++) {
-            panel[i] = new JPanel();
-            this.add(panel[i]);
+        this.setLayout(new BoxLayout(this.getContentPane(), BoxLayout.PAGE_AXIS));
+        this.getContentPane().setBackground(Color.WHITE);
+
+        try {
+            GraphicsEnvironment ge = GraphicsEnvironment.getLocalGraphicsEnvironment();
+            InputStream is = getClass().getResourceAsStream("../resources/Lexend.ttf");
+            ge.registerFont(Font.createFont(Font.TRUETYPE_FONT, is));
+        } catch (Exception e) {
+            System.out.println("Font load error: " + e.getMessage());
         }
         
-        //colored panels for a, d, and space
-        panel[13].setBackground(Color.gray);
-        panel[21].setBackground(Color.gray);
-        panel[22].setBackground(Color.gray);
-        panel[23].setBackground(Color.gray);
+        overallPanel = new JPanel();
+        overallPanel.setLayout(new BoxLayout(overallPanel, BoxLayout.PAGE_AXIS));
+        overallPanel.setBorder(new EmptyBorder(30, 100, 50, 100));
+        overallPanel.setBackground(Color.WHITE);
+        overallPanel.setAlignmentX(Component.CENTER_ALIGNMENT);
+        this.add(overallPanel);
         
-        panel[39].setBackground(Color.gray);
-        panel[40].setBackground(Color.gray);
-        panel[41].setBackground(Color.gray);
+        String[][] instructions = {
+            {"../resources/arrowkeys.png", "Press A to move left.<br>Press D to move right."},
+            {"../resources/spacebar.png", "Press SPACE to jump."},
+            {"../resources/cursor.png", "Your mouse 'repels' the character whenever you jump."}
+        };
         
-        a = new JLabel();
-        a.setText("A");
-        a.setFont(new Font("Arial", Font.BOLD, 60));
-        a.setForeground(Color.white);
-        panel[21].add(a);
+        gridPanel = new JPanel(new GridLayout(instructions.length, 2, 20, 20));
+        gridPanel.setAlignmentX(Component.CENTER_ALIGNMENT);
+        gridPanel.setBackground(Color.WHITE);
         
-        d = new JLabel();
-        d.setText("D");
-        d.setFont(new Font("Arial", Font.BOLD, 60));
-        d.setForeground(Color.white);
-        panel[23].add(d);
+        ArrayList<JLabel> imgs = new ArrayList<>();
         
-        space = new JLabel();
-        space.setText("Space");
-        space.setFont(new Font("Arial", Font.BOLD, 35));
-        space.setForeground(Color.white);
-        panel[40].add(space);
+        for (int i = 0; i < instructions.length; i++) {
+            
+            JLabel imageLabel = new JLabel();
+            imageLabel.setHorizontalAlignment(JLabel.CENTER);
+            try {
+                imageLabel.setIcon(new ImageIcon(getClass().getResource(instructions[i][0])));
+            } catch (Exception e) {
+                System.out.println("Error loading image " + instructions[i][0] + ": " + e.getMessage());
+            }
+            imgs.add(imageLabel);
+            gridPanel.add(imageLabel);
+            
+            JLabel descLabel = new JLabel("<html>" + instructions[i][1] + "</html>");
+            descLabel.setFont(new Font("Lexend", Font.PLAIN, 20));
+            descLabel.setHorizontalAlignment(JLabel.LEFT);
+            
+            gridPanel.add(descLabel);
+            
+        }
         
-        descriptionA = new JLabel();
-        descriptionA.setFont(new Font("Arial", Font.BOLD, 50));
-        descriptionA.setText("<<");
-        panel[20].add(descriptionA);
+        overallPanel.add(gridPanel);
         
-        descriptionD = new JLabel();
-        descriptionD.setFont(new Font("Arial", Font.BOLD, 50));
-        descriptionD.setText(">>");
-        panel[24].add(descriptionD);
+        try {
+            menuButton = new JButton();
+            menuButton.setAlignmentX(Component.CENTER_ALIGNMENT);
+            menuButton.setIcon(new ImageIcon(ImageIO.read(getClass().getResource("../resources/mainmenu.png"))));
+            menuButton.setBorderPainted(false);
+            menuButton.setFocusPainted(false);
+            menuButton.setCursor(Cursor.getPredefinedCursor(Cursor.HAND_CURSOR));
+        } catch (IOException ioe) {
+            menuButton = new JButton("MAIN MENU");
+            menuButton.setAlignmentX(Component.CENTER_ALIGNMENT);
+        }
+        overallPanel.add(menuButton);
         
-        descriptionSpace = new JLabel();
-        descriptionSpace.setFont(new Font("Arial", Font.BOLD, 50));
-        descriptionSpace.setText("/\\");
-        panel[31].add(descriptionSpace);
-        
-        
-        menuButton = new JButton("Main Menu");
-        panel[58].add(menuButton, BorderLayout.SOUTH);
-        controller = new HelpGUIController(this, menuButton);
+        controller = new HelpGUIController(this, menuButton, imgs);
+        this.addKeyListener(controller);
         menuButton.addActionListener(controller);
         menuButton.addMouseListener(controller);
         
-        
-        
+        this.setFocusable(true);
         this.setVisible(true);
     }
-    
 }

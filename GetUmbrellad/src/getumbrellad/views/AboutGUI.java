@@ -80,7 +80,9 @@ public class AboutGUI extends JFrame{
             
         } catch (IOException ioe) {
             
-            System.out.println("Error while loading button.");
+            menuButton = new JButton("Main Menu");
+            menuButton.setAlignmentX(Component.CENTER_ALIGNMENT);
+            overallPanel.add(menuButton);
             return;
             
         }
