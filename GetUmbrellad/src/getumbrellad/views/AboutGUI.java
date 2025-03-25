@@ -39,7 +39,7 @@ public class AboutGUI extends JFrame{
         // Create "overall" pane
                 
         overallPanel = new JPanel();
-        overallPanel.setBorder(new EmptyBorder(50, 0, 50, 0));
+        overallPanel.setBorder(new EmptyBorder(30, 0, 50, 0));
         overallPanel.setLayout(new BoxLayout(overallPanel, BoxLayout.PAGE_AXIS));
         this.add(overallPanel);
         
