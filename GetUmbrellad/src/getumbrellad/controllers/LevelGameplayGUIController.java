@@ -1,15 +1,5 @@
-/*
- * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
- * Click nbfs://nbhost/SystemFileSystem/Templates/Classes/Class.java to edit this template
- */
-package appliedlevelgameplaytesting;
-import java.awt.event.*;
-
-
-/**
- *
- * @author bruv
- */
+package getumbrellad.controllers;
+    
 public class LevelGameplayGUIController implements ActionListener, MouseListener, MouseMotionListener, KeyListener{
 
     
