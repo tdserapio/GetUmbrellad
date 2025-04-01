@@ -33,7 +33,7 @@ public class LevelGameplayGUI extends JFrame{
         }
         
         //show collectibles
-        ImageIcon collectibleImage = new ImageIcon(getClass().getResource("../resources/placeHolderImage.png")); 
+        ImageIcon collectibleImage = new ImageIcon(getClass().getResource("../resources/umbrellacoin.png")); 
         for (int i = 6; i < 11; i += 2) {
             panel[(3) * gridColumn + i].add(new JLabel(collectibleImage));
             //panel[(3) * gridColumn + i].setBackground(Color.yellow);
@@ -77,7 +77,7 @@ public class LevelGameplayGUI extends JFrame{
         
         
         //coin image and label
-        ImageIcon coinImage = new ImageIcon(getClass().getResource("../resources/placeHolderImage.png"));
+        ImageIcon coinImage = new ImageIcon(getClass().getResource("../resources/umbrellacoin.png"));
         panel[2 * gridColumn - 2].add(new JLabel(coinImage));
         //panel[2 * gridColumn - 2].setBackground(Color.blue);
         int coinCount = 0;
