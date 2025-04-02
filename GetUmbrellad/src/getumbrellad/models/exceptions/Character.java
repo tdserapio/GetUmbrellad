@@ -1,4 +1,4 @@
-package getumbrellad.models/exceptions;
+package getumbrellad.models;
 
 import java.awt.Color;
 import java.awt.Graphics2D;
