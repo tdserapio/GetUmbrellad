@@ -47,10 +47,9 @@ public class LevelGameplayPanelGUI extends JPanel {
     public void paint(Graphics g) {
     
         super.paint(g);
-
         Graphics2D gtd = (Graphics2D) g;
-    
         player.draw(gtd);
+        
         for (Obstacle obstacle: obstacles) {
             obstacle.draw(gtd);
         }
