@@ -26,12 +26,6 @@ public class LevelGameplayGUI extends JFrame{
         panel.setFocusable(true);
         this.add(panel);
         
-        
-        
-        
-        
-        
-        
         //don't change this
         addMouseMotionListener(new LevelGameplayPanelGUIController(panel));
         addKeyListener(new LevelGameplayPanelGUIController(panel));
