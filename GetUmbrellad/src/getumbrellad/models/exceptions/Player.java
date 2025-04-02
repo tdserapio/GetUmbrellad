@@ -1,13 +1,5 @@
-/*
- * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
- * Click nbfs://nbhost/SystemFileSystem/Templates/Classes/Class.java to edit this template
- */
-package appliedlevelgameplaytesting;
+package getumbrellad.models.exception;
 
-/**
- *
- * @author bruv
- */
 public class Player extends Character implements Spawnable{
     private int money;
     
