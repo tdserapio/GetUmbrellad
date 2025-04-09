@@ -92,7 +92,6 @@ public class HelpGUIController implements ActionListener, MouseListener, KeyList
         if (pressedCharacter == KeyEvent.VK_SPACE) {
             isSpacePressed = true;
         }
-        System.out.println(isAPressed + " " + isDPressed + " " + isSpacePressed);
         changeImage();
     }
     
