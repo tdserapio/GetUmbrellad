@@ -1,5 +1,6 @@
-package getumbrellad.models.exception;
+package getumbrellad.models.exceptions;
 
+import getumbrellad.views.LevelGameplayPanelGUI;
 import java.awt.Color;
 import java.awt.Graphics2D;
 import java.awt.Rectangle;
