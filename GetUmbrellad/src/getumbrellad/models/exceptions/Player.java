@@ -1,4 +1,6 @@
-package getumbrellad.models.exception;
+package getumbrellad.models.exceptions;
+
+import getumbrellad.views.LevelGameplayPanelGUI;
 
 public class Player extends Character implements Spawnable{
     private int money;
