@@ -1,5 +1,8 @@
 package getumbrellad.controllers;
     
+import getumbrellad.views.LevelGameplayPanelGUI;
+import java.awt.event.*;
+    
 public class LevelGameplayGUIController implements ActionListener, MouseListener, MouseMotionListener, KeyListener{
 
     
