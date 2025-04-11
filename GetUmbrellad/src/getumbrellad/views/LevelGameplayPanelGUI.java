@@ -1,8 +1,7 @@
-/*
- * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
- * Click nbfs://nbhost/SystemFileSystem/Templates/Classes/Class.java to edit this template
- */
-package appliedlevelgameplaytesting;
+package getumbrellad.views;
+
+import getumbrellad.models.exceptions.Obstacle;
+import getumbrellad.models.exceptions.Player;
 import javax.swing.JPanel;
 import java.awt.*;
 import java.util.*;
@@ -11,11 +10,6 @@ import java.awt.event.MouseEvent;
 import java.util.Timer;
 import java.util.TimerTask;
 
-
-/**
- *
- * @author bruv
- */
 public class LevelGameplayPanelGUI extends JPanel {
     
     private Player player;
