@@ -1,7 +1,7 @@
-package getumbrellad.controllers;
-    
-import getumbrellad.views.LevelGameplayPanelGUI;
-import java.awt.event.*;
+package getumbrellad.views;
+
+import getumbrellad.controllers.LevelGameplayGUIController;
+import getumbrellad.controllers.LevelGameplayPanelGUIController;
 
 public class LevelGameplayGUI extends JFrame{
     
