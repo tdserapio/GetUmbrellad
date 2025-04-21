@@ -117,9 +117,16 @@ public abstract class Character {
         
         
         if (keyLeft && keyRight || !keyLeft && !keyRight) {
-            if (boostDelay == 0) {
-                xSpeed *= 0.8;
+            hitbox.y++;
+            if (playerIsColliding()) {
+                
+                if (boostDelay == 0) {
+                    xSpeed *= 0.8;
+                }
             }
+            hitbox.y--;
+            
+            
         }
         else if (keyLeft && !keyRight) {
             xSpeed--;
@@ -160,6 +167,7 @@ public abstract class Character {
             //checking if can umbrella boost
             hitbox.y++;
             if (playerIsColliding()) {
+                
                 int yJumpFactor = 15;
                 int xJumpFactor = 10;
 
@@ -167,8 +175,9 @@ public abstract class Character {
                 
                 if (boostDelay == 0) {
                     boostDelay = 15;
-                    ySpeed = yJumpFactor * getDirectionalComponentOf(xMouse, x, yMouse, y, false);
+                    ySpeed = -yJumpFactor;
                     xSpeed = xJumpFactor * getDirectionalComponentOf(xMouse, x, yMouse, y, true);
+                    
                 }
                 else {
                     boostDelay--;
