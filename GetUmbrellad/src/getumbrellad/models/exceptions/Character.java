@@ -322,4 +322,3 @@ public abstract class Character {
     
     
 }
-
