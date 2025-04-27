@@ -2,6 +2,7 @@ package getumbrellad.views;
 
 import getumbrellad.controllers.LevelGameplayGUIController;
 import getumbrellad.controllers.LevelGameplayPanelGUIController;
+import javax.swing.JFrame;
 
 public class LevelGameplayGUI extends JFrame{
     
