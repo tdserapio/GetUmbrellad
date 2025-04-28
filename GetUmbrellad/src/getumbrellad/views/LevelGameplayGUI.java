@@ -92,14 +92,19 @@ public class LevelGameplayGUI extends JFrame{
             resumeButton.setPreferredSize(size);
             panels.get(5).add(resumeButton);
             pausePanel.add(panels.get(5));
-            
-            
-            
-            
-            
-            
-            
 
+            controller = new LevelGameplayGUIController(this, menuButton, inventoryButton, storeButton, helpButton, resumeButton);
+            menuButton.addActionListener(controller);
+            inventoryButton.addActionListener(controller);
+            storeButton.addActionListener(controller);
+            helpButton.addActionListener(controller);
+            resumeButton.addActionListener(controller);
+            menuButton.addMouseListener(controller);
+            inventoryButton.addMouseListener(controller);
+            storeButton.addMouseListener(controller);
+            helpButton.addMouseListener(controller);
+            resumeButton.addMouseListener(controller);
+            
             this.add(pausePanel);
         
             SwingUtilities.updateComponentTreeUI(this);
