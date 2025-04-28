@@ -53,10 +53,10 @@ public class MainMenuGUI extends JFrame {
         titleText.setBorder(BorderFactory.createEmptyBorder(0, 0, 30, 0));
         titlePanel.add(titleText);
         
-        JButton inventoryButton = new JButton("Inventory");
-        titlePanel.add(inventoryButton);
-        JButton storeMenuButton = new JButton("Store Menu");
-        titlePanel.add(storeMenuButton);
+//        JButton inventoryButton = new JButton("Inventory");
+//        titlePanel.add(inventoryButton);
+//        JButton storeMenuButton = new JButton("Store Menu");
+//        titlePanel.add(storeMenuButton);
         
         // Add Buttons
         
@@ -92,9 +92,9 @@ public class MainMenuGUI extends JFrame {
         
         overallPanel.add(buttonPanel, BorderLayout.CENTER);
         
-        controller = new MainMenuGUIController(this, buttons.get(0), buttons.get(1), buttons.get(2), buttons.get(4), buttons.get(3), inventoryButton, storeMenuButton);
-        buttons.add(inventoryButton);
-        buttons.add(storeMenuButton);
+        controller = new MainMenuGUIController(this, buttons.get(0), buttons.get(1), buttons.get(2), buttons.get(4), buttons.get(3));
+//        buttons.add(inventoryButton);
+//        buttons.add(storeMenuButton);
         for (JButton currentButton: buttons) {
             currentButton.addActionListener(controller);
             currentButton.addMouseListener(controller);

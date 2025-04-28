@@ -17,12 +17,14 @@ public class HelpGUIController implements ActionListener, MouseListener, KeyList
     private boolean isDPressed;
     private boolean isSpacePressed;
     private ArrayList<JLabel> imgs;
+    private Frame previousFrame;
     
-    public HelpGUIController(HelpGUI helpGUI, JButton menuButton, ArrayList<JLabel> imgs) {
+    public HelpGUIController(HelpGUI helpGUI, JButton menuButton, ArrayList<JLabel> imgs, JFrame previousFrame) {
         
         this.helpGUI = helpGUI;
         this.menuButton = menuButton;
         this.imgs = imgs;
+        this.previousFrame = previousFrame;
         
     }
     
@@ -48,8 +50,7 @@ public class HelpGUIController implements ActionListener, MouseListener, KeyList
     @Override
     public void actionPerformed(ActionEvent e) {
         if (e.getSource() == menuButton) {
-            MainMenuGUI display = new MainMenuGUI();
-            display.setVisible(true);
+            previousFrame.setVisible(true);
             helpGUI.dispose();
         }
     }

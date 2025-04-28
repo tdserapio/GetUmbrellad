@@ -40,7 +40,7 @@ public class LevelGameplayGUIController implements ActionListener, MouseListener
             frame.dispose();
         }
         if (e.getSource() == helpButton) {
-            HelpGUI display = new HelpGUI();
+            HelpGUI display = new HelpGUI(this.frame);
             display.setVisible(true);
             frame.dispose();
         }

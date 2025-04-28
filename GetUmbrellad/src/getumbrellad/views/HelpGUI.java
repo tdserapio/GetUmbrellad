@@ -16,7 +16,9 @@ public class HelpGUI extends JFrame {
     private JButton menuButton;
     private HelpGUIController controller;
     
-    public HelpGUI() {
+    private JFrame previousFrame;
+    
+    public HelpGUI(JFrame previousFrame) {
         
         super("Help & Controls");
         
@@ -87,7 +89,7 @@ public class HelpGUI extends JFrame {
         }
         overallPanel.add(menuButton);
         
-        controller = new HelpGUIController(this, menuButton, imgs);
+        controller = new HelpGUIController(this, menuButton, imgs, previousFrame);
         this.addKeyListener(controller);
         menuButton.addActionListener(controller);
         menuButton.addMouseListener(controller);

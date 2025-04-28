@@ -19,17 +19,18 @@ import javax.imageio.ImageIO;
 
 public class MainMenuGUIController implements ActionListener, MouseListener{
     private JFrame GUI;
-    private JButton playButton, aboutButton, helpButton, leaveButton, loreButton, inventoryButton, storeMenuButton;
+    private JButton playButton, aboutButton, helpButton, leaveButton, loreButton;
+//            , inventoryButton, storeMenuButton;
     
-    public MainMenuGUIController(JFrame GUI, JButton playButton,JButton aboutButton, JButton helpButton, JButton leaveButton, JButton loreButton, JButton inventoryButton, JButton storeMenuButton){
+    public MainMenuGUIController(JFrame GUI, JButton playButton,JButton aboutButton, JButton helpButton, JButton leaveButton, JButton loreButton){
         this.GUI = GUI;
         this.playButton = playButton;
         this.aboutButton = aboutButton;
         this.helpButton = helpButton;
         this.leaveButton = leaveButton;
         this.loreButton = loreButton;
-        this.inventoryButton = inventoryButton;
-        this.storeMenuButton = storeMenuButton;
+//        this.inventoryButton = inventoryButton;
+//        this.storeMenuButton = storeMenuButton;
     }
     
     public void openScreen(ActionEvent e){
@@ -43,7 +44,7 @@ public class MainMenuGUIController implements ActionListener, MouseListener{
             about.setVisible(true);
             GUI.dispose();
         } else if(e.getSource() == helpButton){
-            HelpGUI help = new HelpGUI();
+            HelpGUI help = new HelpGUI(this.GUI);
             help.setVisible(true);
             GUI.dispose();
         } else if(e.getSource() == leaveButton){
@@ -61,15 +62,17 @@ public class MainMenuGUIController implements ActionListener, MouseListener{
             LoreGUI lore = new LoreGUI();
             lore.setVisible(true);
             GUI.dispose();
-        } else if (e.getSource() == inventoryButton) {
-            InventoryGUI igui = new InventoryGUI(this.GUI);
-            igui.setVisible(true);
-            GUI.dispose();
-        } else if (e.getSource() == storeMenuButton) {
-            StoreMenuGUI smgui = new StoreMenuGUI(this.GUI);
-            smgui.setVisible(true);
-            GUI.dispose();
-        }
+        } 
+        
+//        else if (e.getSource() == inventoryButton) {
+//            InventoryGUI igui = new InventoryGUI(this.GUI);
+//            igui.setVisible(true);
+//            GUI.dispose();
+//        } else if (e.getSource() == storeMenuButton) {
+//            StoreMenuGUI smgui = new StoreMenuGUI(this.GUI);
+//            smgui.setVisible(true);
+//            GUI.dispose();
+//        }
     }
     
     public void changeColor(MouseEvent e){
