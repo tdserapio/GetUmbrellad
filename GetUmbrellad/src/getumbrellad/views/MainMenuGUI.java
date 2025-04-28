@@ -1,6 +1,7 @@
 package getumbrellad.views;
 
 import getumbrellad.controllers.MainMenuGUIController;
+import getumbrellad.models.exceptions.Player;
 import java.awt.*;
 import javax.swing.*;
 import javax.swing.border.EmptyBorder;
@@ -9,7 +10,8 @@ import java.io.IOException;
 import java.util.ArrayList;
 import java.io.InputStream;
 
-public class MainMenuGUI extends JFrame{
+public class MainMenuGUI extends JFrame {
+    
     private JPanel titlePanel, buttonPanel, overallPanel;
     private JButton playButton, aboutButton, helpButton, leaveButton;
     private JLabel titleText;
@@ -53,6 +55,8 @@ public class MainMenuGUI extends JFrame{
         
         JButton inventoryButton = new JButton("Inventory");
         titlePanel.add(inventoryButton);
+        JButton storeMenuButton = new JButton("Store Menu");
+        titlePanel.add(storeMenuButton);
         
         // Add Buttons
         
@@ -88,8 +92,9 @@ public class MainMenuGUI extends JFrame{
         
         overallPanel.add(buttonPanel, BorderLayout.CENTER);
         
-        controller = new MainMenuGUIController(this, buttons.get(0), buttons.get(1), buttons.get(2), buttons.get(4), buttons.get(3), inventoryButton);
+        controller = new MainMenuGUIController(this, buttons.get(0), buttons.get(1), buttons.get(2), buttons.get(4), buttons.get(3), inventoryButton, storeMenuButton);
         buttons.add(inventoryButton);
+        buttons.add(storeMenuButton);
         for (JButton currentButton: buttons) {
             currentButton.addActionListener(controller);
             currentButton.addMouseListener(controller);
@@ -103,4 +108,5 @@ public class MainMenuGUI extends JFrame{
         
     
     }
+    
 }

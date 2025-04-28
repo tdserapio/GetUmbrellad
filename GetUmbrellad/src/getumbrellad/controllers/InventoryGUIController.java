@@ -51,11 +51,17 @@ public class InventoryGUIController implements ActionListener, MouseListener, Li
         
         ListSelectionModel lsm = ((JList)e.getSource()).getSelectionModel();
         
-        int selectedIndex = lsm.getMinSelectionIndex();
+//        int selectedIndex = lsm.getMinSelectionIndex();
+        String selectedItem = (String)upgradeList.getSelectedValue();
         
-        nameText.setText("Name: " + Upgrade.UPGRADE_NAMES.get(selectedIndex));
-        effectsText.setText("Value: " + Upgrade.UPGRADE_VALUES.get(selectedIndex));
-        descriptionText.setText("<html>Description: <br>" + Upgrade.UPGRADE_DESCRIPTIONS.get(selectedIndex) + "</html>"); 
+        for (Upgrade currUpg: Upgrade.upgrades) {
+            if (currUpg.getType().equals(selectedItem)) {
+                nameText.setText("Name: " + currUpg.getType());
+                effectsText.setText("Value: " + currUpg.getValue());
+                descriptionText.setText("<html>Description: <br>" + currUpg.getDescription() + "</html>"); 
+                break;
+            }
+        }
         
     }
     

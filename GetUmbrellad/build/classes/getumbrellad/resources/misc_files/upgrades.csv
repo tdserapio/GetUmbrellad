@@ -1,7 +1,4 @@
-upgrade_name, upgrade_value, description
-Scissors,1,This cuts the paper up
-Triple Bullet,2,This gives you triple the bullets
-Sigma,3,This gives you true sigma aura
-Umbrella Surge,4,This gives you powers that umbrellas never had
-Parasol Panic,5,This makes the enemies panic with your parasol
-Flashshade, 6,FLASH!
+upgrade_name, upgrade_value, description, owned, cost
+Triple Bullet,2,This gives you triple the bullets,1,20
+Jolly Jumper,1,This makes you jump higher,1,10
+Parasol Panic,5,This makes the enemies panic with your parasol,0,50

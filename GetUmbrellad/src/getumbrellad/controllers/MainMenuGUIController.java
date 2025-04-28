@@ -3,11 +3,13 @@
  * Click nbfs://nbhost/SystemFileSystem/Templates/Classes/Class.java to edit this template
  */
 package getumbrellad.controllers;
+import getumbrellad.models.exceptions.Player;
 import getumbrellad.views.AboutGUI;
 import getumbrellad.views.LevelGameplayGUI;
 import getumbrellad.views.HelpGUI;
 import getumbrellad.views.LoreGUI;
 import getumbrellad.views.InventoryGUI;
+import getumbrellad.views.StoreMenuGUI;
 import java.awt.Color;
 import java.awt.Component;
 import javax.swing.*;
@@ -17,9 +19,9 @@ import javax.imageio.ImageIO;
 
 public class MainMenuGUIController implements ActionListener, MouseListener{
     private JFrame GUI;
-    private JButton playButton, aboutButton, helpButton, leaveButton, loreButton, inventoryButton;
+    private JButton playButton, aboutButton, helpButton, leaveButton, loreButton, inventoryButton, storeMenuButton;
     
-    public MainMenuGUIController(JFrame GUI, JButton playButton,JButton aboutButton, JButton helpButton, JButton leaveButton, JButton loreButton, JButton inventoryButton){
+    public MainMenuGUIController(JFrame GUI, JButton playButton,JButton aboutButton, JButton helpButton, JButton leaveButton, JButton loreButton, JButton inventoryButton, JButton storeMenuButton){
         this.GUI = GUI;
         this.playButton = playButton;
         this.aboutButton = aboutButton;
@@ -27,6 +29,7 @@ public class MainMenuGUIController implements ActionListener, MouseListener{
         this.leaveButton = leaveButton;
         this.loreButton = loreButton;
         this.inventoryButton = inventoryButton;
+        this.storeMenuButton = storeMenuButton;
     }
     
     public void openScreen(ActionEvent e){
@@ -61,6 +64,10 @@ public class MainMenuGUIController implements ActionListener, MouseListener{
         } else if (e.getSource() == inventoryButton) {
             InventoryGUI igui = new InventoryGUI(this.GUI);
             igui.setVisible(true);
+            GUI.dispose();
+        } else if (e.getSource() == storeMenuButton) {
+            StoreMenuGUI smgui = new StoreMenuGUI(this.GUI);
+            smgui.setVisible(true);
             GUI.dispose();
         }
     }
