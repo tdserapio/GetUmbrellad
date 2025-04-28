@@ -13,9 +13,11 @@ public class LevelGameplayPanelGUI extends JPanel {
     private Player player;
     private ArrayList<Obstacle> obstacles = new ArrayList<>();
     private Timer gameTimer;
+    private LevelGameplayGUI frame;
     
-    public LevelGameplayPanelGUI() {
+    public LevelGameplayPanelGUI(LevelGameplayGUI frame) {
         
+        this.frame = frame;
         
         player = new Player("Umbrella Boy", this, 400, 300, 20, 20, 5);
         //in the future use an arraylist for enemies, npcs, and more
@@ -81,6 +83,7 @@ public class LevelGameplayPanelGUI extends JPanel {
     public void keyTyped(KeyEvent e) {
         if (e.getKeyChar() == KeyEvent.VK_ESCAPE) {
             System.out.println("boom");
+            frame.pauseGame();
         }
     }
     

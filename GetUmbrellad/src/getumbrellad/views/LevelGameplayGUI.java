@@ -14,7 +14,7 @@ public class LevelGameplayGUI extends JFrame{
         this.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         this.setSize(900, 600);
         
-        panel = new LevelGameplayPanelGUI();
+        panel = new LevelGameplayPanelGUI(this);
         panel.setLocation(0,0);
         panel.setSize(this.getSize());
         panel.setVisible(true);
@@ -27,5 +27,9 @@ public class LevelGameplayGUI extends JFrame{
         this.setFocusable(true);
         this.setResizable(false);
         this.setVisible(true);
+    }
+
+    public void pauseGame() {
+        
     }
 }
