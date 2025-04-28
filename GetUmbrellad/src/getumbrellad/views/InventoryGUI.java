@@ -22,7 +22,9 @@ public class InventoryGUI extends JFrame {
     
     private DefaultListModel<String> model;
     
-    public InventoryGUI() {
+    private JFrame previousFrame;
+    
+    public InventoryGUI(JFrame previousFrame) {
         
         super("Main Menu");
         this.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
@@ -76,7 +78,9 @@ public class InventoryGUI extends JFrame {
         exitButton = new JButton("Exit");
         this.add(exitButton, BorderLayout.SOUTH);
         
-        controller = new InventoryGUIController(this, coinText, healthText, nameText, effectsText, descriptionText, exitButton, upgradeList);
+        this.previousFrame = previousFrame;
+        
+        controller = new InventoryGUIController(this, coinText, healthText, nameText, effectsText, descriptionText, exitButton, upgradeList, previousFrame);
         upgradeList.addListSelectionListener(controller); 
         exitButton.addActionListener(controller);
         

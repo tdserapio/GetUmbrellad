@@ -23,9 +23,9 @@ public class InventoryGUIController implements ActionListener, MouseListener, Li
     private JLabel coinText, healthText, nameText, effectsText, descriptionText;
     private JButton exitButton;
     private JList upgradeList;
+    private JFrame previousFrame;
     
-    
-    public InventoryGUIController(JFrame InventoryGUI, JLabel coinText, JLabel healthText, JLabel nameText, JLabel effectsText, JLabel descriptionText, JButton exitButton, JList upgradeList) {
+    public InventoryGUIController(JFrame InventoryGUI, JLabel coinText, JLabel healthText, JLabel nameText, JLabel effectsText, JLabel descriptionText, JButton exitButton, JList upgradeList, JFrame previousFrame) {
         this.InventoryGUI = InventoryGUI;
         this.coinText = coinText;
         this.healthText = healthText;
@@ -34,12 +34,12 @@ public class InventoryGUIController implements ActionListener, MouseListener, Li
         this.descriptionText = descriptionText;
         this.exitButton = exitButton;
         this.upgradeList = upgradeList;
+        this.previousFrame = previousFrame;
     }
     
     public void getOut(ActionEvent e){
         if (e.getSource() == exitButton) {
-            MainMenuGUI mm = new MainMenuGUI();
-            mm.setVisible(true);
+            previousFrame.setVisible(true);
             InventoryGUI.dispose();
         }
     }

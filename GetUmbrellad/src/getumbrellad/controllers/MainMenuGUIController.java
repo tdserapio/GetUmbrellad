@@ -59,7 +59,7 @@ public class MainMenuGUIController implements ActionListener, MouseListener{
             lore.setVisible(true);
             GUI.dispose();
         } else if (e.getSource() == inventoryButton) {
-            InventoryGUI igui = new InventoryGUI();
+            InventoryGUI igui = new InventoryGUI(this.GUI);
             igui.setVisible(true);
             GUI.dispose();
         }
