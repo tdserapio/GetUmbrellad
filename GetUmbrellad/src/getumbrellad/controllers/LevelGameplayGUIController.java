@@ -35,7 +35,7 @@ public class LevelGameplayGUIController implements ActionListener, MouseListener
             frame.dispose();
         }
         if (e.getSource() == storeButton) {
-            StoreMenuGUI display = new StoreMenuGUI();
+            StoreMenuGUI display = new StoreMenuGUI(frame);
             display.setVisible(true);
             frame.dispose();
         }
