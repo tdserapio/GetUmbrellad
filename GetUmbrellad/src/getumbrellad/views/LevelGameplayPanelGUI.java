@@ -14,6 +14,7 @@ public class LevelGameplayPanelGUI extends JPanel {
     private ArrayList<Obstacle> obstacles = new ArrayList<>();
     private Timer gameTimer;
     private LevelGameplayGUI frame;
+    private boolean isPaused = false;
     
     public LevelGameplayPanelGUI(LevelGameplayGUI frame) {
         
@@ -27,8 +28,14 @@ public class LevelGameplayPanelGUI extends JPanel {
             
             @Override
             public void run() {
-                player.set();
-                repaint();
+
+                if (isPaused) {
+
+                }
+                else {
+                    player.set();
+                    repaint();
+                }
             }
             
         }, 0, 17);
@@ -82,7 +89,6 @@ public class LevelGameplayPanelGUI extends JPanel {
 
     public void keyTyped(KeyEvent e) {
         if (e.getKeyChar() == KeyEvent.VK_ESCAPE) {
-            System.out.println("boom");
             frame.pauseGame();
         }
     }
@@ -102,5 +108,13 @@ public class LevelGameplayPanelGUI extends JPanel {
         obstacles.add(new Obstacle(850, 0, 900, 600));
         obstacles.add(new Obstacle(250, 350, 150, 50));
         obstacles.add(new Obstacle(450, 200, 300, 50));
+    }
+
+    public void pause() {
+        isPaused = true;
+    }
+
+    public void unpause() {
+        isPaused = false;
     }
 }
