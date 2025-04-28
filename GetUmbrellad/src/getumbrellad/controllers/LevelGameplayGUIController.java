@@ -1,6 +1,10 @@
 package getumbrellad.controllers;
     
+import getumbrellad.views.HelpGUI;
+import getumbrellad.views.InventoryGUI;
 import getumbrellad.views.LevelGameplayGUI;
+import getumbrellad.views.MainMenuGUI;
+import getumbrellad.views.StoreMenuGUI;
 import java.awt.Color;
 import java.awt.event.*;
 import javax.swing.JButton;
@@ -21,19 +25,23 @@ public class LevelGameplayGUIController implements ActionListener, MouseListener
 
     public void redirect(ActionEvent e) {
         if (e.getSource() == menuButton) {
-
+            MainMenuGUI display = new MainMenuGUI();
+            display.setVisible(true);
             frame.dispose();
         }
         if (e.getSource() == inventoryButton) {
-            
+            InventoryGUI display = new InventoryGUI(frame);
+            display.setVisible(true);
             frame.dispose();
         }
         if (e.getSource() == storeButton) {
-            
+            StoreMenuGUI display = new StoreMenuGUI();
+            display.setVisible(true);
             frame.dispose();
         }
         if (e.getSource() == helpButton) {
-            
+            HelpGUI display = new HelpGUI();
+            display.setVisible(true);
             frame.dispose();
         }
         if (e.getSource() == resumeButton) {
