@@ -25,6 +25,8 @@ public class InventoryGUIController implements ActionListener, MouseListener, Li
     private JList upgradeList;
     private JFrame previousFrame;
     
+    private Color normalExit;
+    
     public InventoryGUIController(JFrame InventoryGUI, JLabel coinText, JLabel healthText, JLabel nameText, JLabel effectsText, JLabel descriptionText, JButton exitButton, JList upgradeList, JFrame previousFrame) {
         this.InventoryGUI = InventoryGUI;
         this.coinText = coinText;
@@ -35,6 +37,8 @@ public class InventoryGUIController implements ActionListener, MouseListener, Li
         this.exitButton = exitButton;
         this.upgradeList = upgradeList;
         this.previousFrame = previousFrame;
+        
+        normalExit = exitButton.getBackground();
     }
     
     public void getOut(ActionEvent e){
@@ -84,10 +88,16 @@ public class InventoryGUIController implements ActionListener, MouseListener, Li
 
     @Override
     public void mouseEntered(MouseEvent e) {
+        if (e.getSource() == exitButton) {
+            exitButton.setBackground(normalExit.darker());
+        }
     }
 
     @Override
     public void mouseExited(MouseEvent e) {
+        if (e.getSource() == exitButton) {
+            exitButton.setBackground(normalExit);
+        }
     }
 
 }

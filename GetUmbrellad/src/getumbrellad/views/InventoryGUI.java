@@ -89,6 +89,9 @@ public class InventoryGUI extends JFrame {
         leftPanel.add(upgradeScroll, BorderLayout.CENTER); 
         
         exitButton = new JButton("Exit");
+        exitButton.setOpaque(true); 
+        exitButton.setContentAreaFilled(true); 
+
         this.add(exitButton, BorderLayout.SOUTH);
         
         this.previousFrame = previousFrame;
@@ -96,6 +99,7 @@ public class InventoryGUI extends JFrame {
         controller = new InventoryGUIController(this, coinText, healthText, nameText, effectsText, descriptionText, exitButton, upgradeList, previousFrame);
         upgradeList.addListSelectionListener(controller); 
         exitButton.addActionListener(controller);
+        exitButton.addMouseListener(controller);
         
         this.setVisible(true);
 
