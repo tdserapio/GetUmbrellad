@@ -1,27 +1,42 @@
 package getumbrellad.views;
 
 import getumbrellad.controllers.StoreMenuGUIController;
+import getumbrellad.models.exceptions.Player;
+import getumbrellad.models.exceptions.PlayerNotFoundException;
+import getumbrellad.models.exceptions.Upgrade;
 import java.awt.*;
 import javax.swing.*;
 import java.awt.image.BufferedImage;
 import java.io.File;
 import java.io.IOException;
+import java.util.ArrayList;
 import javax.imageio.ImageIO;
 
 public class StoreMenuGUI extends JFrame {
     
     private JPanel statsPanel, itemsPanel, buttonPanel, coinPanel;
-    private JLabel coinFrame, coinLabel;
-    private JButton exitButton;
+    private JLabel hpLabel, coinLabel;
+    private JButton exitButton, nextButton;
     
     private StoreMenuGUIController controller;
     
-    public StoreMenuGUI() {
+    private JFrame previousFrame;
+    
+    public StoreMenuGUI(JFrame previousFrame) {
         
         super("Store Menu");
         this.setLayout(new BorderLayout());
         this.setSize(900, 600);
         this.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+        
+        Player dummy = new Player();
+        Player currentPlayer;
+        try {
+            currentPlayer = dummy.readPlayer("umbrella_boy.csv");
+        } catch (PlayerNotFoundException pnfe) {
+            System.out.println("Player not found!");
+            return;
+        }
         
         // Stats Panel
         statsPanel = new JPanel(new BorderLayout());
@@ -36,17 +51,24 @@ public class StoreMenuGUI extends JFrame {
         coinPanel = new JPanel();
         coinPanel.setLayout(new BoxLayout(coinPanel, BoxLayout.X_AXIS));
 
-        coinFrame = new JLabel("🪙");
-        coinLabel = new JLabel("100");
+        hpLabel = new JLabel("HP: " + currentPlayer.getHP());
+        coinLabel = new JLabel("\t\t\t\t\t\t\t\t\tCoins: " + currentPlayer.getMoney());
 
-        coinPanel.add(coinFrame);
+        coinPanel.add(hpLabel);
         coinPanel.add(coinLabel);
         
         statsPanel.add(coinPanel, BorderLayout.EAST);
-
+        
+        Upgrade setup = new Upgrade();
+        ArrayList<Upgrade> canBeBought = new ArrayList<>();
+        for (Upgrade currUPG: Upgrade.upgrades) {
+            if (!currUPG.getIsOwned()) {
+                canBeBought.add(currUPG);
+            }
+        }
         
         // Items Panel
-        itemsPanel = new JPanel(new GridLayout(1, 3, 10, 10));
+        itemsPanel = new JPanel(new GridLayout(1, canBeBought.size(), 10, 10));
         itemsPanel.setBorder(
             BorderFactory.createTitledBorder(
                 BorderFactory.createLineBorder(Color.BLACK, 1), 
@@ -54,7 +76,7 @@ public class StoreMenuGUI extends JFrame {
             )
         );
 
-        for (int i = 0; i < 3; i++) {
+        for (int i = 0; i < canBeBought.size(); i++) {
             
             JPanel itemPanel = new JPanel(new BorderLayout());
             itemPanel.setBorder(BorderFactory.createLineBorder(Color.BLACK, 1));
@@ -67,7 +89,7 @@ public class StoreMenuGUI extends JFrame {
                 itemPanel.add(itemFrame, BorderLayout.NORTH);
             }
             
-            JLabel itemLabel = new JLabel("ITEM " + (i + 1), SwingConstants.CENTER);
+            JLabel itemLabel = new JLabel(canBeBought.get(i).getType(), SwingConstants.CENTER);
             itemPanel.add(itemLabel, BorderLayout.SOUTH);
             
             itemsPanel.add(itemPanel);
@@ -78,6 +100,9 @@ public class StoreMenuGUI extends JFrame {
         // Button Panel
         buttonPanel = new JPanel(new BorderLayout());
         buttonPanel.setBorder(BorderFactory.createEmptyBorder(10, 10, 10, 10));
+        
+        nextButton = new JButton("NEXT");
+        buttonPanel.add(nextButton, BorderLayout.CENTER);
 
         exitButton = new JButton("EXIT");
         buttonPanel.add(exitButton, BorderLayout.CENTER);
@@ -87,7 +112,7 @@ public class StoreMenuGUI extends JFrame {
         this.add(itemsPanel, BorderLayout.CENTER);
         this.add(buttonPanel, BorderLayout.SOUTH);
         
-        controller = new StoreMenuGUIController(this, exitButton, itemsPanel);
+        controller = new StoreMenuGUIController(this, exitButton, itemsPanel, previousFrame);
         exitButton.addActionListener(controller);
         exitButton.addMouseListener(controller);
         

@@ -25,6 +25,8 @@ public class InventoryGUIController implements ActionListener, MouseListener, Li
     private JList upgradeList;
     private JFrame previousFrame;
     
+    private Color normalExit;
+    
     public InventoryGUIController(JFrame InventoryGUI, JLabel coinText, JLabel healthText, JLabel nameText, JLabel effectsText, JLabel descriptionText, JButton exitButton, JList upgradeList, JFrame previousFrame) {
         this.InventoryGUI = InventoryGUI;
         this.coinText = coinText;
@@ -35,6 +37,8 @@ public class InventoryGUIController implements ActionListener, MouseListener, Li
         this.exitButton = exitButton;
         this.upgradeList = upgradeList;
         this.previousFrame = previousFrame;
+        
+        normalExit = exitButton.getBackground();
     }
     
     public void getOut(ActionEvent e){
@@ -51,11 +55,17 @@ public class InventoryGUIController implements ActionListener, MouseListener, Li
         
         ListSelectionModel lsm = ((JList)e.getSource()).getSelectionModel();
         
-        int selectedIndex = lsm.getMinSelectionIndex();
+//        int selectedIndex = lsm.getMinSelectionIndex();
+        String selectedItem = (String)upgradeList.getSelectedValue();
         
-        nameText.setText("Name: " + Upgrade.UPGRADE_NAMES.get(selectedIndex));
-        effectsText.setText("Value: " + Upgrade.UPGRADE_VALUES.get(selectedIndex));
-        descriptionText.setText("<html>Description: <br>" + Upgrade.UPGRADE_DESCRIPTIONS.get(selectedIndex) + "</html>"); 
+        for (Upgrade currUpg: Upgrade.upgrades) {
+            if (currUpg.getType().equals(selectedItem)) {
+                nameText.setText("Name: " + currUpg.getType());
+                effectsText.setText("Value: " + currUpg.getValue());
+                descriptionText.setText("<html>Description: <br>" + currUpg.getDescription() + "</html>"); 
+                break;
+            }
+        }
         
     }
     
@@ -78,10 +88,16 @@ public class InventoryGUIController implements ActionListener, MouseListener, Li
 
     @Override
     public void mouseEntered(MouseEvent e) {
+        if (e.getSource() == exitButton) {
+            exitButton.setBackground(normalExit.darker());
+        }
     }
 
     @Override
     public void mouseExited(MouseEvent e) {
+        if (e.getSource() == exitButton) {
+            exitButton.setBackground(normalExit);
+        }
     }
 
 }

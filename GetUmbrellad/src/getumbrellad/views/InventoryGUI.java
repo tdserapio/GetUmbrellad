@@ -7,6 +7,8 @@ package getumbrellad.views;
 import java.awt.*;
 import java.util.ArrayList;
 import getumbrellad.controllers.InventoryGUIController;
+import getumbrellad.models.exceptions.Player;
+import getumbrellad.models.exceptions.PlayerNotFoundException;
 import getumbrellad.models.exceptions.Upgrade;
 import javax.swing.*;
 import javax.swing.border.EmptyBorder;
@@ -31,11 +33,22 @@ public class InventoryGUI extends JFrame {
         this.setSize(900, 600);
         this.setLayout(new BorderLayout());
         
+        Player dummy = new Player();
+        Player currentPlayer;
+        try {
+            currentPlayer = dummy.readPlayer("umbrella_boy.csv");
+        } catch (PlayerNotFoundException pnfe) {
+            System.out.println("Player not found!");
+            return;
+        }
+        
         Upgrade setup = new Upgrade();
         model = new DefaultListModel<>();
         upgradeList = new JList(model);
-        for (String upgradeName: Upgrade.UPGRADE_NAMES) {
-            model.addElement(upgradeName);
+        for (Upgrade currentUpgrade: Upgrade.upgrades) {
+            if (currentUpgrade.getIsOwned()) {
+                model.addElement(currentUpgrade.getType());
+            }
         }
         upgradeList.getSelectionModel().setSelectionMode(ListSelectionModel.SINGLE_SELECTION);
         
@@ -53,8 +66,8 @@ public class InventoryGUI extends JFrame {
         infoPanel.setLayout(new BoxLayout(infoPanel, BoxLayout.Y_AXIS));
         this.add(infoPanel, BorderLayout.EAST);
         
-        coinText = new JLabel("100 coins");
-        healthText = new JLabel("100 HP");
+        coinText = new JLabel(currentPlayer.getMoney() + " coins");
+        healthText = new JLabel(currentPlayer.getHP() + " HP");
         statsPanel.add(coinText);
         statsPanel.add(healthText);
         
@@ -76,6 +89,9 @@ public class InventoryGUI extends JFrame {
         leftPanel.add(upgradeScroll, BorderLayout.CENTER); 
         
         exitButton = new JButton("Exit");
+        exitButton.setOpaque(true); 
+        exitButton.setContentAreaFilled(true); 
+
         this.add(exitButton, BorderLayout.SOUTH);
         
         this.previousFrame = previousFrame;
@@ -83,6 +99,7 @@ public class InventoryGUI extends JFrame {
         controller = new InventoryGUIController(this, coinText, healthText, nameText, effectsText, descriptionText, exitButton, upgradeList, previousFrame);
         upgradeList.addListSelectionListener(controller); 
         exitButton.addActionListener(controller);
+        exitButton.addMouseListener(controller);
         
         this.setVisible(true);
 
