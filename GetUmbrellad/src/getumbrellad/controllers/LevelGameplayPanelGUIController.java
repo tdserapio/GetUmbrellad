@@ -5,7 +5,7 @@ import java.awt.event.*;
 
 public class LevelGameplayPanelGUIController implements ActionListener, MouseListener, MouseMotionListener, KeyListener{
 
-    LevelGameplayPanelGUI panel;
+    private LevelGameplayPanelGUI panel;
     
     public LevelGameplayPanelGUIController(LevelGameplayPanelGUI panel) {
         this.panel = panel;
@@ -34,7 +34,9 @@ public class LevelGameplayPanelGUIController implements ActionListener, MouseLis
 
     
     @Override
-    public void keyTyped(KeyEvent e) {}
+    public void keyTyped(KeyEvent e) {
+        panel.keyTyped(e);
+    }
     @Override
     public void keyPressed(KeyEvent e) {
         panel.keyPressed(e);

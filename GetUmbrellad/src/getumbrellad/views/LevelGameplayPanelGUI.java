@@ -2,13 +2,11 @@ package getumbrellad.views;
 
 import getumbrellad.models.exceptions.Obstacle;
 import getumbrellad.models.exceptions.Player;
-import javax.swing.JPanel;
 import java.awt.*;
-import java.util.*;
 import java.awt.event.KeyEvent;
 import java.awt.event.MouseEvent;
-import java.util.Timer;
-import java.util.TimerTask;
+import java.util.*;
+import javax.swing.JPanel;
 
 public class LevelGameplayPanelGUI extends JPanel {
     
@@ -78,6 +76,12 @@ public class LevelGameplayPanelGUI extends JPanel {
             player.setKeyUp(false);
         }
         
+    }
+
+    public void keyTyped(KeyEvent e) {
+        if (e.getKeyChar() == KeyEvent.VK_ESCAPE) {
+            System.out.println("boom");
+        }
     }
     
     public void findMouseDirection(MouseEvent e) {
