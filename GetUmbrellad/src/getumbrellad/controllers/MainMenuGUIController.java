@@ -1,9 +1,15 @@
+/*
+ * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
+ * Click nbfs://nbhost/SystemFileSystem/Templates/Classes/Class.java to edit this template
+ */
 package getumbrellad.controllers;
-
 import getumbrellad.views.AboutGUI;
 import getumbrellad.views.LevelGameplayGUI;
 import getumbrellad.views.HelpGUI;
+import getumbrellad.views.LoreGUI;
+import getumbrellad.views.InventoryGUI;
 import java.awt.Color;
+import java.awt.Component;
 import javax.swing.*;
 import java.awt.event.*;
 import java.io.IOException;
@@ -11,14 +17,16 @@ import javax.imageio.ImageIO;
 
 public class MainMenuGUIController implements ActionListener, MouseListener{
     private JFrame GUI;
-    private JButton playButton, aboutButton, helpButton, leaveButton;
+    private JButton playButton, aboutButton, helpButton, leaveButton, loreButton, inventoryButton;
     
-    public MainMenuGUIController(JFrame GUI, JButton playButton,JButton aboutButton, JButton helpButton, JButton leaveButton){
+    public MainMenuGUIController(JFrame GUI, JButton playButton,JButton aboutButton, JButton helpButton, JButton leaveButton, JButton loreButton, JButton inventoryButton){
         this.GUI = GUI;
         this.playButton = playButton;
         this.aboutButton = aboutButton;
         this.helpButton = helpButton;
         this.leaveButton = leaveButton;
+        this.loreButton = loreButton;
+        this.inventoryButton = inventoryButton;
     }
     
     public void openScreen(ActionEvent e){
@@ -46,7 +54,15 @@ public class MainMenuGUIController implements ActionListener, MouseListener{
             if (confirm == JOptionPane.YES_OPTION) {
                 GUI.dispose();
             }
-        } 
+        } else if (e.getSource() == loreButton) {
+            LoreGUI lore = new LoreGUI();
+            lore.setVisible(true);
+            GUI.dispose();
+        } else if (e.getSource() == inventoryButton) {
+            InventoryGUI igui = new InventoryGUI();
+            igui.setVisible(true);
+            GUI.dispose();
+        }
     }
     
     public void changeColor(MouseEvent e){
@@ -59,6 +75,8 @@ public class MainMenuGUIController implements ActionListener, MouseListener{
                 helpButton.setIcon(new ImageIcon(ImageIO.read(getClass().getResource("../resources/help_darken.png"))));
             } else if(e.getSource() == leaveButton){
                 leaveButton.setIcon(new ImageIcon(ImageIO.read(getClass().getResource("../resources/exit_darken.png"))));
+            }  else if(e.getSource() == loreButton){
+                loreButton.setIcon(new ImageIcon(ImageIO.read(getClass().getResource("../resources/lore_darken.png"))));
             } 
         } catch (IOException ioe) {
             System.out.println("Oops! Image not found.");
@@ -75,7 +93,9 @@ public class MainMenuGUIController implements ActionListener, MouseListener{
                 helpButton.setIcon(new ImageIcon(ImageIO.read(getClass().getResource("../resources/help.png"))));
             } else if(e.getSource() == leaveButton){
                 leaveButton.setIcon(new ImageIcon(ImageIO.read(getClass().getResource("../resources/exit.png"))));
-            } 
+            } else if(e.getSource() == loreButton){
+                loreButton.setIcon(new ImageIcon(ImageIO.read(getClass().getResource("../resources/lore.png"))));
+            }
         } catch (IOException ioe) {
             System.out.println("Oops! Image not found.");
         }

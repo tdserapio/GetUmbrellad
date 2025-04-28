@@ -35,7 +35,7 @@ public class MainMenuGUI extends JFrame{
         // Create "overall" pane
                 
         overallPanel = new JPanel();
-        overallPanel.setBorder(new EmptyBorder(100, 50, 100, 50));
+        overallPanel.setBorder(new EmptyBorder(50, 50, 0, 50));
         overallPanel.setLayout(new BorderLayout());
         this.add(overallPanel);
         
@@ -51,12 +51,16 @@ public class MainMenuGUI extends JFrame{
         titleText.setBorder(BorderFactory.createEmptyBorder(0, 0, 30, 0));
         titlePanel.add(titleText);
         
+        JButton inventoryButton = new JButton("Inventory");
+        titlePanel.add(inventoryButton);
+        
         // Add Buttons
         
         ArrayList<String> buttonLabels = new ArrayList<String>();
         buttonLabels.add("play");
         buttonLabels.add("about");
         buttonLabels.add("help");
+        buttonLabels.add("lore");
         buttonLabels.add("exit");
         
         ArrayList<JButton> buttons = new ArrayList<JButton>();
@@ -77,7 +81,6 @@ public class MainMenuGUI extends JFrame{
                 buttons.add(currentButton);
                 
             } catch (IOException ioe) {
-                
                 System.out.println("Image for " + buttonLabel + " not found :(");
                 
             }
@@ -85,7 +88,8 @@ public class MainMenuGUI extends JFrame{
         
         overallPanel.add(buttonPanel, BorderLayout.CENTER);
         
-        controller = new MainMenuGUIController(this, buttons.get(0), buttons.get(1), buttons.get(2), buttons.get(3));
+        controller = new MainMenuGUIController(this, buttons.get(0), buttons.get(1), buttons.get(2), buttons.get(4), buttons.get(3), inventoryButton);
+        buttons.add(inventoryButton);
         for (JButton currentButton: buttons) {
             currentButton.addActionListener(controller);
             currentButton.addMouseListener(controller);
