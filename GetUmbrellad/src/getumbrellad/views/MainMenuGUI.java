@@ -1,14 +1,13 @@
 package getumbrellad.views;
 
 import getumbrellad.controllers.MainMenuGUIController;
-import getumbrellad.models.exceptions.Player;
 import java.awt.*;
+import java.io.IOException;
+import java.io.InputStream;
+import java.util.ArrayList;
+import javax.imageio.ImageIO;
 import javax.swing.*;
 import javax.swing.border.EmptyBorder;
-import javax.imageio.ImageIO;
-import java.io.IOException;
-import java.util.ArrayList;
-import java.io.InputStream;
 
 public class MainMenuGUI extends JFrame {
     
