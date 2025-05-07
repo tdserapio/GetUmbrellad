@@ -74,6 +74,7 @@ public class MainMenuGUI extends JFrame {
                 currentButton.setBorderPainted(false);
                 currentButton.setFocusPainted(false);
                 currentButton.setCursor(Cursor.getPredefinedCursor(Cursor.HAND_CURSOR));
+                currentButton.setBackground(null);
 
                 currentButton.setIcon(new ImageIcon(ImageIO.read(getClass().getResource("../resources/" + buttonLabel + ".png"))));
                 buttonPanel.add(currentButton);

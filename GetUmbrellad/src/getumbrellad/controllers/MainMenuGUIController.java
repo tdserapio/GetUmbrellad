@@ -46,6 +46,11 @@ public class MainMenuGUIController implements ActionListener, MouseListener{
             GUI.dispose();
         } else if(e.getSource() == helpButton){
             helpButton.setBackground(null);
+            try {
+                helpButton.setIcon(new ImageIcon(ImageIO.read(getClass().getResource("../resources/help.png"))));
+            } catch (IOException ioe) {
+                System.out.println("Oops! Image not found.");
+            }
             HelpGUI help = new HelpGUI(this.GUI);
             help.setVisible(true);
             GUI.dispose();
@@ -82,14 +87,19 @@ public class MainMenuGUIController implements ActionListener, MouseListener{
     public void changeColor(MouseEvent e){
         try {
             if(e.getSource() == playButton){
+                playButton.setBackground(null);
                 playButton.setIcon(new ImageIcon(ImageIO.read(getClass().getResource("../resources/play_darken.png"))));
             } else if(e.getSource() == aboutButton){
+                aboutButton.setBackground(null);
                 aboutButton.setIcon(new ImageIcon(ImageIO.read(getClass().getResource("../resources/about_darken.png"))));
             } else if(e.getSource() == helpButton){
+                helpButton.setBackground(null);
                 helpButton.setIcon(new ImageIcon(ImageIO.read(getClass().getResource("../resources/help_darken.png"))));
             } else if(e.getSource() == leaveButton){
+                leaveButton.setBackground(null);
                 leaveButton.setIcon(new ImageIcon(ImageIO.read(getClass().getResource("../resources/exit_darken.png"))));
             }  else if(e.getSource() == loreButton){
+                loreButton.setBackground(null);
                 loreButton.setIcon(new ImageIcon(ImageIO.read(getClass().getResource("../resources/lore_darken.png"))));
             } 
         } catch (IOException ioe) {
