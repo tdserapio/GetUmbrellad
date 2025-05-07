@@ -80,6 +80,7 @@ public class HelpGUI extends JFrame {
             menuButton = new JButton();
             menuButton.setAlignmentX(Component.CENTER_ALIGNMENT);
             menuButton.setIcon(new ImageIcon(ImageIO.read(getClass().getResource("../resources/mainmenu.png"))));
+            menuButton.setBackground(null);
             menuButton.setBorderPainted(false);
             menuButton.setFocusPainted(false);
             menuButton.setCursor(Cursor.getPredefinedCursor(Cursor.HAND_CURSOR));
