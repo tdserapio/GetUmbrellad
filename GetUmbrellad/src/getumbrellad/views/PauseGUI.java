@@ -75,7 +75,6 @@ public class PauseGUI extends JFrame{
         helpButton.addMouseListener(controller);
         resumeButton.addMouseListener(controller);
             
-        this.add(this);
     
         SwingUtilities.updateComponentTreeUI(this);
     }
