@@ -10,7 +10,6 @@ import getumbrellad.views.HelpGUI;
 import getumbrellad.views.LoreGUI;
 import getumbrellad.views.InventoryGUI;
 import getumbrellad.views.StoreMenuGUI;
-import java.awt.Color;
 import java.awt.Component;
 import javax.swing.*;
 import java.awt.event.*;
@@ -36,18 +35,22 @@ public class MainMenuGUIController implements ActionListener, MouseListener{
     public void openScreen(ActionEvent e){
         //add the needed constructors when they are actually made
         if(e.getSource() == playButton){
+            playButton.setBackground(null);
             LevelGameplayGUI lgp = new LevelGameplayGUI();
             lgp.setVisible(true);
             GUI.dispose();
         } else if(e.getSource() == aboutButton){
+            aboutButton.setBackground(null);
             AboutGUI about = new AboutGUI();
             about.setVisible(true);
             GUI.dispose();
         } else if(e.getSource() == helpButton){
+            helpButton.setBackground(null);
             HelpGUI help = new HelpGUI(this.GUI);
             help.setVisible(true);
             GUI.dispose();
         } else if(e.getSource() == leaveButton){
+            leaveButton.setBackground(null);
             int confirm = JOptionPane.showOptionDialog(
                 GUI,
                 "Are you sure you want to leave?",
@@ -59,6 +62,7 @@ public class MainMenuGUIController implements ActionListener, MouseListener{
                 GUI.dispose();
             }
         } else if (e.getSource() == loreButton) {
+            loreButton.setBackground(null);
             LoreGUI lore = new LoreGUI();
             lore.setVisible(true);
             GUI.dispose();

@@ -37,10 +37,14 @@ public class LevelGameplayGUI extends JFrame{
         isPaused = !isPaused;
 
         if (isPaused) {
-
+            panel.pause();
+            
+            PauseGUI display = new PauseGUI(this);
+            display.setVisible(true);
+            this.setVisible(false);
         }
         else {
-            
+            panel.unpause();
 
             SwingUtilities.updateComponentTreeUI(this);
         }

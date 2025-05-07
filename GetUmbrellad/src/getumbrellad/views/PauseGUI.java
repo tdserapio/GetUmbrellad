@@ -11,12 +11,15 @@ public class PauseGUI extends JFrame{
 
     private PauseGUIController controller;
     private JButton menuButton, inventoryButton, storeButton, helpButton, resumeButton;
+    private LevelGameplayGUI levelGameplayGUI;
 
-    public PauseGUI() {
-
-        super("Level Gameplay");
+    public PauseGUI(LevelGameplayGUI levelGameplayGUI) {
+        
+        super("Pause Menu");
         this.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         this.setSize(900, 600);
+        
+        this.levelGameplayGUI = levelGameplayGUI;
 
         this.setLayout(new GridLayout(6, 1));
         this.setLocation(0,0);
@@ -42,28 +45,33 @@ public class PauseGUI extends JFrame{
         
         menuButton.setAlignmentX(CENTER_ALIGNMENT);
         menuButton.setPreferredSize(size);
+        menuButton.setBackground(null);
         panels.get(1).add(menuButton);
         this.add(panels.get(1));
 
         inventoryButton.setAlignmentX(CENTER_ALIGNMENT);
         inventoryButton.setPreferredSize(size);
+        inventoryButton.setBackground(null);
         panels.get(2).add(inventoryButton);
         this.add(panels.get(2));
 
         storeButton.setAlignmentX(CENTER_ALIGNMENT);
         storeButton.setPreferredSize(size);
+        storeButton.setBackground(null);
         panels.get(3).add(storeButton);
         this.add(panels.get(3));
         helpButton.setAlignmentX(CENTER_ALIGNMENT);
         helpButton.setPreferredSize(size);
+        helpButton.setBackground(null);
         panels.get(4).add(helpButton);
         this.add(panels.get(4));
         resumeButton.setAlignmentX(CENTER_ALIGNMENT);
         resumeButton.setPreferredSize(size);
+        resumeButton.setBackground(null);
         panels.get(5).add(resumeButton);
         this.add(panels.get(5));
 
-        controller = new PauseGUIController(this, menuButton, inventoryButton, storeButton, helpButton, resumeButton);
+        controller = new PauseGUIController(this, menuButton, inventoryButton, storeButton, helpButton, resumeButton, levelGameplayGUI);
         menuButton.addActionListener(controller);
         inventoryButton.addActionListener(controller);            
         storeButton.addActionListener(controller);
@@ -74,6 +82,7 @@ public class PauseGUI extends JFrame{
         storeButton.addMouseListener(controller);
         helpButton.addMouseListener(controller);
         resumeButton.addMouseListener(controller);
+        this.addKeyListener(controller);
             
     
         SwingUtilities.updateComponentTreeUI(this);
