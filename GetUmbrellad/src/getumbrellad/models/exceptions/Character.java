@@ -3,7 +3,12 @@ package getumbrellad.models.exceptions;
 import getumbrellad.views.LevelGameplayPanelGUI;
 import java.awt.Color;
 import java.awt.Graphics2D;
+import java.awt.Image;
 import java.awt.Rectangle;
+import java.io.IOException;
+import java.net.URL;
+import javax.imageio.ImageIO;
+import javax.swing.ImageIcon;
 
 public abstract class Character {
 
@@ -255,6 +260,11 @@ public abstract class Character {
     public void draw(Graphics2D gtd) {
         gtd.setColor(Color.BLACK);
         gtd.fillRect(x, y, width, height);
+
+        //System.out.println(getClass().getResource("../resources/character.png"));
+        //Image img = new ImageIcon(getClass().getClassLoader().getResource("resources/character.png")).getImage();    
+        //gtd.drawImage(img, x, y, panel);
+        
     }
    
     public double getDirectionalComponentOf(int xMouse, int x, int yMouse, int y, boolean xComponent) {

@@ -49,12 +49,13 @@ public class LevelGameplayPanelGUI extends JPanel {
     
         super.paint(g);
         Graphics2D gtd = (Graphics2D) g;
-        player.draw(gtd);
+        
         
         for (Obstacle obstacle: obstacles) {
             obstacle.draw(gtd);
         }
-    
+        
+        player.draw(gtd);
     }
     
     public void keyPressed(KeyEvent e) {
