@@ -1,4 +1,4 @@
 upgrade_name, upgrade_value, description, owned, cost
-Triple Bullet,2,This gives you triple the bullets,1,20
-Jolly Jumper,1,This makes you jump higher,0,10
-Parasol Panic,5,This makes the enemies panic with your parasol,0,50
+Triple Bullet,1,This increases the damage the umbrella does on the enemy when it shoots.,1,20
+Jolly Jumper,1,This increases the floating time of the player.,0,10
+Metal Umbrella,1,This increases the damage the umbrellas has a melee weapon.,0,50
