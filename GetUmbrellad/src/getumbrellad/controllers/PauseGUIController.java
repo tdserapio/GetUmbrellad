@@ -56,7 +56,7 @@ public class PauseGUIController implements ActionListener, MouseListener, KeyLis
         }
         if (e.getSource() == resumeButton) {
             resumeButton.setBackground(null);
-            levelGameplayGUI.togglePause();
+            levelGameplayGUI.getController().togglePause();
             levelGameplayGUI.setVisible(true);
             frame.dispose();
         }
@@ -122,7 +122,7 @@ public class PauseGUIController implements ActionListener, MouseListener, KeyLis
     @Override
     public void keyTyped(KeyEvent e) {
         if (e.getKeyChar() == KeyEvent.VK_ESCAPE) {
-            levelGameplayGUI.togglePause();
+            levelGameplayGUI.getController().togglePause();
             levelGameplayGUI.setVisible(true);
             frame.dispose();
         }

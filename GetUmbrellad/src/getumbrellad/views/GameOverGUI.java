@@ -1,44 +1,33 @@
 package getumbrellad.views;
 
 import getumbrellad.controllers.GameOverGUIController;
+
 import javax.swing.*;
 import java.awt.*;
 
 public class GameOverGUI extends JFrame {
-    
-    private JButton menuButton;
-    private JLabel gameMessage;
-    private GameOverGUIController controller;
-    
+
+    private final JButton menuButton;
+    private final JLabel  gameMessage;
+
     public GameOverGUI(boolean died) {
         
-        super();
-        String gameOverMessage;
+        setTitle(died ? "Game Over" : "Victory!");
+        setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+
+        setLayout(new BorderLayout(0, 20));     // gap = 20 px
+
+        gameMessage = new JLabel(died ? "Game Over" : "Congratulations – You Win!");
+        gameMessage.setHorizontalAlignment(SwingConstants.CENTER);
+        add(gameMessage, BorderLayout.CENTER);
+
+        menuButton = new JButton("Return to Main Menu");
+        add(menuButton, BorderLayout.SOUTH);
         
-        if (died) {
-            gameOverMessage = "Game Over";
-        }
-        else {
-            gameOverMessage = "Victory!";
-        }
-        
-        this.setTitle(gameOverMessage);
-        this.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-        this.setSize(900, 600);
-        this.setLayout(new BorderLayout());
-               
-        menuButton = new JButton("Go To Menu");
-        gameMessage = new JLabel();
-        gameMessage.setText(gameOverMessage);
-        
-        this.add(gameMessage);
-        this.add(menuButton);
-        
-        controller = new GameOverGUIController(this, menuButton);
+        GameOverGUIController controller = new GameOverGUIController(this, menuButton);
         menuButton.addActionListener(controller);
         
-        this.setVisible(true);
+        setSize(900, 600);
         
     }
-    
 }

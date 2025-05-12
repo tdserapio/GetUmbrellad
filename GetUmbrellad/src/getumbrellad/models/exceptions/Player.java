@@ -1,6 +1,9 @@
 package getumbrellad.models.exceptions;
 
 import getumbrellad.views.LevelGameplayGUI;
+import java.awt.Color;
+import java.awt.Graphics2D;
+import java.awt.Image;
 import java.awt.Rectangle;
 import java.io.BufferedReader;
 import java.io.BufferedWriter;
@@ -14,6 +17,7 @@ import java.nio.file.Path;
 import java.nio.file.Paths;
 import java.nio.file.StandardOpenOption;
 import java.util.ArrayList;
+import javax.swing.ImageIcon;
 
 public class Player extends Character implements Spawnable {
     
@@ -21,12 +25,16 @@ public class Player extends Character implements Spawnable {
     protected int xMouse, yMouse, boostDelay = 0; //movement attributes
     protected boolean keyUp, keyRight, keyLeft, canJump; //movement attributes
      
-    private int yJumpFactor = 15;
+    private int yJumpFactor = 10;
     private int xJumpFactor = 10;
+    
+    private final Image playerImg = new ImageIcon(getClass().getResource("../../resources/character.png")).getImage();
     
     public Player(String fileName, LevelGameplayGUI lggui) throws PlayerNotFoundException {
         
-        super(lggui, 40, 70, 50, 5.0, 0.5);
+        super(lggui, 40, 48, 50);
+        this.minSpeed = 0.5; 
+        this.maxSpeed = 5.0;
         
         InputStream inputStream = getClass().getClassLoader().getResourceAsStream("getumbrellad/resources/misc_files/" + fileName);
 
@@ -52,7 +60,6 @@ public class Player extends Character implements Spawnable {
                 this.hp = Integer.parseInt(parts[1].trim());
                 this.damage = Integer.parseInt(parts[2].trim());
                 this.money = Integer.parseInt(parts[3].trim());
-                this.setPosition(200, 100);
                 
             }
             
@@ -62,9 +69,6 @@ public class Player extends Character implements Spawnable {
         
     }
     
-    public int getDamage() {
-        return this.damage;
-    }
     public int getMoney() {
         return this.money;
     }
@@ -75,6 +79,14 @@ public class Player extends Character implements Spawnable {
     
     public int getHP() {
         return this.hp;
+    }
+    
+    public void deductHP(int decrement) {
+        this.hp -= decrement;
+    }
+    
+    public void increaseHP(int increment) {
+        this.hp += increment;
     }
     
     public void writePlayer(String fileName) throws PlayerNotFoundException {
@@ -135,25 +147,58 @@ public class Player extends Character implements Spawnable {
         this.yMouse = yMouse;
     }
     
-    public ArrayList<Obstacle> collidesWith() {
+    public ArrayList<Obstacle> obstaclesCollision() {
         
         ArrayList<Obstacle> collidingObjects = new ArrayList<>();
         
-        for (Obstacle obstacle: lgGUI.getObstacles()) {
-                if (obstacle.getHitbox().intersects(hitbox)) {
-                    collidingObjects.add(obstacle);
-                }
+        for (Obstacle obstacle: lgGUI.getController().getObstacles()) {
+            if (obstacle.getHitbox().intersects(hitbox)) {
+                collidingObjects.add(obstacle);
+            }
         }
         
         return collidingObjects;
         
     }
     
-    public boolean isColliding() {
-        return !collidesWith().isEmpty();
+    public void checkAllCollisions() {
+        
+        ArrayList<Spawnable> currentSpawnables = lgGUI.getController().getSpawnables();
+        ArrayList<Bullet> toDestroy = new ArrayList<>();
+        
+        for (Spawnable entity: currentSpawnables) {
+            if (entity instanceof Bullet) {
+                Bullet currentBullet = (Bullet)entity;
+                if (currentBullet.getHitbox().intersects(hitbox)) {
+                    this.deductHP(currentBullet.getDamage());
+                    toDestroy.add(currentBullet);
+                }
+            }
+        }
+        
+        for (Bullet b: toDestroy) {
+            b.destroy();
+        }
+        
     }
     
+    public boolean isColliding() {
+        return !obstaclesCollision().isEmpty();
+    }
+    
+    public boolean getIsDead() {
+        return isDead;
+    }
+    
+    @Override
     public void updateState() {
+        
+        checkAllCollisions();
+        
+        if (this.getHP() <= 0) {
+            this.isDead = true;
+            return;
+        }
         
         hitbox.y++;
         if (isColliding()) {
@@ -192,8 +237,10 @@ public class Player extends Character implements Spawnable {
                 
                 if (boostDelay == 0) {
                     boostDelay = 15;
-                    ySpeed = -yJumpFactor;
-                    xSpeed = xJumpFactor * getDirectionalComponentOf(xMouse, x, yMouse, y, true);
+                    if (getDirectionalComponentOf(xMouse, x, yMouse, y, false) < 0) {
+                        ySpeed = -yJumpFactor;
+                        xSpeed = xJumpFactor * getDirectionalComponentOf(xMouse, x, yMouse, y, true);
+                    }
                 }
                 else {
                     boostDelay--;
@@ -256,6 +303,13 @@ public class Player extends Character implements Spawnable {
     public void spawn(int x, int y) {
         this.x = x;
         this.y = y;
+    }
+    
+    @Override
+    public void draw(Graphics2D gtd) {
+        gtd.setColor(Color.BLACK);
+        gtd.fillRect(x, y, width, height);
+        gtd.drawImage(playerImg, x, y, lgGUI);
     }
 
 }

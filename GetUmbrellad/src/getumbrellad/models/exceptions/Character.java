@@ -1,5 +1,6 @@
 package getumbrellad.models.exceptions;
 
+import getumbrellad.controllers.LevelGameplayGUIController;
 import getumbrellad.views.LevelGameplayGUI;
 import java.awt.Color;
 import java.awt.Graphics2D;
@@ -13,19 +14,20 @@ import javax.swing.ImageIcon;
 public abstract class Character {
 
     protected LevelGameplayGUI lgGUI;
+    protected LevelGameplayGUIController lgController;
     protected String name;
     protected double xSpeed, ySpeed, maxSpeed, minSpeed, theta = 0.0;
     protected int x = 0, y = 0, height, width, maxHP, hp, damage;
     protected Rectangle hitbox;
     protected int range;
-    
-    private final Image characterImg = new ImageIcon(getClass().getResource("../../resources/character.png")).getImage();
-    
-    protected Character(LevelGameplayGUI lgGUI, int width, int height, int range, double maxSpeed, double minSpeed) {
+    protected boolean isDead = false;
+        
+    protected Character(LevelGameplayGUI lgGUI, int width, int height, int range) {
         
         this.lgGUI = lgGUI;
         this.width = width;
         this.height = height;
+        this.lgController = lgGUI.getController();
         
         this.hitbox = new Rectangle(x, y, width, height);
         
@@ -38,6 +40,7 @@ public abstract class Character {
         
         this.name = name;
         this.lgGUI = panel;
+        this.lgController = lgGUI.getController();
         this.theta = 0.0;
         this.maxHP = maxHP;
         this.hp = hp;
@@ -48,7 +51,7 @@ public abstract class Character {
         
     }
     
-    void setPosition(int x, int y) {
+    public void setPosition(int x, int y) {
         this.x = x;
         this.y = y;
         this.hitbox.x = x;
@@ -109,13 +112,6 @@ public abstract class Character {
      */
     public int getDamage() {
         return this.damage;
-    }
-    
-    public void draw(Graphics2D gtd) {
-        gtd.setColor(Color.BLACK);
-        gtd.fillRect(x, y, width, height);
-        gtd.drawImage(characterImg, x, y, lgGUI);
-        
     }
    
     public double getDirectionalComponentOf(int xMouse, int x, int yMouse, int y, boolean xComponent) {

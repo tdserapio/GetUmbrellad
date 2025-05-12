@@ -1,0 +1,8 @@
+name, type, x, y, width, height
+Obstacle1, Obstacle, 0, 520, 900, 50
+Obstacle2, Obstacle, 0, 0, 40, 600
+Obstacle3, Obstacle, 850, 0, 900, 600
+Obstacle4, Obstacle, 250, 350, 150, 50
+Obstacle5, Obstacle, 450, 200, 300, 50
+Spawn Point, Spawn, 100, 400, -1, -1
+Enemy1, Shooter, 250, 303, 70, 47

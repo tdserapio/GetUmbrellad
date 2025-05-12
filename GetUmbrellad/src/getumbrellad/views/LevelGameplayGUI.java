@@ -1,13 +1,19 @@
 package getumbrellad.views;
 
 import getumbrellad.controllers.LevelGameplayGUIController;
+import getumbrellad.models.exceptions.Enemy;
 import getumbrellad.models.exceptions.Obstacle;
 import getumbrellad.models.exceptions.Player;
 import getumbrellad.models.exceptions.PlayerNotFoundException;
+import getumbrellad.models.exceptions.Spawnable;
 
 import javax.swing.*;
 import java.awt.*;
 import java.awt.event.*;
+import java.io.BufferedReader;
+import java.io.IOException;
+import java.io.InputStream;
+import java.io.InputStreamReader;
 import java.util.ArrayList;
 import java.util.Timer;
 import java.util.TimerTask;
@@ -20,17 +26,9 @@ import java.util.TimerTask;
 public class LevelGameplayGUI extends JPanel {
 
     private final JFrame frame;
-    private boolean paused = false;
-
-    private Player player;
-    private ArrayList<Obstacle> obstacles;
-    private Timer gameTimer;
     private LevelGameplayGUIController controller;
 
     public LevelGameplayGUI() {
-        
-        obstacles = new ArrayList<>();
-        gameTimer = new Timer();
 
         frame = new JFrame("Level Gameplay");
         frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
@@ -41,78 +39,33 @@ public class LevelGameplayGUI extends JPanel {
 
         setFocusable(true);
         
-        System.out.println(this instanceof LevelGameplayGUI);
-
-        try {
-            player = new Player("umbrella_boy.csv", this);
-        } catch (PlayerNotFoundException e) {
-            System.err.println("LEVEL CANNOT BE LOADED, PLAYER NOT FOUND");
-            return;
-        }
-        makeObstacles();
-        
-        controller = new LevelGameplayGUIController(this, player);
+        this.controller = new LevelGameplayGUIController(this);
         this.addKeyListener(controller);
         this.addMouseListener(controller);
         this.addMouseMotionListener(controller);
-
-        gameTimer.schedule(new TimerTask() {
-            @Override
-            public void run() {
-                if (!paused) {
-                    player.updateState();        // update physics / state
-                    repaint();           // schedule a redraw
-                }
-            }
-        }, 0, 17);
         
+    }
+    
+    public Frame getFrame() {
+        return frame;
+    }
+    
+    public LevelGameplayGUIController getController() {
+        return controller;
     }
     
     @Override
     protected void paintComponent(Graphics g) {
+        
         super.paintComponent(g);
         Graphics2D g2 = (Graphics2D) g;
-
-        for (Obstacle ob : obstacles) {
-            ob.draw(g2);
-        }
-        if (player != null) {
-            player.draw(g2);
-        }
-    }
-
-    public void makeObstacles() {
-        obstacles.add(new Obstacle(0, 520, 900, 50));
-        obstacles.add(new Obstacle(0, 0, 40, 600));
-        obstacles.add(new Obstacle(850, 0, 900, 600));
-        obstacles.add(new Obstacle(250, 350, 150, 50));
-        obstacles.add(new Obstacle(450, 200, 300, 50));
-    }
-
-    /** Toggle pause and (optionally) show a PauseGUI overlay. */
-    public void togglePause() {
         
-        paused = !paused;
+        ArrayList<Spawnable> entities = new ArrayList<>(controller.getSpawnables());
 
-        if (paused) {
-            // show your existing PauseGUI, then hide the play window
-            PauseGUI pause = new PauseGUI(this, player);
-            pause.setVisible(true);
-            frame.setVisible(false);
-        } else {
-            frame.setVisible(true);
-            requestFocusInWindow();
+        for (Spawnable spawn : entities) {
+            spawn.draw(g2);
         }
         
-    }
-    
-    public void findMouseDirection(MouseEvent e) {
-        player.setXMouse(e.getX());
-        player.setYMouse(e.getY());
-    }
-    
-    public ArrayList<Obstacle> getObstacles() {
-        return obstacles;
     }
 
 }
