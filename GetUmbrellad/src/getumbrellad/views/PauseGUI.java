@@ -2,6 +2,7 @@ package getumbrellad.views;
 
 import getumbrellad.controllers.LevelGameplayGUIController;
 import getumbrellad.controllers.PauseGUIController;
+import getumbrellad.models.exceptions.Player;
 import java.awt.*;
 import java.util.ArrayList;
 import javax.swing.*;
@@ -12,8 +13,9 @@ public class PauseGUI extends JFrame{
     private PauseGUIController controller;
     private JButton menuButton, inventoryButton, storeButton, helpButton, resumeButton;
     private LevelGameplayGUI levelGameplayGUI;
+    private Player currentPlayer;
 
-    public PauseGUI(LevelGameplayGUI levelGameplayGUI) {
+    public PauseGUI(LevelGameplayGUI levelGameplayGUI, Player currentPlayer) {
         
         super("Pause Menu");
         this.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
@@ -35,7 +37,8 @@ public class PauseGUI extends JFrame{
         Dimension size = new Dimension(150, 80);
 
         ArrayList<JPanel> panels = new ArrayList<JPanel>();
-        for (int i = 0; i < 6; i++) {                JPanel basePanel = new JPanel();
+        for (int i = 0; i < 6; i++) {                
+            JPanel basePanel = new JPanel();
             panels.add(basePanel);
             this.add(basePanel);
         }
@@ -71,7 +74,7 @@ public class PauseGUI extends JFrame{
         panels.get(5).add(resumeButton);
         this.add(panels.get(5));
 
-        controller = new PauseGUIController(this, menuButton, inventoryButton, storeButton, helpButton, resumeButton, levelGameplayGUI);
+        controller = new PauseGUIController(this, menuButton, inventoryButton, storeButton, helpButton, resumeButton, levelGameplayGUI, currentPlayer);
         menuButton.addActionListener(controller);
         inventoryButton.addActionListener(controller);            
         storeButton.addActionListener(controller);

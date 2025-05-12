@@ -1,5 +1,6 @@
 package getumbrellad.controllers;
     
+import getumbrellad.models.exceptions.Player;
 import getumbrellad.views.HelpGUI;
 import getumbrellad.views.InventoryGUI;
 import getumbrellad.views.LevelGameplayGUI;
@@ -15,8 +16,9 @@ public class PauseGUIController implements ActionListener, MouseListener, KeyLis
     private PauseGUI frame;
     private JButton menuButton, inventoryButton, storeButton, helpButton, resumeButton;
     private LevelGameplayGUI levelGameplayGUI;
+    private Player currentPlayer;
 
-    public PauseGUIController(PauseGUI frame, JButton menuButton, JButton inventoryButton, JButton storeButton, JButton helpButton, JButton resumeButton, LevelGameplayGUI levelGameplayGUI) {
+    public PauseGUIController(PauseGUI frame, JButton menuButton, JButton inventoryButton, JButton storeButton, JButton helpButton, JButton resumeButton, LevelGameplayGUI levelGameplayGUI, Player currentPlayer) {
         this.frame = frame;
         this.menuButton = menuButton;
         this.inventoryButton = inventoryButton;
@@ -24,6 +26,7 @@ public class PauseGUIController implements ActionListener, MouseListener, KeyLis
         this.helpButton = helpButton;
         this.resumeButton = resumeButton;
         this.levelGameplayGUI = levelGameplayGUI;
+        this.currentPlayer = currentPlayer;
     }
 
     public void redirect(ActionEvent e) {
@@ -35,13 +38,13 @@ public class PauseGUIController implements ActionListener, MouseListener, KeyLis
         }
         if (e.getSource() == inventoryButton) {
             inventoryButton.setBackground(null);
-            InventoryGUI display = new InventoryGUI(frame);
+            InventoryGUI display = new InventoryGUI(frame, currentPlayer);
             display.setVisible(true);
             frame.dispose();
         }
         if (e.getSource() == storeButton) {
             storeButton.setBackground(null);
-            StoreMenuGUI display = new StoreMenuGUI(frame);
+            StoreMenuGUI display = new StoreMenuGUI(frame, currentPlayer);
             display.setVisible(true);
             frame.dispose();
         }
@@ -53,7 +56,7 @@ public class PauseGUIController implements ActionListener, MouseListener, KeyLis
         }
         if (e.getSource() == resumeButton) {
             resumeButton.setBackground(null);
-            levelGameplayGUI.pauseGame();
+            levelGameplayGUI.togglePause();
             levelGameplayGUI.setVisible(true);
             frame.dispose();
         }
@@ -119,7 +122,7 @@ public class PauseGUIController implements ActionListener, MouseListener, KeyLis
     @Override
     public void keyTyped(KeyEvent e) {
         if (e.getKeyChar() == KeyEvent.VK_ESCAPE) {
-            levelGameplayGUI.pauseGame();
+            levelGameplayGUI.togglePause();
             levelGameplayGUI.setVisible(true);
             frame.dispose();
         }

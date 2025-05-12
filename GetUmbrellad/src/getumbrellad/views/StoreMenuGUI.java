@@ -22,21 +22,12 @@ public class StoreMenuGUI extends JFrame {
     
     private JFrame previousFrame;
     
-    public StoreMenuGUI(JFrame previousFrame) {
+    public StoreMenuGUI(JFrame previousFrame, Player currentPlayer) {
         
         super("Store Menu");
         this.setLayout(new BorderLayout());
         this.setSize(900, 600);
         this.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-        
-        Player dummy = new Player();
-        Player currentPlayer;
-        try {
-            currentPlayer = dummy.readPlayer("umbrella_boy.csv");
-        } catch (PlayerNotFoundException pnfe) {
-            System.out.println("Player not found!");
-            return;
-        }
         
         // Stats Panel
         statsPanel = new JPanel(new BorderLayout());
@@ -112,7 +103,7 @@ public class StoreMenuGUI extends JFrame {
         this.add(itemsPanel, BorderLayout.CENTER);
         this.add(buttonPanel, BorderLayout.SOUTH);
         
-        controller = new StoreMenuGUIController(this, exitButton, itemsPanel, previousFrame);
+        controller = new StoreMenuGUIController(this, exitButton, itemsPanel, previousFrame, currentPlayer);
         exitButton.addActionListener(controller);
         exitButton.addMouseListener(controller);
         

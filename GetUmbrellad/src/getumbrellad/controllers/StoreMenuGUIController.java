@@ -18,12 +18,14 @@ public class StoreMenuGUIController implements ActionListener, MouseListener {
     private JFrame GUI, previousFrame;
     private JButton exitButton;
     private JPanel itemsPanel;
+    private Player currentPlayer;
     
-    public StoreMenuGUIController(JFrame GUI, JButton exitButton, JPanel itemsPanel, JFrame previousFrame) {
+    public StoreMenuGUIController(JFrame GUI, JButton exitButton, JPanel itemsPanel, JFrame previousFrame, Player currentPlayer) {
         this.GUI = GUI;
         this.exitButton = exitButton;
         this.itemsPanel = itemsPanel;
         this.previousFrame = previousFrame;
+        this.currentPlayer = currentPlayer;
     }
     
     public void goBack(ActionEvent e){
@@ -51,15 +53,6 @@ public class StoreMenuGUIController implements ActionListener, MouseListener {
     
     public void buyItem(MouseEvent e) {
         
-        Player dummy = new Player();
-        Player actualPlayer;
-        try {
-            actualPlayer = dummy.readPlayer("umbrella_boy.csv");
-        } catch (PlayerNotFoundException pnfe) {
-            System.out.println("Sorry, cannot buy.");
-            return;
-        }
-        
         try {
             
             String itemName = getItemName((JPanel)e.getSource());
@@ -69,7 +62,7 @@ public class StoreMenuGUIController implements ActionListener, MouseListener {
             for (Upgrade currUPG: Upgrade.upgrades) {
                 if (currUPG.getType().equals(itemName)) {
                     actualUpgrade = currUPG;
-                    if (currUPG.getCost() > actualPlayer.getMoney()) {
+                    if (currUPG.getCost() > this.currentPlayer.getMoney()) {
                         JOptionPane.showMessageDialog(null, "You're too broke for this.", "Phew, my dollars are saved!", JOptionPane.INFORMATION_MESSAGE);
                         return;
                     }
@@ -85,8 +78,7 @@ public class StoreMenuGUIController implements ActionListener, MouseListener {
 
             if (confirm == JOptionPane.YES_OPTION) {
                 JOptionPane.showMessageDialog(null, itemName + " successfully purchased!", "OK", JOptionPane.INFORMATION_MESSAGE);
-                actualPlayer.setMoney(actualPlayer.getMoney() - actualUpgrade.getCost());
-                dummy.writePlayer("umbrella_boy.csv", actualPlayer);
+                this.currentPlayer.setMoney(this.currentPlayer.getMoney() - actualUpgrade.getCost());
                 actualUpgrade.setIsOwned(true);
                 actualUpgrade.writeJsonFile();
             } else {
@@ -98,7 +90,7 @@ public class StoreMenuGUIController implements ActionListener, MouseListener {
             Logger.getLogger(StoreMenuGUIController.class.getName()).log(Level.SEVERE, null, ex);
         }
         
-        StoreMenuGUI smgui = new StoreMenuGUI(previousFrame);
+        StoreMenuGUI smgui = new StoreMenuGUI(previousFrame, this.currentPlayer);
         smgui.setVisible(true);
         this.GUI.dispose();
         

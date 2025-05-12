@@ -1,6 +1,6 @@
 package getumbrellad.models.exceptions;
 
-import getumbrellad.views.LevelGameplayPanelGUI;
+import getumbrellad.views.LevelGameplayGUI;
 import java.awt.Color;
 import java.awt.Graphics2D;
 import java.awt.Image;
@@ -12,29 +12,47 @@ import javax.swing.ImageIcon;
 
 public abstract class Character {
 
-    protected LevelGameplayPanelGUI panel;
+    protected LevelGameplayGUI lgGUI;
     protected String name;
-    protected double xSpeed, ySpeed, maxSpeed = 5.00, minSpeed = 0.500, theta;
-    protected int x, y, height = 70, width = 40, maxHP, hp, damage;
-    protected int xMouse, yMouse, boostDelay = 0; //movement attributes
-    protected boolean keyUp, keyRight, keyLeft, jumpToggle; //movement attributes
+    protected double xSpeed, ySpeed, maxSpeed, minSpeed, theta = 0.0;
+    protected int x = 0, y = 0, height, width, maxHP, hp, damage;
     protected Rectangle hitbox;
-    final protected int range = 50;
-   
+    protected int range;
+    
+    private final Image characterImg = new ImageIcon(getClass().getResource("../../resources/character.png")).getImage();
+    
+    protected Character(LevelGameplayGUI lgGUI, int width, int height, int range, double maxSpeed, double minSpeed) {
+        
+        this.lgGUI = lgGUI;
+        this.width = width;
+        this.height = height;
+        
+        this.hitbox = new Rectangle(x, y, width, height);
+        
+        this.maxSpeed = maxSpeed;
+        this.minSpeed = minSpeed;
+        
+    }
 
-    protected Character(String name, LevelGameplayPanelGUI panel, int x, int y, int maxHP, int hp, int damage) {
+    protected Character(String name, LevelGameplayGUI panel, int maxHP, int hp, int damage, int range) {
         
         this.name = name;
-        this.panel = panel;
-        this.x = x;
-        this.y = y;
+        this.lgGUI = panel;
         this.theta = 0.0;
         this.maxHP = maxHP;
         this.hp = hp;
         this.damage = damage;
+        this.range = range;
         
         this.hitbox = new Rectangle(x, y, width, height);
         
+    }
+    
+    void setPosition(int x, int y) {
+        this.x = x;
+        this.y = y;
+        this.hitbox.x = x;
+        this.hitbox.y = y;
     }
    
     /**
@@ -92,178 +110,11 @@ public abstract class Character {
     public int getDamage() {
         return this.damage;
     }
-   
-   
-    public void setKeyUp(boolean keyUp) {
-        this.keyUp = keyUp;
-    }
-    
-    public void setKeyRight(boolean keyRight) {
-        this.keyRight = keyRight;
-    }
-    
-    public void setKeyLeft(boolean keyLeft) {
-        this.keyLeft = keyLeft;
-    }
-    
-    public void setJumpToggle(boolean jumpToggle) {
-        this.jumpToggle = jumpToggle;
-    }
-    
-    public void setXMouse(int xMouse) {
-        this.xMouse = xMouse;
-    }
-    
-    public void setYMouse(int yMouse) {
-        this.yMouse = yMouse;
-    }
-    
-    public void set() {
-        
-        
-        if (keyLeft && keyRight || !keyLeft && !keyRight) {
-            hitbox.y++;
-            if (playerIsColliding()) {
-                
-                if (boostDelay == 0) {
-                    xSpeed *= 0.8;
-                }
-            }
-            hitbox.y--;
-            
-            
-        }
-        else if (keyLeft && !keyRight) {
-            xSpeed--;
-        }
-        else if (!keyLeft && keyRight) {
-            xSpeed++;
-        }
-        
-        
-        //minimum speeds
-        if(xSpeed > 0 && xSpeed < minSpeed) {
-            xSpeed = 0;
-        }
-        
-        if(xSpeed < 0 && xSpeed > -minSpeed) {
-            xSpeed = 0;
-        }
-        
-        
-        //maximum speeds
-        if(xSpeed > maxSpeed && boostDelay == 0) {
-            xSpeed = maxSpeed;
-        }
-        
-        if(xSpeed < -maxSpeed && boostDelay == 0) {
-            xSpeed = -maxSpeed;
-        }
-        
-        
-        
-        if (!jumpToggle) {
-            keyUp = false;
-        }
-        
-        if (keyUp) {
-            jumpToggle = false;
-            
-            //checking if can umbrella boost
-            hitbox.y++;
-            if (playerIsColliding()) {
-                
-                int yJumpFactor = 15;
-                int xJumpFactor = 10;
-
-                
-                
-                if (boostDelay == 0) {
-                    boostDelay = 15;
-                    ySpeed = -yJumpFactor;
-                    xSpeed = xJumpFactor * getDirectionalComponentOf(xMouse, x, yMouse, y, true);
-                    
-                }
-                else {
-                    boostDelay--;
-                    System.out.println(boostDelay);
-                }
-                
-            }
-            hitbox.y--;
-        }
-        
-        if (boostDelay > 0) {
-            boostDelay--;
-        }
-        
-        double gravity = 0.5;
-        if (!jumpToggle && !keyUp && ySpeed > 0) {
-            gravity = 0.072;
-        }
-        
-        
-        //gravity
-        ySpeed += gravity;
-        
-        //x collision
-        hitbox.x += xSpeed;
-        if (playerIsColliding()) {
-            hitbox.x -= xSpeed; //returns player to previous tick in terms of x
-            while(!playerIsColliding()) {
-                //moves player until barely colliding the x of obstacle hitbox
-                hitbox.x += Math.signum(xSpeed);
-            }
-            hitbox.x -= Math.signum(xSpeed); //adjusts player right against obstacle
-            xSpeed = 0; //stops player
-            x = hitbox.x; //sets the player position
-        }
-        
-        //y collision
-        hitbox.y += ySpeed;
-        if (playerIsColliding()) {
-            hitbox.y -= ySpeed; //returns player to previous tick in terms of y
-            while(!playerIsColliding()) {
-                //moves player until barely colliding the y of obstacle hitbox
-                hitbox.y += Math.signum(ySpeed);
-            }
-            hitbox.y -= Math.signum(ySpeed); //adjusts player right against obstacle
-            ySpeed = 0; //stops player
-            y = hitbox.y; //sets the player position
-        }
-        
-        
-        
-        x += xSpeed;
-        y += ySpeed;
-        
-        hitbox.x = x;
-        hitbox.y = y;
-        
-    }
-    
-    
-    public boolean playerIsColliding() {
-        
-        boolean playerIntersects = false;
-        
-        for (Obstacle obstacle: panel.getObstacles()) {
-                if (obstacle.getHitbox().intersects(hitbox)) {
-                    playerIntersects = true;
-                }
-        }
-        
-        return playerIntersects;
-        
-    }
     
     public void draw(Graphics2D gtd) {
         gtd.setColor(Color.BLACK);
         gtd.fillRect(x, y, width, height);
-
-        //System.out.println(getClass().getResource("../resources/character.png"));
-        //Image img = new ImageIcon(getClass().getClassLoader().getResource("resources/character.png")).getImage();    
-        //gtd.drawImage(img, x, y, panel);
+        gtd.drawImage(characterImg, x, y, lgGUI);
         
     }
    
@@ -289,8 +140,6 @@ public abstract class Character {
             direction = yDirection;
         }
         
-        
-        System.out.println(component);
         return component * direction;
     }
     

@@ -26,21 +26,12 @@ public class InventoryGUI extends JFrame {
     
     private JFrame previousFrame;
     
-    public InventoryGUI(JFrame previousFrame) {
+    public InventoryGUI(JFrame previousFrame, Player currentPlayer) {
         
         super("Main Menu");
         this.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         this.setSize(900, 600);
         this.setLayout(new BorderLayout());
-        
-        Player dummy = new Player();
-        Player currentPlayer;
-        try {
-            currentPlayer = dummy.readPlayer("umbrella_boy.csv");
-        } catch (PlayerNotFoundException pnfe) {
-            System.out.println("Player not found!");
-            return;
-        }
         
         Upgrade setup = new Upgrade();
         model = new DefaultListModel<>();
