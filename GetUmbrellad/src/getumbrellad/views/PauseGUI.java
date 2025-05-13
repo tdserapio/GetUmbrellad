@@ -37,7 +37,7 @@ public class PauseGUI extends JFrame{
         Dimension size = new Dimension(150, 80);
 
         ArrayList<JPanel> panels = new ArrayList<JPanel>();
-        for (int i = 0; i < 6; i++) {                
+        for (int i = 0; i < 5; i++) {                
             JPanel basePanel = new JPanel();
             panels.add(basePanel);
             this.add(basePanel);
@@ -58,31 +58,24 @@ public class PauseGUI extends JFrame{
         panels.get(2).add(inventoryButton);
         this.add(panels.get(2));
 
-        storeButton.setAlignmentX(CENTER_ALIGNMENT);
-        storeButton.setPreferredSize(size);
-        storeButton.setBackground(null);
-        panels.get(3).add(storeButton);
-        this.add(panels.get(3));
         helpButton.setAlignmentX(CENTER_ALIGNMENT);
         helpButton.setPreferredSize(size);
         helpButton.setBackground(null);
-        panels.get(4).add(helpButton);
-        this.add(panels.get(4));
+        panels.get(3).add(helpButton);
+        this.add(panels.get(3));
         resumeButton.setAlignmentX(CENTER_ALIGNMENT);
         resumeButton.setPreferredSize(size);
         resumeButton.setBackground(null);
-        panels.get(5).add(resumeButton);
-        this.add(panels.get(5));
+        panels.get(4).add(resumeButton);
+        this.add(panels.get(4));
 
-        controller = new PauseGUIController(this, menuButton, inventoryButton, storeButton, helpButton, resumeButton, levelGameplayGUI, currentPlayer);
+        controller = new PauseGUIController(this, menuButton, inventoryButton, helpButton, resumeButton, levelGameplayGUI, currentPlayer);
         menuButton.addActionListener(controller);
         inventoryButton.addActionListener(controller);            
-        storeButton.addActionListener(controller);
         helpButton.addActionListener(controller);
         resumeButton.addActionListener(controller);
         menuButton.addMouseListener(controller);
         inventoryButton.addMouseListener(controller);
-        storeButton.addMouseListener(controller);
         helpButton.addMouseListener(controller);
         resumeButton.addMouseListener(controller);
         this.addKeyListener(controller);

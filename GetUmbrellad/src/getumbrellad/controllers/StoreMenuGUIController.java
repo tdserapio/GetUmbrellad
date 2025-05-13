@@ -15,24 +15,25 @@ import java.util.logging.Logger;
 
 public class StoreMenuGUIController implements ActionListener, MouseListener {
     
-    private JFrame GUI, previousFrame;
+    private LevelGameplayGUI lggui;
+    private JFrame GUI;
     private JButton exitButton;
     private JPanel itemsPanel;
     private Player currentPlayer;
     
-    public StoreMenuGUIController(JFrame GUI, JButton exitButton, JPanel itemsPanel, JFrame previousFrame, Player currentPlayer) {
+    public StoreMenuGUIController(JFrame GUI, JButton exitButton, JPanel itemsPanel, LevelGameplayGUI lggui, Player currentPlayer) {
         this.GUI = GUI;
         this.exitButton = exitButton;
         this.itemsPanel = itemsPanel;
-        this.previousFrame = previousFrame;
+        this.lggui = lggui;
         this.currentPlayer = currentPlayer;
     }
     
     public void goBack(ActionEvent e){
         
         if (e.getSource() == exitButton) {
-            
-            previousFrame.setVisible(true);
+            lggui.getController().setPaused(false);
+            lggui.setVisible(true);
             GUI.dispose();
             
         }
@@ -90,7 +91,7 @@ public class StoreMenuGUIController implements ActionListener, MouseListener {
             Logger.getLogger(StoreMenuGUIController.class.getName()).log(Level.SEVERE, null, ex);
         }
         
-        StoreMenuGUI smgui = new StoreMenuGUI(previousFrame, this.currentPlayer);
+        StoreMenuGUI smgui = new StoreMenuGUI(lggui, this.currentPlayer);
         smgui.setVisible(true);
         this.GUI.dispose();
         

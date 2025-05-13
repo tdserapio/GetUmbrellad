@@ -14,6 +14,7 @@ import javax.imageio.ImageIO;
 
 public class StoreMenuGUI extends JFrame {
     
+    private LevelGameplayGUI lggui;
     private JPanel statsPanel, itemsPanel, buttonPanel, coinPanel;
     private JLabel hpLabel, coinLabel;
     private JButton exitButton, nextButton;
@@ -22,7 +23,7 @@ public class StoreMenuGUI extends JFrame {
     
     private JFrame previousFrame;
     
-    public StoreMenuGUI(JFrame previousFrame, Player currentPlayer) {
+    public StoreMenuGUI(LevelGameplayGUI lggui, Player currentPlayer) {
         
         super("Store Menu");
         this.setLayout(new BorderLayout());
@@ -103,7 +104,7 @@ public class StoreMenuGUI extends JFrame {
         this.add(itemsPanel, BorderLayout.CENTER);
         this.add(buttonPanel, BorderLayout.SOUTH);
         
-        controller = new StoreMenuGUIController(this, exitButton, itemsPanel, previousFrame, currentPlayer);
+        controller = new StoreMenuGUIController(this, exitButton, itemsPanel, lggui, currentPlayer);
         exitButton.addActionListener(controller);
         exitButton.addMouseListener(controller);
         

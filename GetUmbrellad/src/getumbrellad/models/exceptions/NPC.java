@@ -4,14 +4,15 @@
  */
 package getumbrellad.models.exceptions;
 
+import getumbrellad.views.InventoryGUI;
 import getumbrellad.views.LevelGameplayGUI;
+import getumbrellad.views.StoreMenuGUI;
 import java.awt.Color;
 import java.awt.Graphics2D;
 import java.awt.Image;
 import java.awt.Rectangle;
-import java.util.Timer;
-import java.util.TimerTask;
 import javax.swing.ImageIcon;
+import javax.swing.JFrame;
 
 /**
  *
@@ -23,7 +24,6 @@ public class NPC extends Character implements Spawnable{
     private String name;
     private Rectangle hitbox;
     private int x, y, width, height;
-    private Timer NPCTimer;
     
     private final Image NPCImg = new ImageIcon(getClass().getResource("../../resources/paperNPC.png")).getImage();
     
@@ -34,6 +34,23 @@ public class NPC extends Character implements Spawnable{
         this.y = y;
         this.width = width;
         this.height = height;
+        
+        hitbox = new Rectangle(x, y, width, height);
+    }
+    
+    public String getName() {
+        return this.name;
+    }
+    
+    public Rectangle getHitbox() {
+        return this.hitbox;
+    }
+    
+    public void openShop(LevelGameplayGUI lggui, Player currentPlayer) {
+        lggui.getController().setPaused(true);
+        StoreMenuGUI display = new StoreMenuGUI(lggui, currentPlayer);
+        display.setVisible(true);
+        lggui.setVisible(false);
     }
 
     @Override

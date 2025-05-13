@@ -219,5 +219,8 @@ public class LevelGameplayGUIController implements ActionListener, MouseListener
         return player;
     }
     
+    public void setPaused(boolean isPaused) {
+        this.paused = isPaused;
+    }
 }
 

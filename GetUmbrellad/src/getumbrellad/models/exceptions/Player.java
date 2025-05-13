@@ -18,6 +18,7 @@ import java.nio.file.Paths;
 import java.nio.file.StandardOpenOption;
 import java.util.ArrayList;
 import javax.swing.ImageIcon;
+import javax.swing.JOptionPane;
 
 public class Player extends Character implements Spawnable {
     
@@ -174,7 +175,19 @@ public class Player extends Character implements Spawnable {
                     toDestroy.add(currentBullet);
                 }
             } else if (entity instanceof NPC) {
-                
+                NPC currentNPC = (NPC)entity;
+                    if (currentNPC.getHitbox().intersects(hitbox)) {
+                        int confirm = JOptionPane.showOptionDialog(
+                        this.lgGUI,
+                        "Do you wish to buy from me?",
+                        currentNPC.getName(), JOptionPane.YES_NO_OPTION,
+                        JOptionPane.QUESTION_MESSAGE, null, null, null
+                    );
+
+                    if (confirm == JOptionPane.YES_OPTION) {
+                        currentNPC.openShop(this.lgGUI, this);
+                    }
+                }
             }
         }
         

@@ -28,7 +28,7 @@ public class InventoryGUI extends JFrame {
     
     public InventoryGUI(JFrame previousFrame, Player currentPlayer) {
         
-        super("Main Menu");
+        super("Inventory Menu");
         this.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         this.setSize(900, 600);
         this.setLayout(new BorderLayout());
