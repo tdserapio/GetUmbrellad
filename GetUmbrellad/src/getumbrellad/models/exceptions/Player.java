@@ -173,6 +173,8 @@ public class Player extends Character implements Spawnable {
                     this.deductHP(currentBullet.getDamage());
                     toDestroy.add(currentBullet);
                 }
+            } else if (entity instanceof NPC) {
+                
             }
         }
         

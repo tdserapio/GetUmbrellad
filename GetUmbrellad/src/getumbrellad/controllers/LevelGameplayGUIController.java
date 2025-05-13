@@ -1,6 +1,7 @@
 package getumbrellad.controllers;
 
 import getumbrellad.models.exceptions.Enemy;
+import getumbrellad.models.exceptions.NPC;
 import getumbrellad.models.exceptions.Obstacle;
 import getumbrellad.models.exceptions.Player;
 import getumbrellad.models.exceptions.PlayerNotFoundException;
@@ -157,6 +158,8 @@ public class LevelGameplayGUIController implements ActionListener, MouseListener
                     entities.add(player);
                 } else if (currentType.equals("Shooter")) {
                     entities.add(new Enemy(this.panel, currentType, currX, currY, currWidth, currHeight, gameTimer));
+                } else if (currentType.equals("NPC")) {
+                    entities.add(new NPC(this.panel, currentName, currX, currY, currWidth, currHeight));
                 }
                 
             }

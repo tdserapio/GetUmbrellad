@@ -39,7 +39,7 @@ public class Enemy extends Character implements Spawnable {
         enemyTimer.schedule(new TimerTask() {
             @Override
             public void run() {
-                if (!lggui.getController().isPaused()) {
+                if (lggui != null && lggui.getController() != null && !lggui.getController().isPaused()) {
                     double dx = lggui.getController().getPlayer().getX() - x;
                     double dy = lggui.getController().getPlayer().getY() - y;
                     double theta = Math.atan2(dy, dx);
