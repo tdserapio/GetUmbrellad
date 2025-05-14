@@ -174,22 +174,30 @@ public class Player extends Character implements Spawnable {
                     this.deductHP(currentBullet.getDamage());
                     toDestroy.add(currentBullet);
                 }
-            } else if (entity instanceof NPC) {
+            } else if (entity instanceof NPC) {  
                 NPC currentNPC = (NPC)entity;
-                    if (currentNPC.getHitbox().intersects(hitbox)) {
+                
+                boolean isColliding = currentNPC.getHitbox().intersects(hitbox);
+                    if (isColliding && !currentNPC.getHasInteracted()) {
+                        currentNPC.setIsOverlapping(true);
+                        currentNPC.setHasInteracted(true);
                         int confirm = JOptionPane.showOptionDialog(
                         this.lgGUI,
                         "Do you wish to buy from me?",
                         currentNPC.getName(), JOptionPane.YES_NO_OPTION,
                         JOptionPane.QUESTION_MESSAGE, null, null, null
                     );
-
+                    
                     if (confirm == JOptionPane.YES_OPTION) {
                         currentNPC.openShop(this.lgGUI, this);
                     }
+                } else if (!isColliding && currentNPC.getIsOverlapping()){
+                    currentNPC.setIsOverlapping(false);
+                    currentNPC.setHasInteracted(false);
                 }
             }
         }
+        
         
         for (Bullet b: toDestroy) {
             b.destroy();

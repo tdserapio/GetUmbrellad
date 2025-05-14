@@ -20,7 +20,7 @@ import java.util.Scanner;
 
 public class Upgrade {
     
-    private String type;
+    private String type, increasedStat;
     private int value;
     private String description;
     private boolean isOwned;
@@ -28,9 +28,10 @@ public class Upgrade {
     
     public static ArrayList<Upgrade> upgrades;
     
-    public Upgrade(String type, int value, String description, boolean isOwned, int cost) {
+    public Upgrade(String type, int value, String increasedStat, String description, boolean isOwned, int cost) {
         this.type = type;
         this.value = value;
+        this.increasedStat = increasedStat;
         this.description = description;
         this.isOwned = isOwned;
         this.cost = cost;
@@ -56,6 +57,9 @@ public class Upgrade {
         return this.value;
     }
     
+    public String getIncreasedStat() {
+        return this.increasedStat;
+    }
     public int getCost() {
         return this.cost;
     }
@@ -97,11 +101,12 @@ public class Upgrade {
                 String[] parts = line.split(",");
                 String upgradeName = parts[0].trim();
                 int upgradeValue = Integer.parseInt(parts[1].trim());
-                String upgradeDescription = parts[2].trim();
-                boolean upgradeOwned = (Integer.parseInt(parts[3].trim()) > 0);
-                int upgradeCost = Integer.parseInt(parts[4].trim());
+                String increasedStat = parts[2].trim();
+                String upgradeDescription = parts[3].trim();
+                boolean upgradeOwned = (Integer.parseInt(parts[4].trim()) > 0);
+                int upgradeCost = Integer.parseInt(parts[5].trim());
                                 
-                Upgrade currUPG = new Upgrade(upgradeName, upgradeValue, upgradeDescription, upgradeOwned, upgradeCost);
+                Upgrade currUPG = new Upgrade(upgradeName, upgradeValue, increasedStat, upgradeDescription, upgradeOwned, upgradeCost);
                 upgrades.add(currUPG);
                 
             }
@@ -125,7 +130,7 @@ public class Upgrade {
             try (BufferedWriter writer = Files.newBufferedWriter(outPath, StandardCharsets.UTF_8, StandardOpenOption.CREATE, StandardOpenOption.TRUNCATE_EXISTING)) {
 
                 // Write header
-                writer.write("upgrade_name, upgrade_value, description, owned, cost");
+                writer.write("upgrade_name, upgrade_value, increased_stat, description, owned, cost");
                 writer.newLine();
                 
                 
@@ -134,6 +139,7 @@ public class Upgrade {
                     int isAlreadyOwned = (currUPG.getIsOwned()) ? 1 : 0;
                     writer.write(currUPG.getType() + "," +
                                  currUPG.getValue() + "," +
+                                 currUPG.getIncreasedStat() + "," +
                                  currUPG.getDescription() + "," +
                                  isAlreadyOwned + "," +
                                  currUPG.getCost());

@@ -1,4 +1,4 @@
-upgrade_name, upgrade_value, description, owned, cost
-Triple Bullet,1,This increases the damage the umbrella does on the enemy when it shoots.,1,20
-Jolly Jumper,1,This increases the floating time of the player.,0,10
-Metal Umbrella,1,This increases the damage the umbrellas has a melee weapon.,0,50
+upgrade_name, upgrade_value, increased_stat, description, owned, cost
+Knitting Kit,1,maxHP,This increases the maximum hp of the player.,1,20
+Jolly Jumper,1,floating,This increases the floating time of the player.,0,10
+Metal Umbrella,1,damage,This increases the damage the umbrellas has a melee weapon.,0,50

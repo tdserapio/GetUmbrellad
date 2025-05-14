@@ -24,6 +24,7 @@ public class NPC extends Character implements Spawnable{
     private String name;
     private Rectangle hitbox;
     private int x, y, width, height;
+    private boolean hasInteracted = false, isOverlapping;
     
     private final Image NPCImg = new ImageIcon(getClass().getResource("../../resources/paperNPC.png")).getImage();
     
@@ -44,6 +45,22 @@ public class NPC extends Character implements Spawnable{
     
     public Rectangle getHitbox() {
         return this.hitbox;
+    }
+    
+    public boolean getHasInteracted() {
+        return this.hasInteracted;
+    }
+    
+    public void setHasInteracted(boolean hasInteracted) {
+        this.hasInteracted = hasInteracted;
+    }
+    
+    public boolean getIsOverlapping() {
+        return this.isOverlapping;
+    }
+    
+    public void setIsOverlapping(boolean isOverlapping) {
+        this.isOverlapping = isOverlapping;
     }
     
     public void openShop(LevelGameplayGUI lggui, Player currentPlayer) {
