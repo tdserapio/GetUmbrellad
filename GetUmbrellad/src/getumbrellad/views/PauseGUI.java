@@ -20,6 +20,7 @@ public class PauseGUI extends JFrame{
         super("Pause Menu");
         this.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         this.setSize(900, 600);
+        this.setResizable(false);
         
         this.levelGameplayGUI = levelGameplayGUI;
 
@@ -46,10 +47,10 @@ public class PauseGUI extends JFrame{
         panels.get(0).add(new JTextArea("Game is paused"));
         this.add(panels.get(0));
         
-        menuButton.setAlignmentX(CENTER_ALIGNMENT);
-        menuButton.setPreferredSize(size);
-        menuButton.setBackground(null);
-        panels.get(1).add(menuButton);
+        resumeButton.setAlignmentX(CENTER_ALIGNMENT);
+        resumeButton.setPreferredSize(size);
+        resumeButton.setBackground(null);
+        panels.get(1).add(resumeButton);
         this.add(panels.get(1));
 
         inventoryButton.setAlignmentX(CENTER_ALIGNMENT);
@@ -63,10 +64,11 @@ public class PauseGUI extends JFrame{
         helpButton.setBackground(null);
         panels.get(3).add(helpButton);
         this.add(panels.get(3));
-        resumeButton.setAlignmentX(CENTER_ALIGNMENT);
-        resumeButton.setPreferredSize(size);
-        resumeButton.setBackground(null);
-        panels.get(4).add(resumeButton);
+        
+        menuButton.setAlignmentX(CENTER_ALIGNMENT);
+        menuButton.setPreferredSize(size);
+        menuButton.setBackground(null);
+        panels.get(4).add(menuButton);
         this.add(panels.get(4));
 
         controller = new PauseGUIController(this, menuButton, inventoryButton, helpButton, resumeButton, levelGameplayGUI, currentPlayer);

@@ -21,6 +21,7 @@ public class MainMenuGUI extends JFrame {
         super("Main Menu");
         this.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         this.setSize(900, 600);
+        this.setResizable(false);
         
         // Import Lexend font
         

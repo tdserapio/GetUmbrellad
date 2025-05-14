@@ -26,6 +26,7 @@ public class HelpGUI extends JFrame {
         this.setSize(900, 600);
         this.setLayout(new BoxLayout(this.getContentPane(), BoxLayout.PAGE_AXIS));
         this.getContentPane().setBackground(Color.WHITE);
+        this.setResizable(false);
 
         try {
             GraphicsEnvironment ge = GraphicsEnvironment.getLocalGraphicsEnvironment();

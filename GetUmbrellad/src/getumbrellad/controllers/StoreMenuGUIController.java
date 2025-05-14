@@ -90,17 +90,17 @@ public class StoreMenuGUIController implements ActionListener, MouseListener {
             );
 
             if (confirm == JOptionPane.YES_OPTION) {
-                JOptionPane.showMessageDialog(null, itemName + " successfully purchased!", "OK", JOptionPane.INFORMATION_MESSAGE);
+                JOptionPane.showMessageDialog(GUI, itemName + " successfully purchased!", "OK", JOptionPane.INFORMATION_MESSAGE);
                 this.currentPlayer.setMoney(this.currentPlayer.getMoney() - actualUpgrade.getCost());
                 this.currentPlayer.getPlayerUpgrades().add(actualUpgrade);
                 this.currentPlayer.applyUpgrade(actualUpgrade);
                 actualUpgrade.setIsOwned(true);
                 actualUpgrade.writeJsonFile();
             } else {
-                JOptionPane.showMessageDialog(null, itemName + " purchase was cancelled.", "Phew, my dollars are saved!", JOptionPane.INFORMATION_MESSAGE);
+                JOptionPane.showMessageDialog(GUI, itemName + " purchase was cancelled.", "Phew, my dollars are saved!", JOptionPane.INFORMATION_MESSAGE);
             }
         } catch (ItemNotFoundException inf) {
-            JOptionPane.showMessageDialog(null, "Oops, item not found!", "OK", JOptionPane.INFORMATION_MESSAGE);
+            JOptionPane.showMessageDialog(GUI, "Oops, item not found!", "OK", JOptionPane.INFORMATION_MESSAGE);
         } catch (PlayerNotFoundException ex) {
             Logger.getLogger(StoreMenuGUIController.class.getName()).log(Level.SEVERE, null, ex);
         }

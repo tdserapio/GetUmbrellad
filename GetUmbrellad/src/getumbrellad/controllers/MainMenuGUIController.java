@@ -11,6 +11,7 @@ import getumbrellad.views.LoreGUI;
 import getumbrellad.views.InventoryGUI;
 import getumbrellad.views.StoreMenuGUI;
 import java.awt.Component;
+import java.awt.Window;
 import javax.swing.*;
 import java.awt.event.*;
 import java.io.IOException;
@@ -64,7 +65,13 @@ public class MainMenuGUIController implements ActionListener, MouseListener{
             );
 
             if (confirm == JOptionPane.YES_OPTION) {
+                for (Window window : Window.getWindows()) {
+                    if (window instanceof JFrame) {
+                        window.dispose();
+                    }
+                }
                 GUI.dispose();
+                System.exit(0);
             }
         } else if (e.getSource() == loreButton) {
             loreButton.setBackground(null);
