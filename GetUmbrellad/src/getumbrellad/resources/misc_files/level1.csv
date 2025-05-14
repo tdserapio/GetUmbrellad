@@ -7,3 +7,4 @@ Obstacle5, Obstacle, 450, 200, 300, 50
 Spawn Point, Spawn, 100, 400, -1, -1
 Enemy1, Shooter, 250, 303, 70, 47
 NPC1, NPC, 600, 430, 45, 60
+NPC2, NPC, 100, 330, 45, 60

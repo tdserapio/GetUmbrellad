@@ -123,6 +123,10 @@ public class StoreMenuGUI extends JFrame {
         return controller;
     }
     
+    public ArrayList<Upgrade> getCanBeBought() {
+        return this.canBeBought;
+    }
+    
     public void setCanBeBought(ArrayList<Upgrade> npcUpgrades) {
         this.canBeBought = npcUpgrades;
     }

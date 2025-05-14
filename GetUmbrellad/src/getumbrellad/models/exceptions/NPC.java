@@ -11,6 +11,10 @@ import java.awt.Color;
 import java.awt.Graphics2D;
 import java.awt.Image;
 import java.awt.Rectangle;
+import java.io.BufferedReader;
+import java.io.IOException;
+import java.io.InputStream;
+import java.io.InputStreamReader;
 import java.util.ArrayList;
 import javax.swing.ImageIcon;
 import javax.swing.JFrame;
@@ -28,18 +32,21 @@ public class NPC extends Character implements Spawnable{
     private boolean hasInteracted = false, isOverlapping;
     private ArrayList<Upgrade> npcUpgrades = new ArrayList<>();
     private StoreMenuGUI smgui;
+    private Player currentPlayer;
     
     private final Image NPCImg = new ImageIcon(getClass().getResource("../../resources/paperNPC.png")).getImage();
     
-    public NPC(LevelGameplayGUI lggui, String name, int x, int y, int width, int height) {
+    public NPC(LevelGameplayGUI lggui, String name, int x, int y, int width, int height, Player currentPlayer) {
         super(lggui, width, height, 20);
         this.name = name;
         this.x = x;
         this.y = y;
         this.width = width;
         this.height = height;
+        this.currentPlayer = currentPlayer;
         
         hitbox = new Rectangle(x, y, width, height);
+        npcUpgrades = loadShopReadingJsonFile();
     }
     
     public String getName() {
@@ -67,11 +74,11 @@ public class NPC extends Character implements Spawnable{
     }
     
     public void addUpgrade(Upgrade upgrade) {
-        npcUpgrades.add(upgrade);
+        this.npcUpgrades.add(upgrade);
     }
     
     public ArrayList<Upgrade> getNPCUpgrades() {
-        return npcUpgrades;
+        return this.npcUpgrades;
     }
     
     public StoreMenuGUI getStoreMenuGUI() {
@@ -81,11 +88,67 @@ public class NPC extends Character implements Spawnable{
     public void openShop(LevelGameplayGUI lggui, Player currentPlayer) {
         lggui.getController().setPaused(true);
         smgui = new StoreMenuGUI(lggui, currentPlayer, npcUpgrades);
-        smgui.getController().loadAllStoresJsonFile();
-        smgui.dispose();
-        smgui = new StoreMenuGUI(lggui, currentPlayer, npcUpgrades); //redundancy to load first try
+        /*this.smgui = smgui;
+        smgui.getController().loadThisStoresJsonFile(this);
+        smgui.setCanBeBought(npcUpgrades);
+        smgui.revalidate();
+        smgui.repaint();*/
         smgui.setVisible(true);
         lggui.setVisible(false);
+    }
+    
+    public ArrayList<Upgrade> loadShopReadingJsonFile() {
+        
+        if (Upgrade.upgrades != null) {
+            Upgrade.upgrades.clear();
+        }
+
+        ArrayList<Upgrade> shopUpgrades = new ArrayList<Upgrade>();
+        
+        // Path is relative to src/main/resources or classpath root
+        InputStream inputStream = getClass().getClassLoader().getResourceAsStream("getumbrellad/resources/misc_files/stores.csv");
+
+        if (inputStream == null) {
+            System.out.println("File not found!");
+            return null;
+        }
+
+        try (BufferedReader reader = new BufferedReader(new InputStreamReader(inputStream))) {
+            String line;
+            boolean isFirstLine = true;
+
+            while ((line = reader.readLine()) != null) {
+                if (isFirstLine) { // Skip header if necessary
+                    isFirstLine = false;
+                    continue;
+                }
+
+                String[] parts = line.split(",");
+                String npcName = parts[0].trim();
+                String upgradeName = parts[1].trim();
+                int upgradeValue = Integer.parseInt(parts[2].trim());
+                String increasedStat = parts[3].trim();
+                String upgradeDescription = parts[4].trim();
+                boolean upgradeOwned = (Integer.parseInt(parts[5].trim()) > 0);
+                int upgradeCost = Integer.parseInt(parts[6].trim());
+                                
+                Upgrade currUPG = new Upgrade(upgradeName, upgradeValue, increasedStat, upgradeDescription, upgradeOwned, upgradeCost);
+                //Upgrade.upgrades.add(currUPG);
+                
+
+                if (this.getName().equals(npcName)) {
+                    if (!this.getNPCUpgrades().contains(currUPG) && !currentPlayer.getPlayerUpgrades().contains(currUPG)) { //if current NPC and player does not have the upgrade
+                        shopUpgrades.add(currUPG);
+                    }
+                }
+                
+                
+            }
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+        
+        return shopUpgrades;
     }
     
 

@@ -39,7 +39,7 @@ public class LevelGameplayGUIController implements ActionListener, MouseListener
             return;
         }
         
-        makeObstacles();
+        makeObstacles(player);
         
         gameTimer.schedule(new TimerTask() {
             @Override
@@ -128,7 +128,7 @@ public class LevelGameplayGUIController implements ActionListener, MouseListener
         return paused;
     }
 
-    public void makeObstacles() {
+    public void makeObstacles(Player player) {
         InputStream inputStream = getClass().getClassLoader().getResourceAsStream("getumbrellad/resources/misc_files/level1.csv");
 
         try (BufferedReader reader = new BufferedReader(new InputStreamReader(inputStream))) {
@@ -159,7 +159,7 @@ public class LevelGameplayGUIController implements ActionListener, MouseListener
                 } else if (currentType.equals("Shooter")) {
                     entities.add(new Enemy(this.panel, currentType, currX, currY, currWidth, currHeight, gameTimer));
                 } else if (currentType.equals("NPC")) {
-                    NPC currentNPC = new NPC(this.panel, currentName, currX, currY, currWidth, currHeight);
+                    NPC currentNPC = new NPC(this.panel, currentName, currX, currY, currWidth, currHeight, this.player);
                     entities.add(currentNPC);
                     StoreMenuGUIController.NPCs.add(currentNPC);
                 }

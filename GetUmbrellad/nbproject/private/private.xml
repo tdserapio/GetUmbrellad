@@ -2,16 +2,6 @@
 <project-private xmlns="http://www.netbeans.org/ns/project-private/1">
     <editor-bookmarks xmlns="http://www.netbeans.org/ns/editor-bookmarks/2" lastBookmarkId="0"/>
     <open-files xmlns="http://www.netbeans.org/ns/projectui-open-files/2">
-        <group>
-            <file>file:/C:/Users/bruv/OneDrive/Desktop/GetUmbrellad/GetUmbrellad/src/getumbrellad/views/StoreMenuGUI.java</file>
-            <file>file:/C:/Users/bruv/OneDrive/Desktop/GetUmbrellad/GetUmbrellad/src/getumbrellad/GetUmbrellad.java</file>
-            <file>file:/C:/Users/bruv/OneDrive/Desktop/GetUmbrellad/GetUmbrellad/src/getumbrellad/controllers/LevelGameplayGUIController.java</file>
-            <file>file:/C:/Users/bruv/OneDrive/Desktop/GetUmbrellad/GetUmbrellad/src/getumbrellad/models/exceptions/NPC.java</file>
-            <file>file:/C:/Users/bruv/OneDrive/Desktop/GetUmbrellad/GetUmbrellad/src/getumbrellad/resources/misc_files/upgrades.csv</file>
-            <file>file:/C:/Users/bruv/OneDrive/Desktop/GetUmbrellad/GetUmbrellad/src/getumbrellad/views/LevelGameplayGUI.java</file>
-            <file>file:/C:/Users/bruv/OneDrive/Desktop/GetUmbrellad/GetUmbrellad/src/getumbrellad/models/exceptions/Player.java</file>
-            <file>file:/C:/Users/bruv/OneDrive/Desktop/GetUmbrellad/GetUmbrellad/src/getumbrellad/models/exceptions/Upgrade.java</file>
-            <file>file:/C:/Users/bruv/OneDrive/Desktop/GetUmbrellad/GetUmbrellad/src/getumbrellad/controllers/StoreMenuGUIController.java</file>
-        </group>
+        <group/>
     </open-files>
 </project-private>

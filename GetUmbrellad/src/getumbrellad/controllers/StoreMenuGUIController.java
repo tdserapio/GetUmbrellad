@@ -112,62 +112,6 @@ public class StoreMenuGUIController implements ActionListener, MouseListener {
     }
 
     
-    public void loadAllStoresJsonFile() {
-        
-        if (Upgrade.upgrades != null) {
-            Upgrade.upgrades.clear();
-        }
-        
-        for (NPC currNPC: NPCs) {
-            currNPC.getNPCUpgrades().clear();
-            currNPC.getStoreMenuGUI().setCanBeBought(currNPC.getNPCUpgrades());
-        }
-        // Path is relative to src/main/resources or classpath root
-        InputStream inputStream = getClass().getClassLoader().getResourceAsStream("getumbrellad/resources/misc_files/stores.csv");
-
-        if (inputStream == null) {
-            System.out.println("File not found!");
-            return;
-        }
-
-        try (BufferedReader reader = new BufferedReader(new InputStreamReader(inputStream))) {
-            String line;
-            boolean isFirstLine = true;
-
-            while ((line = reader.readLine()) != null) {
-                if (isFirstLine) { // Skip header if necessary
-                    isFirstLine = false;
-                    continue;
-                }
-
-                String[] parts = line.split(",");
-                String npcName = parts[0].trim();
-                String upgradeName = parts[1].trim();
-                int upgradeValue = Integer.parseInt(parts[2].trim());
-                String increasedStat = parts[3].trim();
-                String upgradeDescription = parts[4].trim();
-                boolean upgradeOwned = (Integer.parseInt(parts[5].trim()) > 0);
-                int upgradeCost = Integer.parseInt(parts[6].trim());
-                                
-                Upgrade currUPG = new Upgrade(upgradeName, upgradeValue, increasedStat, upgradeDescription, upgradeOwned, upgradeCost);
-                Upgrade.upgrades.add(currUPG);
-                
-                for (NPC currNPC: NPCs) {
-                    if (currNPC.getName().equals(npcName)) {
-                        if (!currNPC.getNPCUpgrades().contains(currUPG) && !currentPlayer.getPlayerUpgrades().contains(currUPG)) { //if current NPC and player does not have the upgrade
-                            currNPC.addUpgrade(currUPG);
-                            currNPC.getStoreMenuGUI().setCanBeBought(currNPC.getNPCUpgrades());
-                        }
-                    }
-                }
-                
-            }
-        } catch (IOException e) {
-            e.printStackTrace();
-        }
-
-    }
-    
     @Override
     public void actionPerformed(ActionEvent e) {
         goBack(e);
