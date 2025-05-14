@@ -92,6 +92,8 @@ public class StoreMenuGUIController implements ActionListener, MouseListener {
             if (confirm == JOptionPane.YES_OPTION) {
                 JOptionPane.showMessageDialog(null, itemName + " successfully purchased!", "OK", JOptionPane.INFORMATION_MESSAGE);
                 this.currentPlayer.setMoney(this.currentPlayer.getMoney() - actualUpgrade.getCost());
+                this.currentPlayer.getPlayerUpgrades().add(actualUpgrade);
+                this.currentPlayer.applyUpgrade(actualUpgrade);
                 actualUpgrade.setIsOwned(true);
                 actualUpgrade.writeJsonFile();
             } else {

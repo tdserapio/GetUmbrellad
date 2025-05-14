@@ -328,6 +328,10 @@ public class Player extends Character implements Spawnable {
         return playerUpgrades;
     }
     
+    public void applyUpgrade(Upgrade upgrade) {
+        
+    }
+    
     @Override
     public void spawn(int x, int y) {
         this.x = x;
