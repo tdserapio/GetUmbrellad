@@ -31,6 +31,8 @@ public class Player extends Character implements Spawnable {
     
     private final Image playerImg = new ImageIcon(getClass().getResource("../../resources/character.png")).getImage();
     
+    private ArrayList<Upgrade> playerUpgrades = new ArrayList<>();
+    
     public Player(String fileName, LevelGameplayGUI lggui) throws PlayerNotFoundException {
         
         super(lggui, 40, 48, 50);
@@ -320,6 +322,10 @@ public class Player extends Character implements Spawnable {
         hitbox.x = x;
         hitbox.y = y;
         
+    }
+    
+    public ArrayList<Upgrade> getPlayerUpgrades() {
+        return playerUpgrades;
     }
     
     @Override

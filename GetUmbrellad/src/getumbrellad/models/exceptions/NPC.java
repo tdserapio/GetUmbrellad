@@ -11,6 +11,7 @@ import java.awt.Color;
 import java.awt.Graphics2D;
 import java.awt.Image;
 import java.awt.Rectangle;
+import java.util.ArrayList;
 import javax.swing.ImageIcon;
 import javax.swing.JFrame;
 
@@ -25,6 +26,8 @@ public class NPC extends Character implements Spawnable{
     private Rectangle hitbox;
     private int x, y, width, height;
     private boolean hasInteracted = false, isOverlapping;
+    private ArrayList<Upgrade> npcUpgrades = new ArrayList<>();
+    private StoreMenuGUI smgui;
     
     private final Image NPCImg = new ImageIcon(getClass().getResource("../../resources/paperNPC.png")).getImage();
     
@@ -63,12 +66,28 @@ public class NPC extends Character implements Spawnable{
         this.isOverlapping = isOverlapping;
     }
     
+    public void addUpgrade(Upgrade upgrade) {
+        npcUpgrades.add(upgrade);
+    }
+    
+    public ArrayList<Upgrade> getNPCUpgrades() {
+        return npcUpgrades;
+    }
+    
+    public StoreMenuGUI getStoreMenuGUI() {
+        return smgui;
+    }
+    
     public void openShop(LevelGameplayGUI lggui, Player currentPlayer) {
         lggui.getController().setPaused(true);
-        StoreMenuGUI display = new StoreMenuGUI(lggui, currentPlayer);
-        display.setVisible(true);
+        smgui = new StoreMenuGUI(lggui, currentPlayer, npcUpgrades);
+        smgui.getController().loadAllStoresJsonFile();
+        smgui.dispose();
+        smgui = new StoreMenuGUI(lggui, currentPlayer, npcUpgrades); //redundancy to load first try
+        smgui.setVisible(true);
         lggui.setVisible(false);
     }
+    
 
     @Override
     public void spawn(int x, int y) {

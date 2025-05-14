@@ -159,7 +159,9 @@ public class LevelGameplayGUIController implements ActionListener, MouseListener
                 } else if (currentType.equals("Shooter")) {
                     entities.add(new Enemy(this.panel, currentType, currX, currY, currWidth, currHeight, gameTimer));
                 } else if (currentType.equals("NPC")) {
-                    entities.add(new NPC(this.panel, currentName, currX, currY, currWidth, currHeight));
+                    NPC currentNPC = new NPC(this.panel, currentName, currX, currY, currWidth, currHeight);
+                    entities.add(currentNPC);
+                    StoreMenuGUIController.NPCs.add(currentNPC);
                 }
                 
             }

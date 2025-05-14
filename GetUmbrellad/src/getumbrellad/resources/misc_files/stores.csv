@@ -1,0 +1,4 @@
+shop_owner, upgrade_name, upgrade_value, increased_stat, description, owned, cost
+NPC1, Knitting Kit,1,maxHP,This increases the maximum hp of the player.,1,20
+NPC1, Jolly Jumper,1,floating,This increases the floating time of the player.,0,10
+NPC1, Metal Umbrella,1,damage,This increases the damage the umbrellas has a melee weapon.,0,50

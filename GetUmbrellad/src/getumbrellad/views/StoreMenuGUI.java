@@ -18,19 +18,22 @@ public class StoreMenuGUI extends JFrame {
     private JPanel statsPanel, itemsPanel, buttonPanel, coinPanel;
     private JLabel hpLabel, coinLabel;
     private JButton exitButton, nextButton;
+    private ArrayList<Upgrade> canBeBought;
     
     private StoreMenuGUIController controller;
     
     private JFrame previousFrame;
     
-    public StoreMenuGUI(LevelGameplayGUI lggui, Player currentPlayer) {
+    public StoreMenuGUI(LevelGameplayGUI lggui, Player currentPlayer, ArrayList<Upgrade> npcUpgrades) {
         
         super("Store Menu");
         this.setLayout(new BorderLayout());
         this.setSize(900, 600);
         this.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+        this.setResizable(false);
         
         // Stats Panel
+        this.canBeBought = npcUpgrades;
         statsPanel = new JPanel(new BorderLayout());
         statsPanel.setBorder(
             BorderFactory.createTitledBorder(
@@ -52,7 +55,7 @@ public class StoreMenuGUI extends JFrame {
         statsPanel.add(coinPanel, BorderLayout.EAST);
         
         Upgrade setup = new Upgrade();
-        ArrayList<Upgrade> canBeBought = new ArrayList<>();
+        //can be bought arraylist was here
         for (Upgrade currUPG: Upgrade.upgrades) {
             if (!currUPG.getIsOwned()) {
                 canBeBought.add(currUPG);
@@ -104,7 +107,7 @@ public class StoreMenuGUI extends JFrame {
         this.add(itemsPanel, BorderLayout.CENTER);
         this.add(buttonPanel, BorderLayout.SOUTH);
         
-        controller = new StoreMenuGUIController(this, exitButton, itemsPanel, lggui, currentPlayer);
+        controller = new StoreMenuGUIController(this, exitButton, itemsPanel, lggui, currentPlayer, canBeBought);
         exitButton.addActionListener(controller);
         exitButton.addMouseListener(controller);
         
@@ -114,6 +117,14 @@ public class StoreMenuGUI extends JFrame {
         
         this.setVisible(true);
         
+    }
+    
+    public StoreMenuGUIController getController() {
+        return controller;
+    }
+    
+    public void setCanBeBought(ArrayList<Upgrade> npcUpgrades) {
+        this.canBeBought = npcUpgrades;
     }
 
 }
