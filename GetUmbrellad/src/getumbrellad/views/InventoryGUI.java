@@ -21,6 +21,7 @@ public class InventoryGUI extends JFrame {
     private JButton exitButton;
     private JList upgradeList;
     private InventoryGUIController controller;
+    private Player currentPlayer;
     
     private DefaultListModel<String> model;
     
@@ -33,13 +34,13 @@ public class InventoryGUI extends JFrame {
         this.setSize(900, 600);
         this.setLayout(new BorderLayout());
         
+        this.currentPlayer = currentPlayer;
+        
         Upgrade setup = new Upgrade();
         model = new DefaultListModel<>();
         upgradeList = new JList(model);
-        for (Upgrade currentUpgrade: Upgrade.upgrades) {
-            if (currentUpgrade.getIsOwned()) {
-                model.addElement(currentUpgrade.getType());
-            }
+        for (Upgrade currentUpgrade: currentPlayer.getPlayerUpgrades()) {
+            model.addElement(currentUpgrade.getType());
         }
         upgradeList.getSelectionModel().setSelectionMode(ListSelectionModel.SINGLE_SELECTION);
         
@@ -87,7 +88,7 @@ public class InventoryGUI extends JFrame {
         
         this.previousFrame = previousFrame;
         
-        controller = new InventoryGUIController(this, coinText, healthText, nameText, effectsText, descriptionText, exitButton, upgradeList, previousFrame);
+        controller = new InventoryGUIController(this, coinText, healthText, nameText, effectsText, descriptionText, exitButton, upgradeList, previousFrame, currentPlayer);
         upgradeList.addListSelectionListener(controller); 
         exitButton.addActionListener(controller);
         exitButton.addMouseListener(controller);

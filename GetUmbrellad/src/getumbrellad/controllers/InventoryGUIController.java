@@ -4,6 +4,7 @@
  */
 package getumbrellad.controllers;
 
+import getumbrellad.models.exceptions.Player;
 import java.awt.*;
 import javax.swing.*;
 
@@ -24,10 +25,11 @@ public class InventoryGUIController implements ActionListener, MouseListener, Li
     private JButton exitButton;
     private JList upgradeList;
     private JFrame previousFrame;
+    private Player currentPlayer;
     
     private Color normalExit;
     
-    public InventoryGUIController(JFrame InventoryGUI, JLabel coinText, JLabel healthText, JLabel nameText, JLabel effectsText, JLabel descriptionText, JButton exitButton, JList upgradeList, JFrame previousFrame) {
+    public InventoryGUIController(JFrame InventoryGUI, JLabel coinText, JLabel healthText, JLabel nameText, JLabel effectsText, JLabel descriptionText, JButton exitButton, JList upgradeList, JFrame previousFrame, Player currentPlayer) {
         this.InventoryGUI = InventoryGUI;
         this.coinText = coinText;
         this.healthText = healthText;
@@ -37,6 +39,7 @@ public class InventoryGUIController implements ActionListener, MouseListener, Li
         this.exitButton = exitButton;
         this.upgradeList = upgradeList;
         this.previousFrame = previousFrame;
+        this.currentPlayer = currentPlayer;
         
         normalExit = exitButton.getBackground();
     }
@@ -58,7 +61,7 @@ public class InventoryGUIController implements ActionListener, MouseListener, Li
 //        int selectedIndex = lsm.getMinSelectionIndex();
         String selectedItem = (String)upgradeList.getSelectedValue();
         
-        for (Upgrade currUpg: Upgrade.upgrades) {
+        for (Upgrade currUpg: currentPlayer.getPlayerUpgrades()) {
             if (currUpg.getType().equals(selectedItem)) {
                 nameText.setText("Name: " + currUpg.getType());
                 effectsText.setText("Value: " + currUpg.getValue());

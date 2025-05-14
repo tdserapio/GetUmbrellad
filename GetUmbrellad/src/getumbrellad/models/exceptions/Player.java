@@ -99,6 +99,38 @@ public class Player extends Character implements Spawnable {
         this.hp += increment;
     }
     
+    public int getMaxHPBuff() {
+        return this.maxHPBuff;
+    }
+    
+    public int getHpBuff() {
+        return this.hpBuff;
+    }
+    
+    public int getDamageBuff() {
+        return this.damageBuff;
+    }
+    
+    public int getDefenseBuff() {
+        return this.defenseBuff;
+    }
+    
+    public int getFloatBuff() {
+        return this.floatBuff;
+    }
+    
+    public int getJumpBuff() {
+        return this.jumpBuff;
+    }
+    
+    public int getCoinBuff() {
+        return this.coinBuff;
+    }
+    
+    public ArrayList<Upgrade> getPlayerUpgrades() {
+        return this.playerUpgrades;
+    }
+    
     public void writePlayer(String fileName) throws PlayerNotFoundException {
 
         // Path is relative to src/main/resources or classpath root
@@ -329,10 +361,6 @@ public class Player extends Character implements Spawnable {
         hitbox.x = x;
         hitbox.y = y;
         
-    }
-    
-    public ArrayList<Upgrade> getPlayerUpgrades() {
-        return playerUpgrades;
     }
     
     public void applyUpgrade(Upgrade upgrade) {
