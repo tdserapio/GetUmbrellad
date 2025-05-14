@@ -32,6 +32,8 @@ public class Player extends Character implements Spawnable {
     private final Image playerImg = new ImageIcon(getClass().getResource("../../resources/character.png")).getImage();
     
     private ArrayList<Upgrade> playerUpgrades = new ArrayList<>();
+    private int maxHPBuff = 0, hpBuff = 0, damageBuff = 0, defenseBuff = 0, floatBuff = 0, jumpBuff = 0, coinBuff = 0;
+    private double floatingEffect;
     
     public Player(String fileName, LevelGameplayGUI lggui) throws PlayerNotFoundException {
         
@@ -80,11 +82,16 @@ public class Player extends Character implements Spawnable {
         this.money = money;
     }
     
+    public void earnMoney() {
+        this.money += 1 * coinBuff;
+    }
+    
     public int getHP() {
         return this.hp;
     }
     
     public void deductHP(int decrement) {
+        decrement -= defenseBuff;
         this.hp -= decrement;
     }
     
@@ -263,7 +270,7 @@ public class Player extends Character implements Spawnable {
                 if (boostDelay == 0) {
                     boostDelay = 15;
                     if (getDirectionalComponentOf(xMouse, x, yMouse, y, false) < 0) {
-                        ySpeed = -yJumpFactor;
+                        ySpeed = -yJumpFactor - jumpBuff;
                         xSpeed = xJumpFactor * getDirectionalComponentOf(xMouse, x, yMouse, y, true);
                     }
                 }
@@ -281,9 +288,9 @@ public class Player extends Character implements Spawnable {
             boostDelay--;
         }
         
-        double gravity = 0.5;
+        double gravity = 0.5 -  floatingEffect;
         if (!canJump && !keyUp && ySpeed > 0) {
-            gravity = 0.072;
+            gravity = 0.072 - floatingEffect;
         }
         
         //gravity
@@ -329,7 +336,32 @@ public class Player extends Character implements Spawnable {
     }
     
     public void applyUpgrade(Upgrade upgrade) {
+        int value = upgrade.getValue();
+        String increasedStat = upgrade.getIncreasedStat();
         
+        if (increasedStat.equals("maxHP")) {
+            maxHPBuff += value;
+            maxHP += value;
+            hpBuff += value;
+            hp += value;
+        } else if (increasedStat.equals("hp")) {
+            hpBuff += value;
+            hp += value;
+        } else if (increasedStat.equals("damage")) {
+            damageBuff += value;
+            damage += value;
+        } else if (increasedStat.equals("defense")) {
+            defenseBuff += value;
+        } else if (increasedStat.equals("float")) {
+            floatBuff += value;
+            floatingEffect = floatBuff * 0.01;
+        } else if (increasedStat.equals("jump")) {
+            jumpBuff += value;
+        } else if (increasedStat.equals("coin")) {
+            coinBuff *= value;
+        } else {
+            System.out.println("Oops! The upgrade was useless.");
+        }
     }
     
     @Override
