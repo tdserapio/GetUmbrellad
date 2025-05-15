@@ -9,3 +9,6 @@ Platform 3,Obstacle,290,483,100,71
 NPC1,NPC,588,494,45,60
 Platform 4,Obstacle,812,477,42,22
 Coin 1,Coin,822,451,20,20
+Shooter 1,Shooter,152,294,62,80
+Platform 5,Obstacle,332,280,330,20
+Chaser 1,Chaser,333,199,60,81

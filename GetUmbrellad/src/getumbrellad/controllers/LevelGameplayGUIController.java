@@ -1,5 +1,6 @@
 package getumbrellad.controllers;
 
+import getumbrellad.models.exceptions.Chaser;
 import getumbrellad.models.exceptions.Coin;
 import getumbrellad.models.exceptions.Shooter;
 import getumbrellad.models.exceptions.NPC;
@@ -185,6 +186,8 @@ public class LevelGameplayGUIController implements ActionListener, MouseListener
                     StoreMenuGUIController.NPCs.add(currentNPC);
                 } else if (currentType.equals("Coin")) {
                     entities.add(new Coin(this.panel, currX, currY));
+                } else if (currentType.equals("Chaser")) {
+                    entities.add(new Chaser(this.panel, currX, currY, currWidth, currHeight, gameTimer));
                 }
                 
             }

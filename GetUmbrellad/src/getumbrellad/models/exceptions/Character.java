@@ -68,17 +68,17 @@ public abstract class Character {
 
     /**
      * Gets the character's x position
-     * @return the protected Float x
+     * @return the protected integer x
      */
-    public float getX() {
+    public int getX() {
         return this.x;
     }
 
     /**
      * Gets the character's y position
-     * @return the protected Float y
+     * @return the protected integer y
      */
-    public float getY() {
+    public int getY() {
         return this.y;
     }
 

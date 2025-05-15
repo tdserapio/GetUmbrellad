@@ -137,6 +137,10 @@ public class Player extends Character implements Spawnable {
         return this.coinBuff;
     }
     
+    public Rectangle getHitBox() {
+        return this.hitbox;
+    }
+    
     public ArrayList<Upgrade> getPlayerUpgrades() {
         playerUpgrades = new ArrayList<>();
         for (Upgrade currUPG: Upgrade.upgrades) {
