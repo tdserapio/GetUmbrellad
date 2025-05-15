@@ -145,6 +145,8 @@ public class StoreMenuGUIController implements ActionListener, MouseListener {
                 width = 280;
             } else if (components == 3) {
                 width = 210;
+            } else if (components == 0) {
+                System.out.println("Shop is empty");
             } else {
                 System.out.println("Error more or less than 3 components");
             }
