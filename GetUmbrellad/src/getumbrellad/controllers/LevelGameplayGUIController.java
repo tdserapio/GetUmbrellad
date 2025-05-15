@@ -18,6 +18,8 @@ import java.io.InputStreamReader;
 import java.util.ArrayList;
 import java.util.Timer;
 import java.util.TimerTask;
+import javax.swing.JButton;
+import javax.swing.JLabel;
 
 public class LevelGameplayGUIController implements ActionListener, MouseListener, MouseMotionListener, KeyListener{
 
@@ -27,6 +29,9 @@ public class LevelGameplayGUIController implements ActionListener, MouseListener
     private boolean paused = false;
     private Timer gameTimer;
     private Player player;
+    
+    private JButton menuButton;
+    private JLabel coinLabel, hpLabel;
     
     public LevelGameplayGUIController(LevelGameplayGUI panel) {
         
@@ -59,6 +64,9 @@ public class LevelGameplayGUIController implements ActionListener, MouseListener
                         panel.getFrame().dispose();
                     }
                     
+                    if (coinLabel != null) coinLabel.setText(player.getMoney() + "");
+                    if (hpLabel != null) hpLabel.setText(player.getHP() + "");
+                    
                     panel.repaint();           // schedule a redraw
                 }
             }
@@ -66,8 +74,20 @@ public class LevelGameplayGUIController implements ActionListener, MouseListener
         
     }
     
+    public void setupFrontend(JButton menuButton, JLabel coinLabel, JLabel hpLabel) {
+        this.menuButton = menuButton;
+        this.coinLabel = coinLabel;
+        this.hpLabel = hpLabel;
+    }
+    
     @Override
-    public void actionPerformed(ActionEvent e) {}
+    public void actionPerformed(ActionEvent e) {
+    
+        if (menuButton != null && e.getSource() == menuButton) {
+            if (!paused) togglePause();
+        }
+        
+    }
 
     
     @Override
