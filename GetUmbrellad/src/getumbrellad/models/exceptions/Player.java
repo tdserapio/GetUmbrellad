@@ -32,7 +32,7 @@ public class Player extends Character implements Spawnable {
     private final Image playerImg = new ImageIcon(getClass().getResource("../../resources/character.png")).getImage();
     
     private ArrayList<Upgrade> playerUpgrades = new ArrayList<>();
-    private int maxHPBuff = 0, hpBuff = 0, damageBuff = 0, defenseBuff = 0, floatBuff = 0, jumpBuff = 0, coinBuff = 0;
+    private int maxHPBuff = 0, hpBuff = 0, damageBuff = 0, defenseBuff = 0, floatBuff = 0, jumpBuff = 0, coinBuff = 1;
     private double floatingEffect;
     
     public Player(String fileName, LevelGameplayGUI lggui) throws PlayerNotFoundException {
@@ -80,10 +80,20 @@ public class Player extends Character implements Spawnable {
     
     public void setMoney(int money) {
         this.money = money;
+        try {
+            writePlayer("umbrella_boy.csv");
+        } catch (PlayerNotFoundException pnfe) {
+            System.out.println("BY NO MEANS SHOULD THIS HAPPEN...");
+        }
     }
     
     public void earnMoney() {
         this.money += 1 * coinBuff;
+        try {
+            writePlayer("umbrella_boy.csv");
+        } catch (PlayerNotFoundException pnfe) {
+            System.out.println("BY NO MEANS SHOULD THIS HAPPEN...");
+        }
     }
     
     public int getHP() {
@@ -156,7 +166,7 @@ public class Player extends Character implements Spawnable {
 
                 // Write player data
                 writer.write(getName() + "," +
-                             getmaxHP() + "," +
+                             getHP() + "," +
                              getDamage() + "," +
                              getMoney());
                 writer.newLine();
@@ -212,14 +222,16 @@ public class Player extends Character implements Spawnable {
     public void checkAllCollisions() {
         
         ArrayList<Spawnable> currentSpawnables = lgGUI.getController().getSpawnables();
-        ArrayList<Bullet> toDestroy = new ArrayList<>();
+        
+        ArrayList<Bullet> toDestroyBullet = new ArrayList<>();
+        ArrayList<Coin> toDestroyCoin = new ArrayList<>();
         
         for (Spawnable entity: currentSpawnables) {
             if (entity instanceof Bullet) {
                 Bullet currentBullet = (Bullet)entity;
                 if (currentBullet.getHitbox().intersects(hitbox)) {
                     this.deductHP(currentBullet.getDamage());
-                    toDestroy.add(currentBullet);
+                    toDestroyBullet.add(currentBullet);
                 }
             } else if (entity instanceof NPC) {  
                 NPC currentNPC = (NPC)entity;
@@ -242,13 +254,18 @@ public class Player extends Character implements Spawnable {
                     currentNPC.setIsOverlapping(false);
                     currentNPC.setHasInteracted(false);
                 }
+            } else if (entity instanceof Coin) {
+                Coin currentCoin = (Coin)entity;
+                if (currentCoin.getHitbox().intersects(hitbox)) {
+                    this.earnMoney();
+                    toDestroyCoin.add(currentCoin);
+                }
             }
         }
         
         
-        for (Bullet b: toDestroy) {
-            b.destroy();
-        }
+        for (Bullet b: toDestroyBullet) b.destroy();
+        for (Coin c: toDestroyCoin) c.destroy();
         
     }
     

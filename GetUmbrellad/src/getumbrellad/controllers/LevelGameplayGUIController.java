@@ -1,5 +1,6 @@
 package getumbrellad.controllers;
 
+import getumbrellad.models.exceptions.Coin;
 import getumbrellad.models.exceptions.Shooter;
 import getumbrellad.models.exceptions.NPC;
 import getumbrellad.models.exceptions.Obstacle;
@@ -162,6 +163,8 @@ public class LevelGameplayGUIController implements ActionListener, MouseListener
                     NPC currentNPC = new NPC(this.panel, currentName, currX, currY, currWidth, currHeight, this.player);
                     entities.add(currentNPC);
                     StoreMenuGUIController.NPCs.add(currentNPC);
+                } else if (currentType.equals("Coin")) {
+                    entities.add(new Coin(this.panel, currX, currY));
                 }
                 
             }
