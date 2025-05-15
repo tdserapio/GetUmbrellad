@@ -82,12 +82,14 @@ public class StoreMenuGUI extends JFrame {
             try {
                 JLabel picLabel = new JLabel(new ImageIcon(StoreMenuGUI.class.getResource("../resources/" + currentUpgradeName + ".png")), SwingConstants.CENTER);
                 itemPanel.add(picLabel, BorderLayout.NORTH);
+                itemPanel.setName(currentUpgradeName);
             } catch (Exception fileError) {
                 JLabel itemFrame = new JLabel("[ ]", SwingConstants.CENTER);
                 itemPanel.add(itemFrame, BorderLayout.NORTH);
             }
             
             JLabel itemLabel = new JLabel(canBeBought.get(i).getName(), SwingConstants.CENTER);
+            itemLabel.setFont(new Font("Arial", Font.BOLD, 32));
             itemPanel.add(itemLabel, BorderLayout.SOUTH);
             
             itemsPanel.add(itemPanel);
