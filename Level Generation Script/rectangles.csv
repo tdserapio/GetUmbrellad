@@ -7,4 +7,5 @@ Platform 1,Obstacle,153,520,86,33
 Platform 2,Obstacle,53,379,684,23
 Platform 3,Obstacle,290,483,100,71
 NPC1,NPC,588,494,45,60
-Platform 4,Obstacle,811,449,42,22
+Platform 4,Obstacle,812,477,42,22
+Coin 1,Coin,822,451,20,20

@@ -1,5 +1,6 @@
 package getumbrellad.controllers;
 
+import getumbrellad.models.exceptions.Coin;
 import getumbrellad.models.exceptions.Shooter;
 import getumbrellad.models.exceptions.NPC;
 import getumbrellad.models.exceptions.Obstacle;
@@ -17,6 +18,8 @@ import java.io.InputStreamReader;
 import java.util.ArrayList;
 import java.util.Timer;
 import java.util.TimerTask;
+import javax.swing.JButton;
+import javax.swing.JLabel;
 
 public class LevelGameplayGUIController implements ActionListener, MouseListener, MouseMotionListener, KeyListener{
 
@@ -26,6 +29,9 @@ public class LevelGameplayGUIController implements ActionListener, MouseListener
     private boolean paused = false;
     private Timer gameTimer;
     private Player player;
+    
+    private JButton menuButton;
+    private JLabel coinLabel, hpLabel;
     
     public LevelGameplayGUIController(LevelGameplayGUI panel) {
         
@@ -58,6 +64,9 @@ public class LevelGameplayGUIController implements ActionListener, MouseListener
                         panel.getFrame().dispose();
                     }
                     
+                    if (coinLabel != null) coinLabel.setText(player.getMoney() + "");
+                    if (hpLabel != null) hpLabel.setText(player.getHP() + "");
+                    
                     panel.repaint();           // schedule a redraw
                 }
             }
@@ -65,8 +74,20 @@ public class LevelGameplayGUIController implements ActionListener, MouseListener
         
     }
     
+    public void setupFrontend(JButton menuButton, JLabel coinLabel, JLabel hpLabel) {
+        this.menuButton = menuButton;
+        this.coinLabel = coinLabel;
+        this.hpLabel = hpLabel;
+    }
+    
     @Override
-    public void actionPerformed(ActionEvent e) {}
+    public void actionPerformed(ActionEvent e) {
+    
+        if (menuButton != null && e.getSource() == menuButton) {
+            if (!paused) togglePause();
+        }
+        
+    }
 
     
     @Override
@@ -162,6 +183,8 @@ public class LevelGameplayGUIController implements ActionListener, MouseListener
                     NPC currentNPC = new NPC(this.panel, currentName, currX, currY, currWidth, currHeight, this.player);
                     entities.add(currentNPC);
                     StoreMenuGUIController.NPCs.add(currentNPC);
+                } else if (currentType.equals("Coin")) {
+                    entities.add(new Coin(this.panel, currX, currY));
                 }
                 
             }
