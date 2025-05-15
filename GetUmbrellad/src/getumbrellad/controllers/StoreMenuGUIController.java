@@ -133,7 +133,22 @@ public class StoreMenuGUIController implements ActionListener, MouseListener {
         
         hoverTimer = new Timer(delay, event -> {
             String itemName = hoveredComponent.getName();
-        
+            
+            int components = 0;
+            int width = 0;
+            for (Component itemPanel : itemsPanel.getComponents()) {
+                components++;
+            }
+            if (components == 1) {
+                width = 350;
+            } else if (components == 2) {
+                width = 280;
+            } else if (components == 3) {
+                width = 210;
+            } else {
+                System.out.println("Error more or less than 3 components");
+            }
+            
             for (Upgrade currUPG: Upgrade.upgrades) {
                 String upgradeName = currUPG.getName().toLowerCase().replaceAll("\\s+", "");
                 if (upgradeName.equals(itemName)) {  
@@ -145,7 +160,7 @@ public class StoreMenuGUIController implements ActionListener, MouseListener {
                         points = " points!!";
                     }
                     String description = 
-                    "<html><body style='width:280px; padding:10px;'><h1>"
+                    "<html><body style='width:" + width + "px; padding:10px;'><h1>"
                     + currUPG.getDescription()
                     + "</h1><h2> Increases your "
                     + currUPG.getIncreasedStat()
@@ -188,7 +203,7 @@ public class StoreMenuGUIController implements ActionListener, MouseListener {
                 
                     Point location = hoveredComponent.getLocationOnScreen();
                     int x = location.x + (hoveredComponent.getWidth() / 2) - (window.getWidth() / 2);
-                    int y = location.y - window.getHeight() + 375;
+                    int y = location.y - window.getHeight() + 400;
                     window.setLocation(x, y);
                     currentWindow = window;
                     window.setVisible(true);
