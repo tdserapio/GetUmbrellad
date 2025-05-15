@@ -1,7 +1,7 @@
 package getumbrellad.views;
 
 import getumbrellad.controllers.LevelGameplayGUIController;
-import getumbrellad.models.exceptions.Enemy;
+import getumbrellad.models.exceptions.Shooter;
 import getumbrellad.models.exceptions.Obstacle;
 import getumbrellad.models.exceptions.Player;
 import getumbrellad.models.exceptions.PlayerNotFoundException;

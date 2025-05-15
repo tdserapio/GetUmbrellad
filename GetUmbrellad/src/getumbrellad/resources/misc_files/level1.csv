@@ -1,11 +1,10 @@
-name, type, x, y, width, height
-Obstacle1, Obstacle, 0, 520, 900, 50
-Obstacle2, Obstacle, 0, 0, 40, 600
-Obstacle3, Obstacle, 850, 0, 900, 600
-Obstacle4, Obstacle, 250, 350, 150, 50
-Obstacle5, Obstacle, 450, 200, 300, 50
-Spawn Point, Spawn, 100, 400, -1, -1
-Enemy1, Shooter, 250, 303, 70, 47
-NPC1, NPC, 600, 430, 45, 60
-NPC2, NPC, 100, 330, 45, 60
-Enemy2, Shooter, 250, 250, 70, 47
+name,type,x,y,width,height
+Border 1,Obstacle,2,0,52,610
+Spawn Point,Spawn,76,524,28,29
+Ground,Obstacle,54,553,843,135
+Border 3,Obstacle,852,2,46,551
+Platform 1,Obstacle,153,520,86,33
+Platform 2,Obstacle,53,379,684,23
+Platform 3,Obstacle,290,483,100,71
+NPC1,NPC,588,494,45,60
+Platform 4,Obstacle,811,449,42,22

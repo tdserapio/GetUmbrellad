@@ -62,13 +62,6 @@ public class StoreMenuGUI extends JFrame {
         
         statsPanel.add(coinPanel, BorderLayout.EAST);
         
-        //can be bought arraylist was here
-        for (Upgrade currUPG: Upgrade.upgrades) {
-            if (!currUPG.getIsOwned()) {
-                canBeBought.add(currUPG);
-            }
-        }
-        
         // Items Panel
         itemsPanel = new JPanel(new GridLayout(1, canBeBought.size(), 10, 10));
         itemsPanel.setBorder(
@@ -83,8 +76,11 @@ public class StoreMenuGUI extends JFrame {
             JPanel itemPanel = new JPanel(new BorderLayout());
             itemPanel.setBorder(BorderFactory.createLineBorder(Color.BLACK, 1));
             
+            String currentUpgradeName = canBeBought.get(i).getName();
+            currentUpgradeName = currentUpgradeName.replaceAll("\\s+", "").toLowerCase();
+            
             try {
-                JLabel picLabel = new JLabel(new ImageIcon(StoreMenuGUI.class.getResource("../resources/placeholder.png")), SwingConstants.CENTER);
+                JLabel picLabel = new JLabel(new ImageIcon(StoreMenuGUI.class.getResource("../resources/" + currentUpgradeName + ".png")), SwingConstants.CENTER);
                 itemPanel.add(picLabel, BorderLayout.NORTH);
             } catch (Exception fileError) {
                 JLabel itemFrame = new JLabel("[ ]", SwingConstants.CENTER);

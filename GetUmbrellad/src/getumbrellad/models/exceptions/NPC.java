@@ -114,8 +114,6 @@ public class NPC extends Character implements Spawnable {
     
     @Override
     public void draw(Graphics2D gtd) {
-        gtd.setColor(Color.BLACK);
-        gtd.fillRect(x, y, width, height);
         gtd.drawImage(NPCImg, x, y, lgGUI);
     }
     

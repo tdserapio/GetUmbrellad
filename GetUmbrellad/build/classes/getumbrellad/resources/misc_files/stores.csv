@@ -1,6 +1,6 @@
-shop_owner, upgrade_name, upgrade_value, increased_stat, description, owned, cost
+shop_owner,upgrade_name,upgrade_value,increased_stat,description,owned,cost
 NPC1,Knitting Kit,1,maxHP,This increases the maximum hp of the player.,0,20
-NPC1,Jolly Jumper,1,jump,This increases the jump height of the player.,0,10
+NPC1,Jolly Jumper,1,jump,This increases the jump height of the player.,1,10
 NPC1,Metal Umbrella,1,damage,This increases the damage the umbrellas has a melee weapon.,0,50
 NPC2,Fairy Dust,2,float,This slightly increases the float time of the player.,0,20
 NPC2,Greedy Goblin,3,coin,This goblin somehow duplicates the players coins when collecting.,0,50
