@@ -17,6 +17,7 @@ import java.io.IOException;
 import java.io.InputStream;
 import java.io.InputStreamReader;
 import java.util.ArrayList;
+import java.util.Objects;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
@@ -28,6 +29,12 @@ public class StoreMenuGUIController implements ActionListener, MouseListener {
     private JPanel itemsPanel;
     private Player currentPlayer;
     private NPC currentNPC;
+    private ArrayList<JDialog> dialogs = new ArrayList<JDialog>();
+    private boolean mouseInsideTooltip = false, mouseInsideItemPanel;
+    private JWindow currentWindow = null;
+    private Timer hoverTimer = null;
+    private Component hoveredComponent = null;
+    private int delay = 200;
     
     public static ArrayList<NPC> NPCs = new ArrayList<>();
     
@@ -38,7 +45,7 @@ public class StoreMenuGUIController implements ActionListener, MouseListener {
         this.lggui = lggui;
         this.currentPlayer = currentPlayer;
         this.currentNPC = currentNPC;
-        
+
     }
     
     public void goBack(ActionEvent e){
@@ -102,12 +109,111 @@ public class StoreMenuGUIController implements ActionListener, MouseListener {
             JOptionPane.showMessageDialog(GUI, "Oops, item not found!", "OK", JOptionPane.INFORMATION_MESSAGE);
         }
         
+        //remove tooltip
+        if (currentWindow != null) {
+            currentWindow.dispose();
+            currentWindow = null;
+        }
+        mouseInsideTooltip = false;
+        mouseInsideItemPanel = false;
+
         StoreMenuGUI smgui = new StoreMenuGUI(lggui, this.currentPlayer, this.currentNPC);
         smgui.setVisible(true);
         this.GUI.dispose();
         
     }
 
+    public void showDescription(MouseEvent e) {
+        
+        hoveredComponent = (Component) e.getSource();
+        
+        if (hoverTimer != null && hoverTimer.isRunning()) {
+            hoverTimer.stop();
+        }
+        
+        hoverTimer = new Timer(delay, event -> {
+            String itemName = hoveredComponent.getName();
+        
+            for (Upgrade currUPG: Upgrade.upgrades) {
+                String upgradeName = currUPG.getName().toLowerCase().replaceAll("\\s+", "");
+                if (upgradeName.equals(itemName)) {  
+                    String points = "ERROR";
+                    if (currUPG.getValue() == 1) {
+                        points = " point!";
+                    }
+                    else {
+                        points = " points!!";
+                    }
+                    String description = 
+                    "<html><body style='width:280px; padding:10px;'><h1>"
+                    + currUPG.getDescription()
+                    + "</h1><h2> Increases your "
+                    + currUPG.getIncreasedStat()
+                    + " by " + currUPG.getValue() + points
+                    + "</h2></body></html>";
+                
+                    if (currentWindow != null) {
+                        currentWindow.dispose();
+                        currentWindow = null;
+                    }
+                
+                    JWindow window = new JWindow();
+                    JLabel label = new JLabel(description);
+                    label.setBorder(BorderFactory.createLineBorder(Color.BLACK));
+                    label.setBackground(Color.decode("#E5E5E5"));
+                    label.setOpaque(true);
+                    window.getContentPane().add(label);
+                    window.pack();
+                    
+                    window.addMouseListener(new MouseAdapter() {
+                        @Override
+                        public void mouseEntered(MouseEvent e) {
+                            mouseInsideTooltip = true;
+                        }
+
+                        @Override
+                        public void mouseExited(MouseEvent e) {
+                            mouseInsideTooltip = false;
+                        
+                            new Timer(delay, event -> {
+                                if (!mouseInsideTooltip && !mouseInsideItemPanel) {
+                                    if (currentWindow != null) {
+                                        currentWindow.dispose();
+                                        currentWindow = null;
+                                    }
+                                }
+                            }).start();
+                        }
+                    });
+                
+                    Point location = hoveredComponent.getLocationOnScreen();
+                    int x = location.x + (hoveredComponent.getWidth() / 2) - (window.getWidth() / 2);
+                    int y = location.y - window.getHeight() + 375;
+                    window.setLocation(x, y);
+                    currentWindow = window;
+                    window.setVisible(true);
+                    break;
+                }           
+            }
+        });
+    
+        hoverTimer.setRepeats(false);
+        hoverTimer.start();
+        
+    }
+    
+    public void hideDescription(MouseEvent e) {
+        mouseInsideItemPanel = false;
+        
+        new Timer(delay, event -> {
+            if (!mouseInsideTooltip && !mouseInsideItemPanel) {
+                if (currentWindow != null) {
+                    currentWindow.dispose();
+                    currentWindow = null;
+                }
+            }
+        }).start();
+    }
     
     @Override
     public void actionPerformed(ActionEvent e) {
@@ -116,12 +222,13 @@ public class StoreMenuGUIController implements ActionListener, MouseListener {
 
     @Override    
     public void mouseEntered(MouseEvent e){
-        
+        mouseInsideItemPanel = true;
+        showDescription(e);
     }
 
     @Override
     public void mouseExited(MouseEvent e) {
-        
+        hideDescription(e);
     }
 
     @Override
