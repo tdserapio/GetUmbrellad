@@ -128,6 +128,12 @@ public class Player extends Character implements Spawnable {
     }
     
     public ArrayList<Upgrade> getPlayerUpgrades() {
+        playerUpgrades = new ArrayList<>();
+        for (Upgrade currUPG: Upgrade.upgrades) {
+            if (currUPG.getIsOwned()) {
+                playerUpgrades.add(currUPG);
+            }
+        }
         return this.playerUpgrades;
     }
     

@@ -27,17 +27,17 @@ public class StoreMenuGUIController implements ActionListener, MouseListener {
     private JButton exitButton;
     private JPanel itemsPanel;
     private Player currentPlayer;
-    private ArrayList<Upgrade> canBeBought;
+    private NPC currentNPC;
     
     public static ArrayList<NPC> NPCs = new ArrayList<>();
     
-    public StoreMenuGUIController(JFrame GUI, JButton exitButton, JPanel itemsPanel, LevelGameplayGUI lggui, Player currentPlayer, ArrayList<Upgrade> canBeBought) {
+    public StoreMenuGUIController(JFrame GUI, JButton exitButton, JPanel itemsPanel, LevelGameplayGUI lggui, Player currentPlayer, NPC currentNPC) {
         this.GUI = GUI;
         this.exitButton = exitButton;
         this.itemsPanel = itemsPanel;
         this.lggui = lggui;
         this.currentPlayer = currentPlayer;
-        this.canBeBought = canBeBought;
+        this.currentNPC = currentNPC;
         
     }
     
@@ -73,7 +73,7 @@ public class StoreMenuGUIController implements ActionListener, MouseListener {
             Upgrade actualUpgrade = null;
             
             for (Upgrade currUPG: Upgrade.upgrades) {
-                if (currUPG.getType().equals(itemName)) {
+                if (currUPG.getName().equals(itemName)) {
                     actualUpgrade = currUPG;
                     if (currUPG.getCost() > this.currentPlayer.getMoney()) {
                         JOptionPane.showMessageDialog(null, "You're too broke for this.", "Phew, my dollars are saved!", JOptionPane.INFORMATION_MESSAGE);
@@ -95,17 +95,14 @@ public class StoreMenuGUIController implements ActionListener, MouseListener {
                 this.currentPlayer.getPlayerUpgrades().add(actualUpgrade);
                 this.currentPlayer.applyUpgrade(actualUpgrade);
                 actualUpgrade.setIsOwned(true);
-                actualUpgrade.writeJsonFile();
             } else {
                 JOptionPane.showMessageDialog(GUI, itemName + " purchase was cancelled.", "Phew, my dollars are saved!", JOptionPane.INFORMATION_MESSAGE);
             }
         } catch (ItemNotFoundException inf) {
             JOptionPane.showMessageDialog(GUI, "Oops, item not found!", "OK", JOptionPane.INFORMATION_MESSAGE);
-        } catch (PlayerNotFoundException ex) {
-            Logger.getLogger(StoreMenuGUIController.class.getName()).log(Level.SEVERE, null, ex);
         }
         
-        StoreMenuGUI smgui = new StoreMenuGUI(lggui, this.currentPlayer, canBeBought);
+        StoreMenuGUI smgui = new StoreMenuGUI(lggui, this.currentPlayer, this.currentNPC);
         smgui.setVisible(true);
         this.GUI.dispose();
         

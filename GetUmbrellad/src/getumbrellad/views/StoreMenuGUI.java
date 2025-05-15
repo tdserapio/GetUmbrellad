@@ -1,6 +1,7 @@
 package getumbrellad.views;
 
 import getumbrellad.controllers.StoreMenuGUIController;
+import getumbrellad.models.exceptions.NPC;
 import getumbrellad.models.exceptions.Player;
 import getumbrellad.models.exceptions.PlayerNotFoundException;
 import getumbrellad.models.exceptions.Upgrade;
@@ -18,13 +19,16 @@ public class StoreMenuGUI extends JFrame {
     private JPanel statsPanel, itemsPanel, buttonPanel, coinPanel;
     private JLabel hpLabel, coinLabel;
     private JButton exitButton, nextButton;
-    private ArrayList<Upgrade> canBeBought;
     
     private StoreMenuGUIController controller;
     
+    private Player currentPlayer;
+    private NPC currentNPC;
     private JFrame previousFrame;
     
-    public StoreMenuGUI(LevelGameplayGUI lggui, Player currentPlayer, ArrayList<Upgrade> npcUpgrades) {
+    private ArrayList<Upgrade> canBeBought = new ArrayList<>();
+    
+    public StoreMenuGUI(LevelGameplayGUI lggui, Player currentPlayer, NPC currentNPC) {
         
         super("Store Menu");
         this.setLayout(new BorderLayout());
@@ -32,8 +36,12 @@ public class StoreMenuGUI extends JFrame {
         this.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         this.setResizable(false);
         
+        this.currentPlayer = currentPlayer;
+        this.currentNPC = currentNPC;
+        
+        this.canBeBought = currentNPC.getNPCUpgrades();
+        
         // Stats Panel
-        this.canBeBought = npcUpgrades;
         statsPanel = new JPanel(new BorderLayout());
         statsPanel.setBorder(
             BorderFactory.createTitledBorder(
@@ -54,7 +62,6 @@ public class StoreMenuGUI extends JFrame {
         
         statsPanel.add(coinPanel, BorderLayout.EAST);
         
-        Upgrade setup = new Upgrade();
         //can be bought arraylist was here
         for (Upgrade currUPG: Upgrade.upgrades) {
             if (!currUPG.getIsOwned()) {
@@ -84,7 +91,7 @@ public class StoreMenuGUI extends JFrame {
                 itemPanel.add(itemFrame, BorderLayout.NORTH);
             }
             
-            JLabel itemLabel = new JLabel(canBeBought.get(i).getType(), SwingConstants.CENTER);
+            JLabel itemLabel = new JLabel(canBeBought.get(i).getName(), SwingConstants.CENTER);
             itemPanel.add(itemLabel, BorderLayout.SOUTH);
             
             itemsPanel.add(itemPanel);
@@ -107,7 +114,7 @@ public class StoreMenuGUI extends JFrame {
         this.add(itemsPanel, BorderLayout.CENTER);
         this.add(buttonPanel, BorderLayout.SOUTH);
         
-        controller = new StoreMenuGUIController(this, exitButton, itemsPanel, lggui, currentPlayer, canBeBought);
+        controller = new StoreMenuGUIController(this, exitButton, itemsPanel, lggui, currentPlayer, currentNPC);
         exitButton.addActionListener(controller);
         exitButton.addMouseListener(controller);
         

@@ -37,11 +37,10 @@ public class InventoryGUI extends JFrame {
         
         this.currentPlayer = currentPlayer;
         
-        Upgrade setup = new Upgrade();
         model = new DefaultListModel<>();
         upgradeList = new JList(model);
         for (Upgrade currentUpgrade: currentPlayer.getPlayerUpgrades()) {
-            model.addElement(currentUpgrade.getType());
+            model.addElement(currentUpgrade.getName());
         }
         upgradeList.getSelectionModel().setSelectionMode(ListSelectionModel.SINGLE_SELECTION);
         

@@ -62,8 +62,8 @@ public class InventoryGUIController implements ActionListener, MouseListener, Li
         String selectedItem = (String)upgradeList.getSelectedValue();
         
         for (Upgrade currUpg: currentPlayer.getPlayerUpgrades()) {
-            if (currUpg.getType().equals(selectedItem)) {
-                nameText.setText("Name: " + currUpg.getType());
+            if (currUpg.getName().equals(selectedItem)) {
+                nameText.setText("Name: " + currUpg.getName());
                 effectsText.setText("Value: " + currUpg.getValue());
                 descriptionText.setText("<html>Description: <br>" + currUpg.getDescription() + "</html>"); 
                 break;
