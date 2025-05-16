@@ -116,7 +116,7 @@ public class StoreMenuGUI extends JFrame {
         nextButton = new JButton("NEXT");
         buttonPanel.add(nextButton, BorderLayout.CENTER);
 
-        exitButton = new JButton("EXIT");
+        exitButton = new JButton("RETURN");
         buttonPanel.add(exitButton, BorderLayout.CENTER);
 
         // Adding panels to JFrame
