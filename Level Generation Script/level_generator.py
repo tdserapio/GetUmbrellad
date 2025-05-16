@@ -13,7 +13,8 @@ FONT = pygame.font.Font(None, 24)
 GRID_SPACING   = 50
 HANDLE_SIZE    = 8
 DRAG_THRESHOLD = 5  # px
-CSV_FILE       = "rectangles.csv"
+
+CSV_FILE       = input("Enter the file name you want to modify: ")
 
 # None = free-size (Obstacle), tuples = fixed sizes
 TYPE_SIZES = {
@@ -23,6 +24,7 @@ TYPE_SIZES = {
     "NPC":      (45, 60),
     "Chaser":   (60, 81),
     "Coin":     (20, 20),
+    "Portal":   (54, 58)
 }
 
 # Types with fixed size
@@ -186,7 +188,7 @@ while running:
             state = "idle"
 
         elif ev.type == pygame.KEYDOWN:
-            if ev.key == pygame.K_DELETE and selected is not None:
+            if ev.key == pygame.K_BACKSPACE and selected is not None:
                 del blocks[selected]
                 selected = None
             elif ev.key == pygame.K_s:

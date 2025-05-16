@@ -3,12 +3,14 @@ Border 1,Obstacle,2,0,52,610
 Spawn Point,Spawn,76,524,28,29
 Ground,Obstacle,54,553,843,135
 Border 3,Obstacle,852,2,46,551
-Platform 1,Obstacle,153,520,86,33
-Platform 2,Obstacle,53,379,684,23
-Platform 3,Obstacle,290,483,100,71
-NPC1,NPC,588,494,45,60
-Platform 4,Obstacle,812,477,42,22
-Coin 1,Coin,822,451,20,20
-Shooter 1,Shooter,152,294,62,80
-Platform 5,Obstacle,332,280,330,20
-Chaser 1,Chaser,333,199,60,81
+Obstacle 1,Obstacle,256,473,171,31
+Coin 1,Coin,330,417,20,20
+Platform 2,Obstacle,482,400,159,27
+Coin 2,Coin,548,347,20,20
+Platform 3,Obstacle,172,303,199,30
+Platform 4,Obstacle,699,310,150,26
+Coin 3,Coin,763,252,20,20
+Platform 5,Obstacle,53,216,107,35
+Coin 4,Coin,263,255,20,20
+Coin 5,Coin,782,499,20,20
+Level 2 Portal,Portal,78,159,54,58

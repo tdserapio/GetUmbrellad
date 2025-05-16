@@ -1,0 +1,16 @@
+name,type,x,y,width,height
+Border 1,Obstacle,2,0,52,610
+Spawn Point,Spawn,76,524,28,29
+Ground,Obstacle,54,553,843,135
+Border 3,Obstacle,852,2,46,551
+Obstacle 1,Obstacle,256,473,171,31
+Coin 1,Coin,330,417,20,20
+Platform 2,Obstacle,482,400,159,27
+Coin 2,Coin,548,347,20,20
+Platform 3,Obstacle,172,303,199,30
+Platform 4,Obstacle,699,310,150,26
+Coin 3,Coin,763,252,20,20
+Platform 5,Obstacle,53,216,107,35
+Coin 4,Coin,263,255,20,20
+Coin 5,Coin,782,499,20,20
+Level 2 Portal,Portal,78,159,54,58

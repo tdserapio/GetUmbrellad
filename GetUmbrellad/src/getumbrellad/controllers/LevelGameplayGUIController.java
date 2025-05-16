@@ -2,11 +2,13 @@ package getumbrellad.controllers;
 
 import getumbrellad.models.exceptions.Chaser;
 import getumbrellad.models.exceptions.Coin;
+import getumbrellad.models.exceptions.LevelDoesNotExistException;
 import getumbrellad.models.exceptions.Shooter;
 import getumbrellad.models.exceptions.NPC;
 import getumbrellad.models.exceptions.Obstacle;
 import getumbrellad.models.exceptions.Player;
 import getumbrellad.models.exceptions.PlayerNotFoundException;
+import getumbrellad.models.exceptions.Portal;
 import getumbrellad.models.exceptions.Spawnable;
 import getumbrellad.views.GameOverGUI;
 import getumbrellad.views.LevelGameplayGUI;
@@ -20,7 +22,9 @@ import java.util.ArrayList;
 import java.util.Timer;
 import java.util.TimerTask;
 import javax.swing.JButton;
+import javax.swing.JFrame;
 import javax.swing.JLabel;
+import javax.swing.SwingUtilities;
 
 public class LevelGameplayGUIController implements ActionListener, MouseListener, MouseMotionListener, KeyListener{
 
@@ -31,6 +35,8 @@ public class LevelGameplayGUIController implements ActionListener, MouseListener
     private Timer gameTimer;
     private Player player;
     
+    private boolean hasLoadedPlayer = false;
+    
     private JButton menuButton;
     private JLabel coinLabel, hpLabel;
     
@@ -40,38 +46,45 @@ public class LevelGameplayGUIController implements ActionListener, MouseListener
         this.gameTimer = new Timer();
         
         try {
+            
             player = new Player("umbrella_boy.csv", this.panel);
-        } catch (PlayerNotFoundException e) {
-            System.err.println("LEVEL CANNOT BE LOADED, PLAYER NOT FOUND");
-            return;
-        }
-        
-        makeObstacles(player);
-        
-        gameTimer.schedule(new TimerTask() {
-            @Override
-            public void run() {
-                if (!paused) {
-                    
-                    ArrayList<Spawnable> entityCopy = new ArrayList<>(entities);
-                    for (Spawnable entity: entityCopy) {
-                        entity.updateState();
+            makeObstacles(player);
+            
+            this.hasLoadedPlayer = true;
+            
+            gameTimer.schedule(new TimerTask() {
+                @Override
+                public void run() {
+                    if (!paused) {
+
+                        ArrayList<Spawnable> entityCopy = new ArrayList<>(entities);
+                        for (Spawnable entity: entityCopy) {
+                            entity.updateState();
+                        }
+
+                        if (player.getIsDead()) {
+                            gameTimer.cancel();
+                            GameOverGUI gogui = new GameOverGUI(true);
+                            gogui.setVisible(true);
+                            panel.getFrame().dispose();
+                        }
+
+                        if (coinLabel != null) coinLabel.setText(player.getMoney() + "");
+                        if (hpLabel != null) hpLabel.setText(player.getHP() + "");
+
+                        panel.repaint();           // schedule a redraw
                     }
-                    
-                    if (player.getIsDead()) {
-                        gameTimer.cancel();
-                        GameOverGUI gogui = new GameOverGUI(true);
-                        gogui.setVisible(true);
-                        panel.getFrame().dispose();
-                    }
-                    
-                    if (coinLabel != null) coinLabel.setText(player.getMoney() + "");
-                    if (hpLabel != null) hpLabel.setText(player.getHP() + "");
-                    
-                    panel.repaint();           // schedule a redraw
                 }
-            }
-        }, 0, 17);
+            }, 0, 17);
+
+        } catch (LevelDoesNotExistException ldne) {
+            System.err.println("The level cannot be loaded.");
+        } catch (PlayerNotFoundException pnfe) {
+            System.err.println("The player cannot be loaded.");
+        } catch (Exception e) {
+            System.err.println("Something happened within the game loop:");
+            System.err.println(e.getMessage());
+        }
         
     }
     
@@ -90,6 +103,9 @@ public class LevelGameplayGUIController implements ActionListener, MouseListener
         
     }
 
+    public boolean getHasLoadedPlayer() {
+        return hasLoadedPlayer;
+    }
     
     @Override
     public void mouseClicked(MouseEvent e) {}
@@ -150,8 +166,14 @@ public class LevelGameplayGUIController implements ActionListener, MouseListener
         return paused;
     }
 
-    public void makeObstacles(Player player) {
-        InputStream inputStream = getClass().getClassLoader().getResourceAsStream("getumbrellad/resources/misc_files/level1.csv");
+    // makes level in general
+    public void makeObstacles(Player player) throws LevelDoesNotExistException {
+        
+        if (!(1 <= player.getLevel() && player.getLevel() <= 6)) {
+            throw new LevelDoesNotExistException();
+        }
+        
+        InputStream inputStream = getClass().getClassLoader().getResourceAsStream("getumbrellad/resources/misc_files/level" + player.getLevel() + ".csv");
 
         try (BufferedReader reader = new BufferedReader(new InputStreamReader(inputStream))) {
             
@@ -188,6 +210,8 @@ public class LevelGameplayGUIController implements ActionListener, MouseListener
                     entities.add(new Coin(this.panel, currX, currY));
                 } else if (currentType.equals("Chaser")) {
                     entities.add(new Chaser(this.panel, currX, currY, currWidth, currHeight, gameTimer));
+                } else if (currentType.equals("Portal")) {
+                    entities.add(new Portal(this.panel, currX, currY));
                 }
                 
             }
@@ -197,7 +221,6 @@ public class LevelGameplayGUIController implements ActionListener, MouseListener
         }
     }
 
-    /** Toggle pause and (optionally) show a PauseGUI overlay. */
     public void togglePause() {
         
         paused = !paused;
@@ -211,6 +234,23 @@ public class LevelGameplayGUIController implements ActionListener, MouseListener
             panel.setVisible(true);
             panel.requestFocusInWindow();
         }
+        
+    }
+    
+    public void refreshLevel() {
+        
+        if (!paused) paused = true;
+        gameTimer.cancel();
+        
+        SwingUtilities.invokeLater(() -> {
+            
+            JFrame oldFrame = panel.getFrame();
+            oldFrame.dispose();
+
+            LevelGameplayGUI newPanel = new LevelGameplayGUI();
+            newPanel.getFrame().setVisible(true);
+            
+        });
         
     }
     
@@ -250,5 +290,6 @@ public class LevelGameplayGUIController implements ActionListener, MouseListener
     public void setPaused(boolean isPaused) {
         this.paused = isPaused;
     }
+    
 }
 

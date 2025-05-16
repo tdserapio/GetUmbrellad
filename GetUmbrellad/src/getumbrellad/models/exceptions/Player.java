@@ -22,7 +22,7 @@ import javax.swing.JOptionPane;
 
 public class Player extends Character implements Spawnable {
     
-    private int money;
+    private int money, currentLevel;
     protected int xMouse, yMouse, boostDelay = 0; //movement attributes
     protected boolean keyUp, keyRight, keyLeft, canJump; //movement attributes
      
@@ -38,6 +38,7 @@ public class Player extends Character implements Spawnable {
     public Player(String fileName, LevelGameplayGUI lggui) throws PlayerNotFoundException {
         
         super(lggui, 40, 48, 50);
+        
         this.minSpeed = 0.5; 
         this.maxSpeed = 5.0;
         
@@ -65,6 +66,7 @@ public class Player extends Character implements Spawnable {
                 this.hp = Integer.parseInt(parts[1].trim());
                 this.damage = Integer.parseInt(parts[2].trim());
                 this.money = Integer.parseInt(parts[3].trim());
+                this.currentLevel = Integer.parseInt(parts[4].trim());
                 
             }
             
@@ -76,6 +78,19 @@ public class Player extends Character implements Spawnable {
     
     public int getMoney() {
         return this.money;
+    }
+    
+    public int getLevel() {
+        return this.currentLevel;
+    }
+    
+    public void setLevel(int newLevel) {
+        this.currentLevel = newLevel;
+        try {
+            writePlayer("umbrella_boy.csv");
+        } catch (PlayerNotFoundException pnfe) {
+            System.out.println("BY NO MEANS SHOULD THIS HAPPEN...");
+        }
     }
     
     public void setMoney(int money) {
@@ -165,14 +180,14 @@ public class Player extends Character implements Spawnable {
             try (BufferedWriter writer = Files.newBufferedWriter(outPath, StandardCharsets.UTF_8, StandardOpenOption.CREATE, StandardOpenOption.TRUNCATE_EXISTING)) {
 
                 // Write header
-                writer.write("name, hp, damage, money");
+                writer.write("name, hp, damage, money, current level");
                 writer.newLine();
 
                 // Write player data
                 writer.write(getName() + "," +
                              getHP() + "," +
                              getDamage() + "," +
-                             getMoney());
+                             getMoney() + "," + getLevel());
                 writer.newLine();
                 
                 writer.flush();

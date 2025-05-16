@@ -34,6 +34,8 @@ public class LevelGameplayGUI extends JPanel {
         this.addKeyListener(controller);
         this.addMouseListener(controller);
         this.addMouseMotionListener(controller);
+        
+        while (!this.controller.getHasLoadedPlayer()) continue;
 
         try {
             GraphicsEnvironment ge = GraphicsEnvironment.getLocalGraphicsEnvironment();
@@ -78,7 +80,7 @@ public class LevelGameplayGUI extends JPanel {
         
     }
 
-    public Frame getFrame() {
+    public JFrame getFrame() {
         return frame;
     }
 
