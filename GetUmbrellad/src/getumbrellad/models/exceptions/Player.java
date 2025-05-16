@@ -32,7 +32,7 @@ public class Player extends Character implements Spawnable {
     private final Image playerImg = new ImageIcon(getClass().getResource("../../resources/character.png")).getImage();
     
     private ArrayList<Upgrade> playerUpgrades = new ArrayList<>();
-    private int maxHPBuff = 0, hpBuff = 0, damageBuff = 0, defenseBuff = 0, floatBuff = 0, jumpBuff = 0, coinBuff = 1;
+    private int maxHPBuff = 0, hpBuff = 0, defenseBuff = 0, floatBuff = 0, jumpBuff = 0, coinBuff = 1;
     private double floatingEffect;
     
     public Player(String name, int hp, int damage, int money, int currentLevel) {
@@ -149,10 +149,6 @@ public class Player extends Character implements Spawnable {
     
     public int getHpBuff() {
         return this.hpBuff;
-    }
-    
-    public int getDamageBuff() {
-        return this.damageBuff;
     }
     
     public int getDefenseBuff() {
@@ -321,7 +317,7 @@ public class Player extends Character implements Spawnable {
         
         checkAllCollisions();
         
-        if (this.getHP() <= 0) {
+        if (this.getHP() <= 0 || this.y >= 1000) {
             this.isDead = true;
             return;
         }
@@ -437,9 +433,6 @@ public class Player extends Character implements Spawnable {
         } else if (increasedStat.equals("hp")) {
             hpBuff += value;
             hp += value;
-        } else if (increasedStat.equals("damage")) {
-            damageBuff += value;
-            damage += value;
         } else if (increasedStat.equals("defense")) {
             defenseBuff += value;
         } else if (increasedStat.equals("float")) {

@@ -51,7 +51,7 @@ public class LoreGUI extends JFrame{
         overallPanel.add(titleText);
         
         subtitleText = new JLabel();
-        subtitleText.setText("<html> <div style='text-align: center;'>In a realm where the skies are eternally stormy, the \"Paperkin\" are delicate <br> beings brought to life. Made entirely of paper, they are as <br> fragile as they are graceful, vulnerable to the elements and hostile <br> forces that lurk in their world. However, each Paperkin is gifted with <br> an umbrella — their only chance at surviving their harsh conditions. <br><br><br> You follow a Paperkin, ever so adventurous, who accidentally fell through <br>  the cracks and into the deep sewers. Will they make it out alive? </div> </html>");
+        subtitleText.setText("<html> <div style='text-align: center;'>In a realm where the skies are eternally stormy, the \"Paperkin\" are delicate and pacifist <br> beings brought to life. Made entirely of paper, they are as <br> fragile as they are graceful, vulnerable to the elements and hostile <br> forces that lurk in their world. However, each Paperkin is gifted with <br> an umbrella — their only chance at surviving their harsh conditions. <br><br><br> You follow a Paperkin, ever so adventurous, who accidentally fell through <br>  the cracks and into the deep sewers. Will they make it out alive? </div> </html>");
         subtitleText.setAlignmentX(JLabel.CENTER_ALIGNMENT);
         subtitleText.setFont(new Font("Lexend", Font.TRUETYPE_FONT, 20));
         subtitleText.setBorder(BorderFactory.createEmptyBorder(50, 80, 50, 50));
