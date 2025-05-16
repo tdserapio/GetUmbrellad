@@ -11,20 +11,30 @@ import java.util.TimerTask;
 
 public class Boss extends Character implements Spawnable {
 
-    private int x, y, width, height;
-    private double speed = 2.5; // faster than Chaser
+    private double speed = 2.3;
+    private double velocityY = 0;
+    private final double GRAVITY = 0.8;
+    private final double TERMINAL_VELOCITY = 12;
+    
+    private final int spawnPointX, spawnPointY;
+    
     private Rectangle hitbox;
+    private boolean isDead = false;
+    
+    private int direction;
 
     private final Image bossImg = new ImageIcon(getClass().getResource("../../resources/boss.png")).getImage();
 
-    public Boss(LevelGameplayGUI lggui, int x, int y, int width, int height, Timer gameTimer) {
-        super(lggui, width, height, 40);
+    public Boss(LevelGameplayGUI lggui, int x, int y, Timer gameTimer) {
+        
+        super(lggui, 76, 102, 40);
+        this.spawnPointX = x;
+        this.spawnPointY = y;
         this.x = x;
         this.y = y;
-        this.width = width;
-        this.height = height;
         this.hitbox = new Rectangle(x, y, width, height);
-        this.damage = 50;
+        this.damage = 1000;
+        this.direction = 0;
 
         gameTimer.schedule(new TimerTask() {
             @Override
@@ -34,6 +44,17 @@ public class Boss extends Character implements Spawnable {
                 }
             }
         }, 0, 1000);
+        
+        gameTimer.schedule(new TimerTask() {
+            @Override
+            public void run() {
+                if (lgGUI != null && lgGUI.getController() != null) {
+                    int playerX = lgGUI.getController().getPlayer().getX();
+                    direction = Integer.compare(playerX, x);
+                }
+            }
+        }, 0, 3500);
+        
     }
 
     @Override
@@ -44,26 +65,12 @@ public class Boss extends Character implements Spawnable {
 
     @Override
     public void draw(Graphics2D gtd) {
-        int dx = lgGUI.getController().getPlayer().getX() - x;
-        if (dx >= 0) {
-            gtd.drawImage(bossImg, x, y, lgGUI);
-        } else {
-            int imgWidth = bossImg.getWidth(null);
-            int imgHeight = bossImg.getHeight(null);
-
-            AffineTransform original = gtd.getTransform();
-
-            gtd.translate(x + imgWidth, y);
-            gtd.scale(-1, 1);
-            gtd.drawImage(bossImg, 0, 0, lgGUI);
-
-            gtd.setTransform(original);
-        }
+        gtd.drawImage(bossImg, x, y, lgGUI);
     }
 
-    public boolean isCollidingWithObstacle(Rectangle groundProbe) {
+    public boolean isCollidingWithObstacle(Rectangle probe) {
         for (Obstacle obs : lgGUI.getController().getObstacles()) {
-            if (obs.getHitbox().intersects(groundProbe)) {
+            if (obs.getHitbox().intersects(probe)) {
                 return true;
             }
         }
@@ -77,23 +84,30 @@ public class Boss extends Character implements Spawnable {
 
     @Override
     public void updateState() {
-        int playerX = lgGUI.getController().getPlayer().getX();
-        int direction = Integer.compare(playerX, x);
-        int nextX = x + (int) (speed * direction);
+        
+        x += (int) (speed * direction);
 
-        Rectangle futureHitbox = new Rectangle(nextX, y, width, height);
-        Rectangle groundProbe = new Rectangle(
-            futureHitbox.x + width / 2,
-            futureHitbox.y + height,
-            10,
-            10
-        );
+        velocityY += GRAVITY;
+        if (velocityY > TERMINAL_VELOCITY) {
+            velocityY = TERMINAL_VELOCITY;
+        }
+
+        int nextY = y + (int) velocityY;
+        Rectangle groundProbe = new Rectangle(x + width / 2, nextY + height, 4, 4);
 
         if (isCollidingWithObstacle(groundProbe)) {
-            x = nextX;
+            velocityY = 0;
+        } else {
+            y = nextY;
         }
 
         hitbox.x = x;
         hitbox.y = y;
+        
+        if (y >= 960) {
+            isDead = true;
+            lgGUI.getController().addEntity(new Portal(this.lgGUI, spawnPointX, spawnPointY));
+        }
+        
     }
 }

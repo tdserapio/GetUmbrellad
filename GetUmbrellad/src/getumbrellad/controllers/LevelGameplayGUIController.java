@@ -1,5 +1,6 @@
 package getumbrellad.controllers;
 
+import getumbrellad.models.exceptions.Boss;
 import getumbrellad.models.exceptions.Chaser;
 import getumbrellad.models.exceptions.Coin;
 import getumbrellad.models.exceptions.LevelDoesNotExistException;
@@ -209,6 +210,8 @@ public class LevelGameplayGUIController implements ActionListener, MouseListener
                     entities.add(new Chaser(this.panel, currX, currY, currWidth, currHeight, gameTimer));
                 } else if (currentType.equals("Portal")) {
                     entities.add(new Portal(this.panel, currX, currY));
+                } else if (currentType.equals("Boss")) {
+                    entities.add(new Boss(this.panel, currX, currY, gameTimer));
                 }
                 
             }
@@ -243,9 +246,16 @@ public class LevelGameplayGUIController implements ActionListener, MouseListener
             
             JFrame oldFrame = panel.getFrame();
             oldFrame.dispose();
-
-            LevelGameplayGUI newPanel = new LevelGameplayGUI();
-            newPanel.getFrame().setVisible(true);
+            
+            if (player.getLevel() == 6) {
+                gameTimer.cancel();
+                GameOverGUI gogui = new GameOverGUI(true);
+                gogui.setVisible(true);
+                gogui.requestFocusInWindow();
+            } else {
+                LevelGameplayGUI newPanel = new LevelGameplayGUI();
+                newPanel.getFrame().setVisible(true);
+            }
             
         });
         

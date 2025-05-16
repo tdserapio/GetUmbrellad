@@ -87,8 +87,8 @@ public class Bullet implements Spawnable {
         Rectangle proximity = new Rectangle(
             x + width/2,
             y + height/2,
-            80,
-            80
+            8,
+            8
         );
         
         if (lggui.getController().getPlayer().getUmbrella().getHitbox().intersects(proximity)) {

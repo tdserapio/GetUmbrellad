@@ -10,6 +10,7 @@ public class Portal extends Character implements Spawnable {
 
     private int x, y;
     private Rectangle hitbox;
+    private boolean alreadyTouched;
 
     private final Image portalImg = new ImageIcon(getClass().getResource("../../resources/portal.png")).getImage();
 
@@ -17,6 +18,7 @@ public class Portal extends Character implements Spawnable {
         super(lggui, 27, 29, 0);
         this.x = x;
         this.y = y;
+        this.alreadyTouched = false;
         this.hitbox = new Rectangle(x, y, width, height);
     }
 
@@ -34,7 +36,8 @@ public class Portal extends Character implements Spawnable {
     @Override
     public void updateState() {
         Player player = lgGUI.getController().getPlayer();
-        if (player.getHitBox().intersects(hitbox)) {
+        if (player.getHitBox().intersects(hitbox) && !alreadyTouched) {
+            alreadyTouched = true;
             player.setLevel(player.getLevel() + 1);
             lgGUI.getController().refreshLevel();
         }

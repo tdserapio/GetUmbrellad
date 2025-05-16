@@ -24,7 +24,8 @@ TYPE_SIZES = {
     "NPC":      (45, 60),
     "Chaser":   (60, 81),
     "Coin":     (20, 20),
-    "Portal":   (54, 58)
+    "Portal":   (54, 58),
+    "Boss":   (76, 102)
 }
 
 # Types with fixed size
