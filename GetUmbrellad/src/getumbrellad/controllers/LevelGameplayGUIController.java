@@ -247,9 +247,9 @@ public class LevelGameplayGUIController implements ActionListener, MouseListener
             JFrame oldFrame = panel.getFrame();
             oldFrame.dispose();
             
-            if (player.getLevel() == 6) {
+            if (player.getLevel() == 7) {
                 gameTimer.cancel();
-                GameOverGUI gogui = new GameOverGUI(true);
+                GameOverGUI gogui = new GameOverGUI(false);
                 gogui.setVisible(true);
                 gogui.requestFocusInWindow();
             } else {

@@ -35,6 +35,7 @@ public class Portal extends Character implements Spawnable {
 
     @Override
     public void updateState() {
+        if (alreadyTouched) return;
         Player player = lgGUI.getController().getPlayer();
         if (player.getHitBox().intersects(hitbox) && !alreadyTouched) {
             alreadyTouched = true;

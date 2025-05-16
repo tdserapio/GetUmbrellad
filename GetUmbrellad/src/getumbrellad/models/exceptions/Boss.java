@@ -104,7 +104,7 @@ public class Boss extends Character implements Spawnable {
         hitbox.x = x;
         hitbox.y = y;
         
-        if (y >= 960) {
+        if (y >= 960 && !isDead) {
             isDead = true;
             lgGUI.getController().addEntity(new Portal(this.lgGUI, spawnPointX, spawnPointY));
         }
