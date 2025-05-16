@@ -1,23 +1,25 @@
 name,type,x,y,width,height
 Wall 1,Obstacle,0,3,49,595
 Ground,Obstacle,49,551,849,46
-Wall 2,Obstacle,852,1,48,548
+Wall 2,Obstacle,852,6,48,548
 Platform 1,Obstacle,159,404,243,28
 Shooter 1,Shooter,161,320,62,80
 Shooter 2,Shooter,333,320,62,80
 NPC2,NPC,686,492,45,60
 Spawn Point,Spawn,181,498,28,29
 NPC1,NPC,64,490,45,60
-Platform 2,Obstacle,715,430,139,28
-Platform 3,Obstacle,524,341,156,28
-Platform 4,Obstacle,713,251,140,32
-Coin 1,Coin,775,219,20,20
+Platform 2,Obstacle,715,447,139,28
+Platform 3,Obstacle,530,396,156,28
+Platform 4,Obstacle,714,313,140,32
+Coin 1,Coin,780,275,20,20
 Platform 6,Obstacle,462,146,140,28
 Platform 7,Obstacle,234,140,157,27
 Platform 8,Obstacle,50,127,122,29
 Portal to Level 4,Portal,83,68,54,58
-Coin 2,Coin,774,404,20,20
+Coin 2,Coin,774,421,20,20
 Coin 3,Coin,311,118,20,20
 Coin 3,Coin,251,383,20,20
 Coin 4,Coin,284,381,20,20
 Coin 5,Coin,267,355,20,20
+platform 69420,Obstacle,535,247,139,28
+Platform ummmm,Obstacle,733,186,119,27

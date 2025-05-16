@@ -1,7 +1,3 @@
-/*
- * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
- * Click nbfs://nbhost/SystemFileSystem/Templates/Classes/Class.java to edit this template
- */
 package getumbrellad.models.exceptions;
 
 import getumbrellad.views.LevelGameplayGUI;
@@ -16,17 +12,57 @@ import javax.swing.ImageIcon;
 import java.util.Random;
 
 /**
- *
- * @author troy
+ * Represents a shooter in the game.
+ * The Shooter tracks the player's position, calculates an angle, and 
+ * shoots bullets toward the Player.
  */
 public class Shooter extends Character implements Spawnable {
     
-    private int x, y, width, height;
+    /**
+     * The x-coordinate of the Shooter.
+     */
+    private int x;
+
+    /**
+     * The y-coordinate of the Shooter.
+     */
+    private int y;
+
+    /**
+     * The width of the Shooter.
+     */
+    private int width;
+
+    /**
+     * The height of the Shooter.
+     */
+    private int height;
+
+    /**
+     * Timer used to schedule bullet firing intervals.
+     */
     private Timer enemyTimer;
+
+    /**
+     * The angle (in radians) from the Shooter to the player.
+     */
     private double thetaToPlayer;
-    
+
+    /**
+     * The image used to visually represent the Shooter.
+     */
     private final Image enemyImg = new ImageIcon(getClass().getResource("../../resources/shooter.png")).getImage();
-    
+
+    /**
+     * Creates a Shooter enemy.
+     *
+     * @param lggui     the game GUI where the Shooter will operate
+     * @param x         the x-coordinate of the Shooter
+     * @param y         the y-coordinate of the Shooter
+     * @param width     the width of the Shooter
+     * @param height    the height of the Shooter
+     * @param gameTimer the shared timer used for scheduling bullet firing
+     */
     public Shooter(LevelGameplayGUI lggui, int x, int y, int width, int height, Timer gameTimer) {
         
         super(lggui, width, height, 40);
@@ -48,12 +84,25 @@ public class Shooter extends Character implements Spawnable {
         
     }
 
+    /**
+     * Spawns the Shooter at the specified coordinates.
+     *
+     * @param x the x-coordinate to spawn at
+     * @param y the y-coordinate to spawn at
+     */
     @Override
     public void spawn(int x, int y) {
         this.x = x;
         this.y = y;
     }
     
+    /**
+     * Draws the Shooter on the screen.
+     * The image is flipped horizontally if the player is to 
+     * the left of the Shooter.
+     *
+     * @param gtd the graphics context used
+     */
     @Override
     public void draw(Graphics2D gtd) {
         if (Math.toDegrees(thetaToPlayer) <= 90 || Math.toDegrees(thetaToPlayer) >= 270) {
@@ -74,6 +123,10 @@ public class Shooter extends Character implements Spawnable {
         }
     }
     
+    /**
+     * Updates the Shooter's angle toward the player each frame.
+     * This angle is used for firing bullets in the correct direction.
+     */
     @Override
     public void updateState() {
         double dx = lgGUI.getController().getPlayer().getX() - x;

@@ -5,14 +5,14 @@ Ground,Obstacle,51,553,799,48
 Spawn Point,Spawn,90,510,28,29
 Shooter Platform 1,Obstacle,305,497,113,24
 Shooter 1,Shooter,329,413,62,80
-Platform 2,Obstacle,736,452,116,31
-Coin 1,Coin,785,416,20,20
-Platform 3,Obstacle,484,368,224,27
-Chaser 1,Chaser,509,284,60,81
-Platform 5,Obstacle,114,291,243,26
-Shooter 2,Shooter,121,205,62,80
-NPC2,NPC,297,228,45,60
-Platform 7,Obstacle,284,157,99,25
-Coin 2,Coin,329,130,20,20
-Exit Platform,Obstacle,470,117,159,43
-Portal to Boss Level,Portal,524,59,54,58
+Platform 2,Obstacle,737,481,116,31
+Coin 1,Coin,785,442,20,20
+Platform 3,Obstacle,484,407,224,27
+Chaser 1,Chaser,509,324,60,81
+Platform 5,Obstacle,116,328,243,26
+Shooter 2,Shooter,121,249,62,80
+NPC2,NPC,297,266,45,60
+Platform 7,Obstacle,286,235,99,25
+Coin 2,Coin,331,199,20,20
+Exit Platform,Obstacle,419,199,159,43
+Portal to Boss Level,Portal,482,137,54,58

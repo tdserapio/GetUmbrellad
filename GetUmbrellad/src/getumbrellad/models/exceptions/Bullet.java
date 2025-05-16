@@ -6,17 +6,79 @@ import java.awt.Color;
 import java.awt.Graphics2D;
 import java.awt.Rectangle;
 
+/**
+ * Represents a Bullet in the game. A Bullet moves in a fixed direction (defined by theta), 
+ * checks for collisions with obstacles or the player's umbrella,
+ * and destroys itself when it hits something.
+ */
 public class Bullet implements Spawnable {
     
+        
+    /**
+     * The game GUI where it resides.
+     */
     private LevelGameplayGUI lggui;
+
+    /**
+     * The controller that manages game logic, accessible from GUI.
+     */
     private LevelGameplayGUIController lgController;
+
+    /**
+     * The direction of movement of the bullet in radians.
+     */
     private double THETA;
-    private int x, y, width, height;
+
+    /**
+     * The x-coordinate of the bullet.
+     */
+    private int x;
+
+    /**
+     * The y-coordinate of the bullet.
+     */
+    private int y;
+
+    /**
+     * The width of the bullet.
+     */
+    private int width;
+
+    /**
+     * The height of the bullet.
+     */
+    private int height;
+
+    /**
+     * The hitbox used for collision detection.
+     */
     private Rectangle hitbox;
+
+    /**
+     * The "speed" of the bullet.
+     */
     private int DELTA = 4;
+
+    /**
+     * Whether the bullet should stop updating because it was destroyed.
+     */
     private boolean stopExisting = false;
+
+    /**
+     * The amount of damage this bullet inflicts on the player.
+     */
     private int damage = 25;
     
+    /**
+     * Constructs a new Bullet.
+     *
+     * @param lggui  the game GUI
+     * @param theta  the direction (in radians) the bullet will travel
+     * @param x      initial x-coordinate
+     * @param y      initial y-coordinate
+     * @param width  width of the bullet
+     * @param height height of the bullet
+     */
     public Bullet(LevelGameplayGUI lggui, double theta, int x, int y, int width, int height) {
         
         this.lggui = lggui;
@@ -33,14 +95,30 @@ public class Bullet implements Spawnable {
         
     }
     
+    /**
+     * Returns the damage this bullet inflicts.
+     *
+     * @return damage value
+     */
     public int getDamage() {
         return damage;
     }
     
+    /**
+     * Returns the hitbox of this bullet.
+     *
+     * @return hitbox rectangle
+     */
     public Rectangle getHitbox() {
         return hitbox;
     }
     
+    /**
+     * Draws the bullet on the screen.
+     * The bullet is rotated according to its direction.
+     *
+     * @param gtd the graphics context
+     */
     public void draw(Graphics2D gtd) {
 
         if (stopExisting) return;
@@ -63,12 +141,24 @@ public class Bullet implements Spawnable {
         
     }
 
+    /**
+     * Spawns the bullet at the given coordinates.
+     *
+     * @param x x-coordinate
+     * @param y y-coordinate
+     */
     @Override
     public void spawn(int x, int y) {
         this.x = (Integer)(x);
         this.y = (Integer)(y);
     }
     
+    /**
+     * Updates the state of the bullet. 
+     * Pretends to move the bullet and checks for collisions
+     * with obstacles and the player’s umbrella. 
+     * Destroys itself if a collision is detected.
+     */
     @Override
     public void updateState() {
         
@@ -104,6 +194,10 @@ public class Bullet implements Spawnable {
         
     }
     
+    /**
+     * Destroys the bullet. 
+     * Removes it from the game and stopping its updates.
+     */
     public void destroy() {
         lgController.removeEntity(this);
         stopExisting = true;

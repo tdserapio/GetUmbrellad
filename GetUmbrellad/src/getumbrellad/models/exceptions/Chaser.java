@@ -14,19 +14,65 @@ import java.util.Timer;
 import java.util.TimerTask;
 
 /**
- *
- * @author troy
+ * The Chaser enemy in the game.
+ * The Chaser moves horizontally toward the player if the 
+ * vertical distance between them is within a threshold.
+ * It checks for collisions with the ground to prevent falling 
+ * and deals damage on contact with the player in fixed time intervals.
  */
 public class Chaser extends Character implements Spawnable {
     
-    private int x, y, width, height;
+       
+    /**
+     * The x-coordinate of the Chaser.
+     */
+    private int x;
+
+    /**
+     * The y-coordinate of the Chaser.
+     */
+    private int y;
+
+    /**
+     * The width of the Chaser.
+     */
+    private int width;
+
+    /**
+     * The height of the Chaser.
+     */
+    private int height;
+
+    /**
+     * Horizontal speed of the Chaser.
+     */
     private double speed = 1.2;
+
+    /**
+     * Vertical threshold for whether or not to pursue the player.
+     */
     private final int chaseThreshold = 100;
-    
+
+    /**
+     * Hitbox for collision detection.
+     */
     private Rectangle hitbox;
 
+    /**
+     * Image of the Chaser.
+     */
     private final Image chaserImg = new ImageIcon(getClass().getResource("../../resources/chaser.png")).getImage();
 
+    /**
+     * Constructs a Chaser instance.
+     *
+     * @param lggui     reference to the game panel
+     * @param x         initial x-coordinate
+     * @param y         initial y-coordinate
+     * @param width     width of the Chaser
+     * @param height    height of the Chaser
+     * @param gameTimer timer for repeatedly checking collisions
+     */
     public Chaser(LevelGameplayGUI lggui, int x, int y, int width, int height, Timer gameTimer) {
         super(lggui, width, height, 40);
         this.x = x;
@@ -46,13 +92,25 @@ public class Chaser extends Character implements Spawnable {
         }, 0, 1000);
         
     }
-
+    
+    /**
+     * Spawns the Chaser at the specified coordinates.
+     *
+     * @param x the spawn point x-coordinate
+     * @param y the spawn point y-coordinate
+     */
     @Override
     public void spawn(int x, int y) {
         this.x = x;
         this.y = y;
     }
 
+    /**
+     * Draws the Chaser on screen. The image is flipped horizontally 
+     * depending on the relative position of the player.
+     *
+     * @param gtd the graphics context to draw on
+     */
     @Override
     public void draw(Graphics2D gtd) {
         int dx = lgGUI.getController().getPlayer().getX() - x;
@@ -73,6 +131,12 @@ public class Chaser extends Character implements Spawnable {
         }
     }
     
+    /**
+     * Checks if the probe intersects with any obstacles.
+     *
+     * @param groundProbe the rectangle used to check ground collision
+     * @return true if intersecting an obstacle, false otherwise
+     */
     public boolean isCollidingWithObstacle(Rectangle groundProbe) {
         
         for (Obstacle obs: lgGUI.getController().getObstacles()) {
@@ -85,12 +149,21 @@ public class Chaser extends Character implements Spawnable {
         
     }
     
+    /**
+     * Checks if the Chaser is currently colliding with the player.
+     *
+     * @return true if intersecting the player's hitbox, false otherwise
+     */
     public boolean isCollidingWithPlayer() {
         Player currentPlayer = lgGUI.getController().getPlayer();
         return currentPlayer.getHitBox().intersects(hitbox);
         
     }
 
+    /**
+     * Updates the Chaser's state. If the player is vertically close enough,
+     * the Chaser moves toward the player while ensuring it doesn’t fall off the platform.
+     */
     @Override
     public void updateState() {
         

@@ -1,0 +1,1 @@
+packageSearchIndex = [{"l":"All Packages","u":"allpackages-index.html"},{"l":"getumbrellad"},{"l":"getumbrellad.controllers"},{"l":"getumbrellad.models.exceptions"},{"l":"getumbrellad.views"}];updateSearchResults();
