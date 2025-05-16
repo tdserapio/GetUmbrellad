@@ -83,6 +83,22 @@ public abstract class Character {
     public int getY() {
         return this.y;
     }
+    
+    /**
+     * Gets the character's width
+     * @return the width of the Character
+     */
+    public int getWidth() {
+        return this.width;
+    }
+
+    /**
+     * Gets the character's height
+     * @return the height of the Character
+     */
+    public int getHeight() {
+        return this.height;
+    }
 
     /**
      * Gets the character's theta looking direction

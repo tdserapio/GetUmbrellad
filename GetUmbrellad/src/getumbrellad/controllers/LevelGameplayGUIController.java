@@ -81,9 +81,6 @@ public class LevelGameplayGUIController implements ActionListener, MouseListener
             System.err.println("The level cannot be loaded.");
         } catch (PlayerNotFoundException pnfe) {
             System.err.println("The player cannot be loaded.");
-        } catch (Exception e) {
-            System.err.println("Something happened within the game loop:");
-            System.err.println(e.getMessage());
         }
         
     }

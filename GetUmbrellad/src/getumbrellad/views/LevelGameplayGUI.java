@@ -96,5 +96,6 @@ public class LevelGameplayGUI extends JPanel {
         for (Spawnable spawn : entities) {
             spawn.draw(g2);
         }
+        this.controller.getPlayer().getUmbrella().draw(g2);
     }
 }

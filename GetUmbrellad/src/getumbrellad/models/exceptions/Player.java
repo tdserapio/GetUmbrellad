@@ -35,6 +35,8 @@ public class Player extends Character implements Spawnable {
     private int maxHPBuff = 0, hpBuff = 0, defenseBuff = 0, floatBuff = 0, jumpBuff = 0, coinBuff = 1;
     private double floatingEffect;
     
+    private Umbrella umbrella;
+    
     public Player(String name, int hp, int damage, int money, int currentLevel) {
         super();
         this.name = name;
@@ -82,6 +84,9 @@ public class Player extends Character implements Spawnable {
         } catch (IOException e) {
             e.printStackTrace();
         }
+        
+        umbrella = new Umbrella(this, this.lgGUI);
+        umbrella.open();
         
     }
     
@@ -169,6 +174,18 @@ public class Player extends Character implements Spawnable {
     
     public Rectangle getHitBox() {
         return this.hitbox;
+    }
+    
+    public int getMouseX() {
+        return xMouse;
+    }
+    
+    public int getMouseY() {
+        return yMouse;
+    }
+    
+    public Umbrella getUmbrella() {
+        return umbrella;
     }
     
     public ArrayList<Upgrade> getPlayerUpgrades() {
@@ -350,6 +367,12 @@ public class Player extends Character implements Spawnable {
             keyUp = false;
         }
         
+        if (ySpeed < 0) {
+            umbrella.close();
+        } else {
+            umbrella.open();
+        }
+        
         if (keyUp) {
             
             canJump = false;
@@ -422,6 +445,7 @@ public class Player extends Character implements Spawnable {
     }
     
     public void applyUpgrade(Upgrade upgrade) {
+        
         int value = upgrade.getValue();
         String increasedStat = upgrade.getIncreasedStat();
         
@@ -445,6 +469,7 @@ public class Player extends Character implements Spawnable {
         } else {
             System.out.println("Oops! The upgrade was useless.");
         }
+        
     }
     
     @Override

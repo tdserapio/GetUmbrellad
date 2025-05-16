@@ -47,15 +47,12 @@ public class Bullet implements Spawnable {
 
         Graphics2D gg = (Graphics2D) gtd.create();
 
-        // Translate to the center of the bullet
         int centerX = x + width / 2;
         int centerY = y + height / 2;
         gg.translate(centerX, centerY);
 
-        // Rotate around the center
         gg.rotate(THETA + Math.PI / 2);
 
-        // Draw the bullet centered at (0,0)
         gg.setColor(Color.BLACK);
         gg.drawRect(-width / 2, -height / 2, width, height);
 
@@ -63,6 +60,7 @@ public class Bullet implements Spawnable {
         gg.fillRect(-width / 2 + 1, -height / 2 + 1, width - 2, height - 2);
 
         gg.dispose();
+        
     }
 
     @Override
@@ -86,8 +84,21 @@ public class Bullet implements Spawnable {
             }
         }
         
+        Rectangle proximity = new Rectangle(
+            x + width/2,
+            y + height/2,
+            80,
+            80
+        );
+        
+        if (lggui.getController().getPlayer().getUmbrella().getHitbox().intersects(proximity)) {
+            destroy();
+            return;
+        }
+        
         this.x = newX;
         this.y = newY;
+        
         hitbox.x = this.x;
         hitbox.y = this.y;
         
