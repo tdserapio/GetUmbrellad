@@ -40,10 +40,11 @@ public class Chaser extends Character implements Spawnable {
             @Override
             public void run() {
                 if (lggui != null && lggui.getController() != null && isCollidingWithPlayer()) {
+                    System.out.println("THATS A HIT!");
                     lggui.getController().getPlayer().deductHP(damage);
                 }
             }
-        }, 1000);
+        }, 0, 1000);
         
     }
 
@@ -86,7 +87,6 @@ public class Chaser extends Character implements Spawnable {
     }
     
     public boolean isCollidingWithPlayer() {
-        
         Player currentPlayer = lgGUI.getController().getPlayer();
         return currentPlayer.getHitBox().intersects(hitbox);
         
@@ -114,6 +114,9 @@ public class Chaser extends Character implements Spawnable {
                 x = nextX;
             }
         }
+        
+        hitbox.x = x;
+        hitbox.y = y;
         
     }
 }

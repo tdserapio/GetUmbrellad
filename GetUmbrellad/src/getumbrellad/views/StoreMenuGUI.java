@@ -10,6 +10,7 @@ import javax.swing.*;
 import java.awt.image.BufferedImage;
 import java.io.File;
 import java.io.IOException;
+import java.io.InputStream;
 import java.util.ArrayList;
 import javax.imageio.ImageIO;
 
@@ -41,6 +42,15 @@ public class StoreMenuGUI extends JFrame {
         
         this.canBeBought = currentNPC.getNPCUpgrades();
         
+        try {
+            GraphicsEnvironment ge = GraphicsEnvironment.getLocalGraphicsEnvironment();
+            InputStream is = getClass().getResourceAsStream("../resources/Lexend.ttf");
+            ge.registerFont(Font.createFont(Font.TRUETYPE_FONT, is));
+        } catch (Exception anyException) {
+            System.out.println(anyException.getMessage());
+            return;
+        }
+        
         // Stats Panel
         statsPanel = new JPanel(new BorderLayout());
         statsPanel.setBorder(
@@ -55,7 +65,9 @@ public class StoreMenuGUI extends JFrame {
         coinPanel.setLayout(new BoxLayout(coinPanel, BoxLayout.X_AXIS));
 
         hpLabel = new JLabel("HP: " + currentPlayer.getHP());
+        hpLabel.setFont(new Font("Lexend", Font.TRUETYPE_FONT, 16));
         coinLabel = new JLabel("\t\t\t\t\t\t\t\t\tCoins: " + currentPlayer.getMoney());
+        coinLabel.setFont(new Font("Lexend", Font.TRUETYPE_FONT, 16));
 
         coinPanel.add(hpLabel);
         coinPanel.add(coinLabel);
@@ -76,21 +88,21 @@ public class StoreMenuGUI extends JFrame {
             JPanel itemPanel = new JPanel(new BorderLayout());
             itemPanel.setBorder(BorderFactory.createLineBorder(Color.BLACK, 1));
             
+            JLabel itemLabel = new JLabel(canBeBought.get(i).getName(), SwingConstants.CENTER);
+            itemLabel.setFont(new Font("Lexend", Font.BOLD, 32));
+            itemPanel.add(itemLabel, BorderLayout.NORTH);
+            
             String currentUpgradeName = canBeBought.get(i).getName();
             currentUpgradeName = currentUpgradeName.replaceAll("\\s+", "").toLowerCase();
             
             try {
                 JLabel picLabel = new JLabel(new ImageIcon(StoreMenuGUI.class.getResource("../resources/" + currentUpgradeName + ".png")), SwingConstants.CENTER);
-                itemPanel.add(picLabel, BorderLayout.NORTH);
+                itemPanel.add(picLabel, BorderLayout.SOUTH);
                 itemPanel.setName(currentUpgradeName);
             } catch (Exception fileError) {
                 JLabel itemFrame = new JLabel("[ ]", SwingConstants.CENTER);
-                itemPanel.add(itemFrame, BorderLayout.NORTH);
+                itemPanel.add(itemFrame, BorderLayout.SOUTH);
             }
-            
-            JLabel itemLabel = new JLabel(canBeBought.get(i).getName(), SwingConstants.CENTER);
-            itemLabel.setFont(new Font("Arial", Font.BOLD, 32));
-            itemPanel.add(itemLabel, BorderLayout.SOUTH);
             
             itemsPanel.add(itemPanel);
             
