@@ -15,7 +15,7 @@ public class Bullet implements Spawnable {
     private Rectangle hitbox;
     private int DELTA = 4;
     private boolean stopExisting = false;
-    private int damage = 50;
+    private int damage = 25;
     
     public Bullet(LevelGameplayGUI lggui, double theta, int x, int y, int width, int height) {
         

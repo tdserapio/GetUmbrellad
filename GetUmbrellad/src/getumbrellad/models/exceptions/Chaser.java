@@ -40,7 +40,6 @@ public class Chaser extends Character implements Spawnable {
             @Override
             public void run() {
                 if (lggui != null && lggui.getController() != null && isCollidingWithPlayer()) {
-                    System.out.println("THATS A HIT!");
                     lggui.getController().getPlayer().deductHP(damage);
                 }
             }
@@ -99,6 +98,7 @@ public class Chaser extends Character implements Spawnable {
         int playerY = lgGUI.getController().getPlayer().getY();
 
         if (Math.abs(playerY - y) <= chaseThreshold) {
+            
             int direction = Integer.compare(playerX, x);
             int nextX = x + (int)(speed * direction);
 
@@ -106,8 +106,8 @@ public class Chaser extends Character implements Spawnable {
             Rectangle groundProbe = new Rectangle(
                 futureHitbox.x + width / 2,
                 futureHitbox.y + height,
-                1,
-                1
+                10,
+                10
             );
 
             if (isCollidingWithObstacle(groundProbe)) {

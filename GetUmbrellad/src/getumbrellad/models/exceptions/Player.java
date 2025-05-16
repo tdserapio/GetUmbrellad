@@ -35,6 +35,15 @@ public class Player extends Character implements Spawnable {
     private int maxHPBuff = 0, hpBuff = 0, damageBuff = 0, defenseBuff = 0, floatBuff = 0, jumpBuff = 0, coinBuff = 1;
     private double floatingEffect;
     
+    public Player(String name, int hp, int damage, int money, int currentLevel) {
+        super();
+        this.name = name;
+        this.hp = hp;
+        this.damage = damage;
+        this.money = money;
+        this.currentLevel = currentLevel;
+    }
+    
     public Player(String fileName, LevelGameplayGUI lggui) throws PlayerNotFoundException {
         
         super(lggui, 40, 48, 50);
@@ -118,10 +127,20 @@ public class Player extends Character implements Spawnable {
     public void deductHP(int decrement) {
         decrement -= defenseBuff;
         this.hp -= decrement;
+        try {
+            writePlayer("umbrella_boy.csv");
+        } catch (PlayerNotFoundException pnfe) {
+            System.out.println("BY NO MEANS SHOULD THIS HAPPEN...");
+        }
     }
     
     public void increaseHP(int increment) {
         this.hp += increment;
+        try {
+            writePlayer("umbrella_boy.csv");
+        } catch (PlayerNotFoundException pnfe) {
+            System.out.println("BY NO MEANS SHOULD THIS HAPPEN...");
+        }
     }
     
     public int getMaxHPBuff() {
@@ -187,7 +206,8 @@ public class Player extends Character implements Spawnable {
                 writer.write(getName() + "," +
                              getHP() + "," +
                              getDamage() + "," +
-                             getMoney() + "," + getLevel());
+                             getMoney() + "," + 
+                             getLevel());
                 writer.newLine();
                 
                 writer.flush();

@@ -44,9 +44,8 @@ public class HelpGUI extends JFrame {
         this.add(overallPanel);
         
         String[][] instructions = {
-            {"../resources/arrowkeys.png", "Press A to move left.<br>Press D to move right."},
             {"../resources/spacebar.png", "Press SPACE to jump."},
-            {"../resources/cursor.png", "Your mouse 'repels' the character whenever you jump."}
+            {"../resources/cursor.png", "Your character will jump towards your mouse."}
         };
         
         gridPanel = new JPanel(new GridLayout(instructions.length, 2, 20, 20));

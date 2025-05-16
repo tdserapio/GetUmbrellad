@@ -21,6 +21,8 @@ public abstract class Character {
     protected Rectangle hitbox;
     protected int range;
     protected boolean isDead = false;
+    
+    protected Character() {}
         
     protected Character(LevelGameplayGUI lgGUI, int width, int height, int range) {
         

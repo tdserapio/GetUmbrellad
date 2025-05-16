@@ -34,7 +34,8 @@ public class NPC extends Character implements Spawnable {
     private StoreMenuGUI smgui;
     private Player currentPlayer;
     
-    private final Image NPCImg = new ImageIcon(getClass().getResource("../../resources/paperNPC.png")).getImage();
+    private final Image NPCImg1 = new ImageIcon(getClass().getResource("../../resources/paperNPC.png")).getImage();
+    private final Image NPCImg2 = new ImageIcon(getClass().getResource("../../resources/rockNPC.png")).getImage();
     
     public NPC(LevelGameplayGUI lggui, String name, int x, int y, int width, int height, Player currentPlayer) {
         
@@ -114,7 +115,11 @@ public class NPC extends Character implements Spawnable {
     
     @Override
     public void draw(Graphics2D gtd) {
-        gtd.drawImage(NPCImg, x, y, lgGUI);
+        if (name.equals("NPC1")) {
+            gtd.drawImage(NPCImg1, x, y, lgGUI);
+        } else if (name.equals("NPC2")) {
+            gtd.drawImage(NPCImg2, x, y, lgGUI);
+        }
     }
     
     @Override

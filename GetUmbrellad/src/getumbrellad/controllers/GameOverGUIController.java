@@ -1,5 +1,7 @@
 package getumbrellad.controllers;
 
+import getumbrellad.models.exceptions.Player;
+import getumbrellad.models.exceptions.PlayerNotFoundException;
 import getumbrellad.views.MainMenuGUI;
 import getumbrellad.views.GameOverGUI;
 import javax.swing.*;
@@ -19,9 +21,19 @@ public class GameOverGUIController implements ActionListener, MouseListener {
     @Override
     public void actionPerformed(ActionEvent e) {
         if (e.getSource() == menuButton) {
+            
             var display = new MainMenuGUI();
             display.setVisible(true);
             gameOver.dispose();
+            
+            Player currentPlayer = new Player("Umbrella Boy", 100, 10, 0, 1);
+            try {
+                currentPlayer.writePlayer("umbrella_boy.csv");
+            } catch (PlayerNotFoundException pnfe) {
+                System.err.println("Sorry, player cannot be reset successfully.");
+                return;
+            }
+            
         }
     }
     

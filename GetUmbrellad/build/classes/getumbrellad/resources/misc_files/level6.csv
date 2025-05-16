@@ -1,0 +1,11 @@
+
+name,type,x,y,width,height
+Platform 1,Obstacle,52,525,799,27
+Platform 2,Obstacle,-177,-44,185,687
+Platform 3,Obstacle,892,-17,22,714
+sigma,Obstacle,154,404,587,24
+Spawn Point,Spawn,437,495,28,29
+Platform 69,Obstacle,826,331,66,19
+Shooter 1,Shooter,829,252,62,80
+Shooter 2,Obstacle,8,332,48,18
+Shooter 3,Shooter,10,251,62,80

@@ -1,0 +1,17 @@
+name,type,x,y,width,height
+Wall 1,Obstacle,0,3,49,598
+GRound,Obstacle,49,552,850,47
+Wall 2,Obstacle,850,3,50,549
+NPC1,NPC,72,491,45,60
+Spawn Point,Spawn,138,512,28,29
+Chaser 1,Chaser,616,472,60,81
+coin 1,Coin,749,511,20,20
+Platform 1,Obstacle,365,422,136,28
+Platform 2,Obstacle,225,349,112,29
+Platform 3,Obstacle,77,291,117,31
+Coin 2,Coin,269,305,20,20
+Coin 3,Coin,129,247,20,20
+Platform 6,Obstacle,324,206,147,28
+Shooter 1,Shooter,369,125,62,80
+Platform 7,Obstacle,542,174,135,29
+Portal to Level 4,Portal,584,117,54,58
