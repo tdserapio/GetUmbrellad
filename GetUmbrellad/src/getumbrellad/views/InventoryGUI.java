@@ -80,7 +80,7 @@ public class InventoryGUI extends JFrame {
         upgradeScroll.setViewportView(upgradeList);
         leftPanel.add(upgradeScroll, BorderLayout.CENTER); 
         
-        exitButton = new JButton("Exit");
+        exitButton = new JButton("Return");
         exitButton.setOpaque(true); 
         exitButton.setContentAreaFilled(true); 
 
